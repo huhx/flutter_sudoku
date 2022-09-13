@@ -1,66 +1,62 @@
+import 'dart:io';
+
+import 'package:double_back_to_close/double_back_to_close.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'business/main/theme_provider.dart';
+import 'component/custom_load_footer.dart';
+import 'component/custom_water_drop_header.dart';
+import 'business/main/main_screen.dart';
+import 'theme/theme.dart';
+import 'util/comm_util.dart';
+import 'util/prefs_util.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+  await PrefsUtil.init();
+
+  if (Platform.isAndroid) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
   }
+  runApp(
+    const ProviderScope(child: MainApp()),
+  );
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class MainApp extends ConsumerStatefulWidget {
+  const MainApp({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MainAppState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+class _MainAppState extends ConsumerState<MainApp> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    return RefreshConfiguration(
+      headerBuilder: () => const CustomWaterDropHeader(),
+      footerBuilder: () => const CustomLoadFooter(),
+      child: MaterialApp(
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: const CupertinoScrollBehavior(),
+            child: child!,
+          );
+        },
+        home: DoubleBack(
+          onFirstBackPress: (_) => CommUtil.toast(message: "再按一次退出"),
+          child: const MainScreen(),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        theme: appThemeData[AppTheme.light],
+        darkTheme: appThemeData[AppTheme.dark],
+        themeMode: ref.watch(themeProvider).themeMode,
       ),
     );
   }
