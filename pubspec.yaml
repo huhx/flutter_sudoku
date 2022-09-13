@@ -47,6 +47,7 @@ dependencies:
   double_back_to_close: ^2.0.0
   vibration: ^1.7.6
   shimmer: ^2.0.0
+  equatable: ^2.0.3
   shared_preferences: ^2.0.15
 
 dependency_overrides:

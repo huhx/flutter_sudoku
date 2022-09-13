@@ -17,7 +17,6 @@ import 'util/prefs_util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await PrefsUtil.init();
 
   if (Platform.isAndroid) {
@@ -44,12 +43,6 @@ class _MainAppState extends ConsumerState<MainApp> {
       headerBuilder: () => const CustomWaterDropHeader(),
       footerBuilder: () => const CustomLoadFooter(),
       child: MaterialApp(
-        builder: (context, child) {
-          return ScrollConfiguration(
-            behavior: const CupertinoScrollBehavior(),
-            child: child!,
-          );
-        },
         home: DoubleBack(
           onFirstBackPress: (_) => CommUtil.toast(message: "再按一次退出"),
           child: const MainScreen(),
