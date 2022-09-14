@@ -28,15 +28,16 @@ class SudokuRequest extends Equatable {
 }
 
 enum Difficulty {
-  d(0),
-  c(1),
-  b(2),
-  a(3),
-  s(4);
+  d(0, "入门"),
+  c(1, "初级"),
+  b(2, "中级"),
+  a(3, "高级"),
+  s(4, "骨灰级");
 
   final int level;
+  final String label;
 
-  const Difficulty(this.level);
+  const Difficulty(this.level, this.label);
 
   static Difficulty from(int level) {
     return Difficulty.values.firstWhere((element) => element.level == level);
