@@ -36,17 +36,23 @@ enum Difficulty {
   final int level;
 
   const Difficulty(this.level);
+
+  static Difficulty from(int level) {
+    return Difficulty.values.firstWhere((element) => element.level == level);
+  }
 }
 
 class SudokuResponse extends Equatable {
-  final List<List<int>> data;
+  final String question;
+  final String answer;
+  final Difficulty difficulty;
 
-  const SudokuResponse({required this.data});
+  const SudokuResponse({
+    required this.question,
+    required this.answer,
+    required this.difficulty,
+  });
 
   @override
-  List<Object?> get props => [data];
-
-  factory SudokuResponse.fromJson(Map<String, dynamic> json) {
-    return SudokuResponse(data: json['data'] as List<List<int>>);
-  }
+  List<Object?> get props => [question, answer, difficulty];
 }
