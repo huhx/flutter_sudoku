@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
+import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
 
 import 'sudoku_screen.dart';
@@ -13,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final SudokuRequest request = const SudokuRequest(difficulty: Difficulty.d, year: 2022, month: 9, day: 6);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              onPressed: () => context.goto(const SudokuScreen()),
+              onPressed: () => context.goto(SudokuScreen(request)),
               icon: const SvgIcon(name: "home_double_right", color: Colors.white),
               label: const Text("新游戏"),
             ),
