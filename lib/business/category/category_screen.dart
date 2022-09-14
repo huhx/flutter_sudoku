@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SudokuScreen extends StatefulWidget {
-  const SudokuScreen({Key? key}) : super(key: key);
+class CategoryScreen extends StatefulWidget {
+  const CategoryScreen({super.key});
 
   @override
-  State<SudokuScreen> createState() => _SudokuScreenState();
+  State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
-class _SudokuScreenState extends State<SudokuScreen> {
+class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("趣味数独")),
       body: Container(
         alignment: Alignment.center,
-        child: const Text("Sudoku Screen"),
+        child: const Text("Category Screen"),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/business/category/category_screen.dart';
 import 'package:flutter_sudoku/business/home/home_screen.dart';
 import 'package:flutter_sudoku/business/profile/profile_screen.dart';
-import 'package:flutter_sudoku/business/sudoku/sudoku_screen.dart';
 import 'package:flutter_sudoku/component/custom_navigation_bar_item.dart';
 import 'package:flutter_sudoku/theme/theme.dart';
 
@@ -14,7 +14,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   var pageIndex = 0;
-  final screens = [const HomeScreen(), const SudokuScreen(), const ProfileScreen()];
+  final screens = [const HomeScreen(), const CategoryScreen(), const ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {
