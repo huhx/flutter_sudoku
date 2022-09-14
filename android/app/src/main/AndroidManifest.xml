@@ -1,11 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.huhx.flutter_sudoku">
-   <application
-        android:label="flutter_sudoku"
+    package="com.huhx.sudoku">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:label="每日数独"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:name=".MainActivity"
+            android:name="com.huhx.flutter_sudoku.MainActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
