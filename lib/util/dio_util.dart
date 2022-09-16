@@ -16,9 +16,8 @@ class RestClient {
         priority: CachePriority.high,
       ),
     );
-    final Dio dio = Dio(BaseOptions());
-    dio.interceptors.add(cacheInterceptor);
-    dio.interceptors.add(HttpFormatter());
-    return dio;
+    return Dio()
+      ..interceptors.add(cacheInterceptor)
+      ..interceptors.add(HttpFormatter());
   }
 }

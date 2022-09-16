@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   const SudokuResponse response = SudokuResponse(
-    question: "800070000003809000054000060060057100008301005000000000000023900000700050600000701",
-    answer: "896475312123869574754132869369257148278341695541698237417523986982716453635984721",
-    difficulty: Difficulty.c,
-  );
+      question: "800070000003809000054000060060057100008301005000000000000023900000700050600000701",
+      answer: "896475312123869574754132869369257148278341695541698237417523986982716453635984721",
+      difficulty: Difficulty.c,
+      dateTime: "20220909");
 
   test("should return question arrays when invoke fromQuestion", () {
     final List<List<int>> result = response.fromQuestion();
