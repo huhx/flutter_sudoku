@@ -19,10 +19,10 @@ class SudokuRequest extends Equatable {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'nd': difficulty.level,
-      'y': year,
-      'm': month,
-      'd': day,
+      'difficulty': difficulty.level,
+      'year': year,
+      'month': month,
+      'day': day,
     };
   }
 }
@@ -65,15 +65,26 @@ class SudokuResponse extends Equatable {
   final String question;
   final String answer;
   final Difficulty difficulty;
+  final String dateTime;
 
   const SudokuResponse({
     required this.question,
     required this.answer,
     required this.difficulty,
+    required this.dateTime,
   });
 
   @override
   List<Object?> get props => [question, answer, difficulty];
+
+  factory SudokuResponse.fromJson(Map<String, dynamic> json) {
+    return SudokuResponse(
+      question: json['question'] as String,
+      answer: json['answer'] as String,
+      difficulty: Difficulty.from(json['difficulty'] as int),
+      dateTime: json['dateTime'] as String,
+    );
+  }
 
   List<List<int>> fromQuestion() {
     final List<String> firstChunk = question.chunk(9);
