@@ -2,27 +2,27 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
 
 class SudokuRequest extends Equatable {
-  final Difficulty difficulty;
   final int year;
   final int month;
   final int day;
+  final Difficulty difficulty;
+
+  @override
+  List<Object?> get props => [year, month, day, difficulty];
 
   const SudokuRequest({
-    required this.difficulty,
     required this.year,
     required this.month,
     required this.day,
+    required this.difficulty,
   });
-
-  @override
-  List<Object?> get props => [difficulty, year, month, day];
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'difficulty': difficulty.level,
       'year': year,
       'month': month,
       'day': day,
+      'difficulty': difficulty.level,
     };
   }
 }
@@ -75,7 +75,7 @@ class SudokuResponse extends Equatable {
   });
 
   @override
-  List<Object?> get props => [question, answer, difficulty];
+  List<Object?> get props => [question, answer, difficulty, dateTime];
 
   factory SudokuResponse.fromJson(Map<String, dynamic> json) {
     return SudokuResponse(
