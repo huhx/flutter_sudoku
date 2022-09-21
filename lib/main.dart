@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'business/main/main_screen.dart';
+import 'business/home/home_screen.dart';
 import 'business/main/theme_provider.dart';
 import 'theme/theme.dart';
 import 'util/app_config.dart';
@@ -46,7 +46,7 @@ class _MainAppState extends ConsumerState<MainApp> {
     return MaterialApp(
       home: DoubleBack(
         onFirstBackPress: (_) => CommUtil.toast(message: "再按一次退出"),
-        child: const MainScreen(),
+        child: const HomeScreen(),
       ),
       theme: appThemeData[AppTheme.light],
       darkTheme: appThemeData[AppTheme.dark],
