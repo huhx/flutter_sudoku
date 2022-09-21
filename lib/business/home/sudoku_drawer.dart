@@ -12,9 +12,12 @@ class SudokuDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(color: Colors.blue),
-            child: Text("Header"),
+          DrawerHeader(
+            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text("每日数独", style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 24, color: Colors.white)),
+            ),
           ),
           ListTile(
             leading: const SvgIcon(name: "main_category"),
