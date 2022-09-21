@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final SudokuRequest request = const SudokuRequest(difficulty: Difficulty.d, year: 2022, month: 9, day: 6);
+  DateTime dateTime = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("数独"),
         actions: [
           IconButton(
-            icon: const SvgIcon(name: "more_hor", color: Colors.white, size: 22),
+            icon: const SvgIcon(name: "more_hor", color: Colors.white, size: 20),
             onPressed: () => CommUtil.toBeDev(),
           )
         ],
@@ -36,7 +36,23 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              onPressed: () => context.goto(SudokuScreen(request)),
+              onPressed: () async {
+                final Difficulty? difficulty = await showDialog(
+                  context: context,
+                  builder: (context) {
+                    return SimpleDialog(
+                      title: const Text("游戏难度"),
+                      children: Difficulty.values
+                          .map((e) => SimpleDialogOption(child: Text(e.label), onPressed: () => context.pop(e)))
+                          .toList(),
+                    );
+                  },
+                );
+                if (difficulty != null) {
+                  final SudokuRequest request = SudokuRequest(difficulty: difficulty, year: dateTime.year, month: dateTime.month, day: dateTime.day);
+                  context.goto(SudokuScreen(request));
+                }
+              },
               icon: const SvgIcon(name: "home_double_right", color: Colors.white),
               label: const Text("新游戏"),
             ),
