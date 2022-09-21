@@ -4,6 +4,7 @@ import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
 
+import 'sudoku_drawer.dart';
 import 'sudoku_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,7 +20,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("数独")),
+      appBar: AppBar(
+        title: const Text("数独"),
+        actions: [
+          IconButton(
+            icon: const SvgIcon(name: "more_hor", color: Colors.white, size: 22),
+            onPressed: () => CommUtil.toBeDev(),
+          )
+        ],
+      ),
+      drawer: const SudokuDrawer(),
       body: Container(
         alignment: Alignment.center,
         child: Column(
