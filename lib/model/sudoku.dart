@@ -25,6 +25,10 @@ class SudokuRequest extends Equatable {
       'difficulty': difficulty.level,
     };
   }
+
+  DateTime toDate() {
+    return DateTime(year, month, day);
+  }
 }
 
 enum Difficulty {
