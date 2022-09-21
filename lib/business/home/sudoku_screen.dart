@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
+import 'package:flutter_sudoku/common/date_extension.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/component/center_progress_indicator.dart';
 import 'package:flutter_sudoku/component/svg_action_icon.dart';
@@ -18,11 +19,19 @@ class SudokuScreen extends StatefulWidget {
 }
 
 class _SudokuScreenState extends State<SudokuScreen> {
+  late DateTime dateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    dateTime = widget.request.toDate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("数独"),
+        title: Text(dateTime.toDateString()),
         leading: const AppbarBackButton(),
         actions: [
           SvgActionIcon(
