@@ -49,8 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 );
                 if (difficulty != null) {
-                  final SudokuRequest request = SudokuRequest(difficulty: difficulty, year: dateTime.year, month: dateTime.month, day: dateTime.day);
-                  context.goto(SudokuScreen(request));
+                  context.goto(SudokuScreen(dateTime, difficulty));
                 }
               },
               icon: const SvgIcon(name: "home_double_right", color: Colors.white),

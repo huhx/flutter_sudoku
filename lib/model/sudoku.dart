@@ -26,6 +26,10 @@ class SudokuRequest extends Equatable {
     };
   }
 
+  static SudokuRequest from(DateTime dateTime, Difficulty difficulty) {
+    return SudokuRequest(year: dateTime.year, month: dateTime.month, day: dateTime.day, difficulty: difficulty);
+  }
+
   DateTime toDate() {
     return DateTime(year, month, day);
   }
