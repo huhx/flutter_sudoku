@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
+import 'package:flutter_sudoku/business/home/sudoku_calendar_screen.dart';
+import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/component/center_progress_indicator.dart';
@@ -10,9 +12,10 @@ import 'package:flutter_sudoku/theme/theme.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
 
 class SudokuScreen extends StatefulWidget {
-  final SudokuRequest request;
+  final DateTime dateTime;
+  final Difficulty difficulty;
 
-  const SudokuScreen(this.request, {super.key});
+  const SudokuScreen(this.dateTime, this.difficulty, {super.key});
 
   @override
   State<SudokuScreen> createState() => _SudokuScreenState();
@@ -24,14 +27,22 @@ class _SudokuScreenState extends State<SudokuScreen> {
   @override
   void initState() {
     super.initState();
-    dateTime = widget.request.toDate();
+    dateTime = widget.dateTime;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(dateTime.toDateString()),
+        title: InkWell(
+          child: Text(dateTime.toDateString()),
+          onTap: () async {
+            final DateTime? selectedDateTime = await context.goto(SudokuCalendarScreen(dateTime));
+            if (selectedDateTime != null && !selectedDateTime.isSameDay(dateTime)) {
+              setState(() => dateTime = selectedDateTime.toDate());
+            }
+          },
+        ),
         leading: const AppbarBackButton(),
         actions: [
           SvgActionIcon(
@@ -45,7 +56,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
         ],
       ),
       body: FutureBuilder(
-        future: sudokuApi.getSudokuData(widget.request),
+        future: sudokuApi.getSudokuData(dateTime, widget.difficulty),
         builder: (context, snap) {
           if (!snap.hasData) return const CenterProgressIndicator();
           final SudokuResponse sudoku = snap.data as SudokuResponse;
