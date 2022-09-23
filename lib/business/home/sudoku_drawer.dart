@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/business/profile/onboard_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
@@ -23,8 +24,8 @@ class SudokuDrawer extends StatelessWidget {
             leading: const SvgIcon(name: "main_category"),
             title: const Text("玩法介绍"),
             onTap: () {
-              CommUtil.toBeDev();
               context.pop();
+              context.goto(const OnboardScreen());
             },
           ),
           ListTile(

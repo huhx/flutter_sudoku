@@ -43,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     return SimpleDialog(
                       title: const Text("游戏难度"),
                       children: Difficulty.values
-                          .map((e) => SimpleDialogOption(child: Text(e.label), onPressed: () => context.pop(e)))
+                          .map((e) => SimpleDialogOption(
+                              onPressed: () => context.pop(e), child: Padding(padding: const EdgeInsets.only(top: 8), child: Text(e.label))))
                           .toList(),
                     );
                   },

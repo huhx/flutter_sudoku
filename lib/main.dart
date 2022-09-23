@@ -48,6 +48,7 @@ class _MainAppState extends ConsumerState<MainApp> {
         onFirstBackPress: (_) => CommUtil.toast(message: "再按一次退出"),
         child: const HomeScreen(),
       ),
+      debugShowCheckedModeBanner: false,
       theme: appThemeData[AppTheme.light],
       darkTheme: appThemeData[AppTheme.dark],
       themeMode: ref.watch(themeProvider).themeMode,
