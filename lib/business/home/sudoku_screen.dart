@@ -11,6 +11,8 @@ import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/theme/theme.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
 
+import 'sudoku_setting_screen.dart';
+
 class SudokuScreen extends StatefulWidget {
   final DateTime dateTime;
   final Difficulty difficulty;
@@ -51,7 +53,7 @@ class _SudokuScreenState extends State<SudokuScreen> {
           ),
           SvgActionIcon(
             name: "sudoku_setting",
-            onTap: () => CommUtil.toBeDev(),
+            onTap: () => context.goto(const SudokuSettingScreen()),
           )
         ],
       ),
