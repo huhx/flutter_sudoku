@@ -8,7 +8,7 @@ import 'sudoku_drawer.dart';
 import 'sudoku_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -36,22 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              onPressed: () async {
-                final Difficulty? difficulty = await showDialog(
+              onPressed: () {
+                showDialog(
                   context: context,
                   builder: (context) {
                     return SimpleDialog(
                       title: const Text("游戏难度"),
                       children: Difficulty.values
-                          .map((e) => SimpleDialogOption(
-                              onPressed: () => context.pop(e), child: Padding(padding: const EdgeInsets.only(top: 8), child: Text(e.label))))
+                          .map((difficulty) => SimpleDialogOption(
+                              onPressed: () => context.replace(SudokuScreen(dateTime, difficulty)),
+                              child: Padding(padding: const EdgeInsets.only(top: 8), child: Text(difficulty.label))))
                           .toList(),
                     );
                   },
                 );
-                if (difficulty != null) {
-                  context.goto(SudokuScreen(dateTime, difficulty));
-                }
               },
               icon: const SvgIcon(name: "home_double_right", color: Colors.white),
               label: const Text("新游戏"),
