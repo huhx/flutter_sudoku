@@ -52,6 +52,8 @@ dependencies:
   intl: ^0.17.0
   table_calendar: ^3.0.7
   introduction_screen: ^3.0.2
+  sqflite: ^2.1.0+1
+  path: ^1.8.2
 
 dev_dependencies:
   flutter_test:
