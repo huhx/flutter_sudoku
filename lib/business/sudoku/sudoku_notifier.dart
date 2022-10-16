@@ -1,6 +1,3 @@
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
 import 'package:flutter_sudoku/common/result.dart';
@@ -95,9 +92,11 @@ class SudokuNotifier extends ChangeNotifier {
     colorMap[Point(x: row, y: column)] = selectedColor;
 
     // highlightColor color
-    final List<Point> matchedPoints = ListUtil.match(content, content[row][column]);
-    for (final Point point in matchedPoints) {
-      colorMap[point] = highlightColor;
+    if (content[row][column] != 0) {
+      final List<Point> matchedPoints = ListUtil.match(content, content[row][column]);
+      for (final Point point in matchedPoints) {
+        colorMap[point] = highlightColor;
+      }
     }
 
     // related color
@@ -109,7 +108,7 @@ class SudokuNotifier extends ChangeNotifier {
         }
         if (i == row || j == column) {
           colorMap[Point(x: i, y: j)] = relatedColor;
-        } else {
+        } else if (content[row][column] != 0) {
           if (relatedPoints.contains(Point(x: i, y: j))) {
             colorMap[Point(x: i, y: j)] = relatedColor;
           }
