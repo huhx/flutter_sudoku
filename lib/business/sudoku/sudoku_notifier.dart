@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
@@ -48,6 +49,35 @@ class SudokuNotifier extends ChangeNotifier {
     return colorMap[Point(x: row, y: column)];
   }
 
+  BoxBorder getBorder(int row, int column) {
+    const BorderSide borderSide = BorderSide(color: Colors.blue, width: 2.0);
+    final List<int> columnIndexes = [0, 3, 6];
+    final List<int> rowIndexes = [0, 3, 6];
+    BorderSide top = BorderSide.none, bottom = BorderSide.none, left = BorderSide.none, right = BorderSide.none;
+
+    if (columnIndexes.contains(column)) {
+      left = borderSide;
+    } else {
+      left = const BorderSide(color: Colors.grey);
+    }
+
+    if (rowIndexes.contains(row)) {
+      top = borderSide;
+    } else {
+      top = const BorderSide(color: Colors.grey);
+    }
+
+    if (column == 8) {
+      right = borderSide;
+    }
+
+    if (row == 8) {
+      bottom = borderSide;
+    }
+
+    return Border(top: top, bottom: bottom, left: left, right: right);
+  }
+
   String get retryString {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
   }
@@ -74,6 +104,9 @@ class SudokuNotifier extends ChangeNotifier {
     final Set<Point> relatedPoints = ListUtil.related(row, column);
     for (int i = 0; i < content.length; i++) {
       for (int j = 0; j < content[i].length; j++) {
+        if (i == row && j == column) {
+          continue;
+        }
         if (i == row || j == column) {
           colorMap[Point(x: i, y: j)] = relatedColor;
         } else {

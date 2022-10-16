@@ -36,7 +36,7 @@ class SudokuCell extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1,
         child: Container(
-          decoration: BoxDecoration(border: _buildBorder(row, column), color: sudokuNotifier.getColor(row, column)),
+          decoration: BoxDecoration(border: sudokuNotifier.getBorder(row, column), color: sudokuNotifier.getColor(row, column)),
           alignment: Alignment.center,
           child: Text(
             number == 0 ? "" : number.toString(),
@@ -45,34 +45,5 @@ class SudokuCell extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  BoxBorder _buildBorder(int row, int column) {
-    const BorderSide borderSide = BorderSide(color: Colors.blue, width: 2.0);
-    final List<int> columnIndexes = [0, 3, 6];
-    final List<int> rowIndexes = [0, 3, 6];
-    BorderSide top = BorderSide.none, bottom = BorderSide.none, left = BorderSide.none, right = BorderSide.none;
-
-    if (columnIndexes.contains(column)) {
-      left = borderSide;
-    } else {
-      left = const BorderSide(color: Colors.grey);
-    }
-
-    if (rowIndexes.contains(row)) {
-      top = borderSide;
-    } else {
-      top = const BorderSide(color: Colors.grey);
-    }
-
-    if (column == 8) {
-      right = borderSide;
-    }
-
-    if (row == 8) {
-      bottom = borderSide;
-    }
-
-    return Border(top: top, bottom: bottom, left: left, right: right);
   }
 }
