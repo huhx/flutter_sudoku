@@ -2,36 +2,31 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
 
 class SudokuRequest extends Equatable {
-  final int year;
-  final int month;
-  final int day;
+  final DateTime dateTime;
   final Difficulty difficulty;
 
   @override
-  List<Object?> get props => [year, month, day, difficulty];
+  List<Object?> get props => [dateTime, difficulty];
 
   const SudokuRequest({
-    required this.year,
-    required this.month,
-    required this.day,
+    required this.dateTime,
     required this.difficulty,
   });
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'year': year,
-      'month': month,
-      'day': day,
+      'dateTime': dateTime,
       'difficulty': difficulty.level,
     };
   }
 
-  static SudokuRequest from(DateTime dateTime, Difficulty difficulty) {
-    return SudokuRequest(year: dateTime.year, month: dateTime.month, day: dateTime.day, difficulty: difficulty);
-  }
-
-  DateTime toDate() {
-    return DateTime(year, month, day);
+  Map<String, dynamic> toRequest() {
+    return <String, dynamic>{
+      'year': dateTime.year,
+      'month': dateTime.month,
+      'day': dateTime.day,
+      'difficulty': difficulty.level,
+    };
   }
 }
 
