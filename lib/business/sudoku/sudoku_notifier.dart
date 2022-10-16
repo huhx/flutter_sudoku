@@ -36,7 +36,7 @@ class SudokuNotifier extends ChangeNotifier {
       colorMap[Point.first()] = selectedColor;
       final List<Point> matchedPoints = ListUtil.match(content, content[0][0]);
       for (final Point point in matchedPoints) {
-        colorMap[point] = selectedColor;
+        colorMap[point] = highlightColor;
       }
     }
     state = ResultState.success();
@@ -57,8 +57,34 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void onTapped(int row, int column) {
+    colorMap.clear();
     tappedX = row;
     tappedY = column;
+
+    // selectedColor
+    colorMap[Point(x: row, y: column)] = selectedColor;
+
+    // highlightColor color
+    final List<Point> matchedPoints = ListUtil.match(content, content[row][column]);
+    for (final Point point in matchedPoints) {
+      colorMap[point] = highlightColor;
+    }
+
+    // related color
+    final Set<Point> relatedPoints = ListUtil.related(row, column);
+    for (int i = 0; i < content.length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        if (i == row || j == column) {
+          colorMap[Point(x: i, y: j)] = relatedColor;
+        } else {
+          if (relatedPoints.contains(Point(x: i, y: j))) {
+            colorMap[Point(x: i, y: j)] = relatedColor;
+          }
+        }
+      }
+    }
+
+    notifyListeners();
   }
 
   void onInput(int value) {
