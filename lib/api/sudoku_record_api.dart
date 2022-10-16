@@ -26,10 +26,11 @@ class SudokuRecordApi {
 
   Future<List<SudokuRecord>> querySudokuRecord(SudokuRequest request) async {
     final Database db = await _getDB();
+    final DateTime dateTime = request.dateTime;
     final List<Map<String, dynamic>> maps = await db.query(
       tableName,
       where: 'year = ? and month = ? and day = ? and difficulty = ?',
-      whereArgs: [request.year, request.month, request.day, request.difficulty.level],
+      whereArgs: [dateTime.year, dateTime.month, dateTime.day, request.difficulty.level],
       orderBy: 'createTime desc',
     );
     return maps.map((json) => SudokuRecord.fromJson(json)).toList();

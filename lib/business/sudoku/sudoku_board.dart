@@ -30,18 +30,14 @@ class SudokuCell extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 1,
       child: Container(
-        decoration: BoxDecoration(border: _buildBorder(row, column), color: _buildColor(row, column)),
+        decoration: BoxDecoration(border: _buildBorder(row, column)),
         alignment: Alignment.center,
-        child: Text(number == 0 ? "" : number.toString()),
+        child: Text(
+          number == 0 ? "" : number.toString(),
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+        ),
       ),
     );
-  }
-
-  Color? _buildColor(int row, int column) {
-    if ((row + column) % 2 == 0) {
-      return Colors.greenAccent.withOpacity(0.6);
-    }
-    return null;
   }
 
   BoxBorder _buildBorder(int row, int column) {
