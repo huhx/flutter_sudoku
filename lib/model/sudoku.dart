@@ -119,3 +119,17 @@ class SudokuResponse extends Equatable {
     return string.split("").map((e) => e.toInt()).toList();
   }
 }
+
+class Point extends Equatable {
+  final int x;
+  final int y;
+
+  const Point({required this.x, required this.y});
+
+  factory Point.first() {
+    return const Point(x: 0, y: 0);
+  }
+
+  @override
+  List<Object?> get props => [x, y];
+}
