@@ -60,7 +60,7 @@ class SudokuScreen extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                SudokuHeader(sudoku),
+                SudokuHeader(sudokuModel),
                 SudokuBoard(questions),
                 const SudokuOperate(),
                 const SudokuKeyPad(),
