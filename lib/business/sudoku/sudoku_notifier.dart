@@ -12,9 +12,7 @@ class SudokuNotifier extends ChangeNotifier {
   bool isSuccess = false;
   bool isFailed = false;
   int retryCount = 0;
-  int seconds = 0;
 
-  bool isStart = false;
   int tappedX = 0, tappedY = 0;
   late List<List<int>> content;
 
@@ -33,16 +31,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   String get retryString {
-    return retryCount == 0 ? "检查无误": "错误：$retryCount/3";
-  }
-
-  String get durationString {
-    final int second = seconds % 60;
-    final int minute = (seconds / 60).floor();
-
-    final String secondString = second < 10 ? "0$second" : "$second";
-    final String minuteString = minute < 10 ? "0$minute" : "$minute";
-    return "$minuteString:$secondString";
+    return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
   }
 
   void refresh(DateTime dateTime, Difficulty difficulty) {
