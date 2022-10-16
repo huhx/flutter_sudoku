@@ -53,15 +53,12 @@ class SudokuScreen extends HookConsumerWidget {
         loading: () => const CenterProgressIndicator(),
         error: (errorText) => const CenterProgressIndicator(),
         success: () {
-          final SudokuResponse sudoku = sudokuModel.sudokuResponse;
-          final List<List<int>> questions = sudoku.fromQuestion();
-
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
                 SudokuHeader(sudokuModel),
-                SudokuBoard(questions),
+                SudokuBoard(sudokuModel),
                 const SudokuOperate(),
                 const SudokuKeyPad(),
               ],
