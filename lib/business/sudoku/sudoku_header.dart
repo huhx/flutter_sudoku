@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
-import 'package:flutter_sudoku/component/svg_icon.dart';
-import 'package:flutter_sudoku/util/comm_util.dart';
+
+import 'sudoku_counter.dart';
 
 class SudokuHeader extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
@@ -17,15 +17,7 @@ class SudokuHeader extends StatelessWidget {
       children: [
         Text(sudokuNotifier.difficulty.label),
         Text(sudokuNotifier.retryString, style: TextStyle(color: color)),
-        Row(
-          children: [
-            IconButton(
-              onPressed: () => CommUtil.toBeDev(),
-              icon: const SvgIcon(name: "sudoku_stop"),
-            ),
-            Text(sudokuNotifier.durationString),
-          ],
-        )
+        const SudokuCounter(initSeconds: 0),
       ],
     );
   }
