@@ -4,23 +4,25 @@ import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CounterNotifier extends ChangeNotifier {
-  bool isStart = false;
-  int initSeconds = 0;
-  final Stopwatch stopwatch = Stopwatch();
+  bool isStart = true;
+  int seconds = 0;
   Timer? timer;
 
   void init(int initSeconds) {
-    this.initSeconds = initSeconds;
+    seconds = initSeconds;
 
-    stopwatch.reset();
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      seconds = seconds + 1;
+      notifyListeners();
+    });
   }
 
-  void toggleStart() {
+  void toggle() {
     isStart = !isStart;
 
     if (isStart) {
       timer = Timer.periodic(const Duration(seconds: 1), (_) {
-        initSeconds = initSeconds + 1;
+        seconds = seconds + 1;
         notifyListeners();
       });
     } else {
@@ -30,7 +32,6 @@ class CounterNotifier extends ChangeNotifier {
   }
 
   String get secondsString {
-    final int seconds = initSeconds + (stopwatch.elapsedMilliseconds / 1000).floor();
     final int second = seconds % 60;
     final int minute = (seconds / 60).floor();
 
