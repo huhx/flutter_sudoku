@@ -13,12 +13,13 @@ class SudokuNotifier extends ChangeNotifier {
   Map<Point, Color?> colorMap = {};
   Map<Point, Color?> textColorMap = {};
 
-  bool isSuccess = false;
-  bool isFailed = false;
+  GameStatus gameStatus = GameStatus.running;
   int retryCount = 0;
 
   int? tappedX, tappedY;
+  late List<List<int>> question;
   late List<List<int>> content;
+  late List<List<int>> answer;
 
   ResultState state = ResultState.success();
 
@@ -28,7 +29,10 @@ class SudokuNotifier extends ChangeNotifier {
 
     state = ResultState.loading();
     sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
+
+    question = sudokuResponse.fromQuestion();
     content = sudokuResponse.fromQuestion();
+    answer = sudokuResponse.fromAnswer();
 
     // background color
     if (content[0][0] == 0) {
@@ -132,12 +136,26 @@ class SudokuNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onInput(int value) {
-    if (sudokuResponse.fromQuestion()[tappedX!][tappedY!] == 0) {
+  GameStatus onInput(int value) {
+    if (question[tappedX!][tappedY!] == 0) {
       content[tappedX!][tappedY!] = value;
+      if (answer[tappedX!][tappedY!] != value) {
+        textColorMap[Point(x: tappedX!, y: tappedY!)] = errorColor;
+        retryCount = retryCount + 1;
+        if (retryCount >= 3) {
+          gameStatus = GameStatus.failed;
+        }
+      } else {
+        textColorMap[Point(x: tappedX!, y: tappedY!)] = inputColor;
+
+        if (ListUtil.check(content, answer)) {
+          gameStatus = GameStatus.success;
+        }
+      }
 
       notifyListeners();
     }
+    return gameStatus;
   }
 }
 

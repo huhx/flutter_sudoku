@@ -133,3 +133,7 @@ class Point extends Equatable {
   @override
   List<Object?> get props => [x, y];
 }
+
+enum GameStatus {
+  success, running, failed
+}

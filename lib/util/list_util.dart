@@ -37,6 +37,18 @@ class ListUtil {
     return points;
   }
 
+  static bool check(List<List<int>> content, List<List<int>> answer) {
+    for (int i = 0; i < content.length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        final int actual = content[i][j], expect = answer[i][j];
+        if (actual != expect) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   static Set<Point> related(int x, int y) {
     final int timeX = (x / 3).floor();
     final int timeY = (y / 3).floor();
