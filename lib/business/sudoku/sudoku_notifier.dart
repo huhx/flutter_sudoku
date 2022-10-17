@@ -15,6 +15,7 @@ class SudokuNotifier extends ChangeNotifier {
 
   GameStatus gameStatus = GameStatus.running;
   int retryCount = 0;
+  int tipCount = 2;
 
   int? tappedX, tappedY;
   late List<List<int>> question;
@@ -156,6 +157,18 @@ class SudokuNotifier extends ChangeNotifier {
       notifyListeners();
     }
     return gameStatus;
+  }
+
+  void useTip() {
+    if (tappedX != null && tappedY != null) {
+      if (content[tappedX!][tappedY!] != answer[tappedX!][tappedY!]) {
+        textColorMap[Point(x: tappedX!, y: tappedY!)] = inputColor;
+        content[tappedX!][tappedY!] = answer[tappedX!][tappedY!];
+        tipCount = tipCount - 1;
+
+        notifyListeners();
+      }
+    }
   }
 }
 
