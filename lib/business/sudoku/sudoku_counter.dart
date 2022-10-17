@@ -16,8 +16,8 @@ class SudokuCounter extends HookConsumerWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          onPressed: () => counterModel.toggleStart(),
-          icon: const SvgIcon(name: "sudoku_stop"),
+          onPressed: () => counterModel.toggle(),
+          icon: counterModel.isStart ? const SvgIcon(name: "sudoku_stop") : const SvgIcon(name: "sudoku_start", size: 18),
         ),
         Text(counterModel.secondsString),
       ],
