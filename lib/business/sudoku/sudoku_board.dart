@@ -13,7 +13,7 @@ class SudokuBoard extends StatelessWidget {
         9,
         (row) => TableRow(
           children: List.generate(9, (column) {
-            return TableCell(child: SudokuCell(row, column, sudokuNotifier.sudokuResponse.fromQuestion()[row][column], sudokuNotifier));
+            return TableCell(child: SudokuCell(row, column, sudokuNotifier.content[row][column], sudokuNotifier));
           }),
         ),
       ),
@@ -40,7 +40,7 @@ class SudokuCell extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             number == 0 ? "" : number.toString(),
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: sudokuNotifier.getTextColor(row, column)),
           ),
         ),
       ),

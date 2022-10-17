@@ -16,8 +16,8 @@ class SudokuHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(sudokuNotifier.difficulty.label),
-        Text(sudokuNotifier.retryString, style: TextStyle(color: color)),
         const SudokuCounter(initSeconds: 0),
+        Text(sudokuNotifier.retryString, style: TextStyle(color: color)),
       ],
     );
   }

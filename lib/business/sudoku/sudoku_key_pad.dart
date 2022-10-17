@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/util/comm_util.dart';
+import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
 
 class SudokuKeyPad extends StatelessWidget {
-  const SudokuKeyPad({Key? key}) : super(key: key);
+  final SudokuNotifier sudokuNotifier;
+
+  const SudokuKeyPad(this.sudokuNotifier, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class SudokuKeyPad extends StatelessWidget {
       crossAxisSpacing: 4,
       children: List.generate(
         9,
-        (index) => NumberItem(index + 1, (int num) => CommUtil.toast(message: "click $num")),
+        (index) => NumberItem(index + 1, (int num) => sudokuNotifier.onInput(num)),
       ),
     );
   }
