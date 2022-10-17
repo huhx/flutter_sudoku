@@ -59,8 +59,8 @@ class SudokuScreen extends HookConsumerWidget {
               children: [
                 SudokuHeader(sudokuModel),
                 SudokuBoard(sudokuModel),
-                const SudokuOperate(),
-                const SudokuKeyPad(),
+                SudokuOperate(sudokuModel),
+                SudokuKeyPad(sudokuModel),
               ],
             ),
           );

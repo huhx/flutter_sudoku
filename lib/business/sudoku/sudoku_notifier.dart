@@ -11,6 +11,7 @@ class SudokuNotifier extends ChangeNotifier {
   late DateTime dateTime;
   late Difficulty difficulty;
   Map<Point, Color?> colorMap = {};
+  Map<Point, Color?> textColorMap = {};
 
   bool isSuccess = false;
   bool isFailed = false;
@@ -28,6 +29,8 @@ class SudokuNotifier extends ChangeNotifier {
     state = ResultState.loading();
     sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
     content = sudokuResponse.fromQuestion();
+
+    // background color
     if (content[0][0] == 0) {
       colorMap[Point.first()] = selectedColor;
     } else {
@@ -37,6 +40,12 @@ class SudokuNotifier extends ChangeNotifier {
         colorMap[point] = highlightColor;
       }
     }
+
+    // input text color
+    ListUtil.empty(content).forEach((element) {
+      textColorMap[element] = inputColor;
+    });
+
     state = ResultState.success();
 
     notifyListeners();
@@ -44,6 +53,10 @@ class SudokuNotifier extends ChangeNotifier {
 
   Color? getColor(int row, int column) {
     return colorMap[Point(x: row, y: column)];
+  }
+
+  Color? getTextColor(int row, int column) {
+    return textColorMap[Point(x: row, y: column)];
   }
 
   BoxBorder getBorder(int row, int column) {
@@ -120,8 +133,9 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void onInput(int value) {
-    if (sudokuResponse.fromQuestion()[tappedX!][tappedY!] != 0) {
+    if (sudokuResponse.fromQuestion()[tappedX!][tappedY!] == 0) {
       content[tappedX!][tappedY!] = value;
+
       notifyListeners();
     }
   }

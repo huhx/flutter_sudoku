@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/theme/theme.dart';
 
 class SudokuOperate extends StatelessWidget {
-  const SudokuOperate({Key? key}) : super(key: key);
+  final SudokuNotifier sudokuNotifier;
+
+  const SudokuOperate(this.sudokuNotifier, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
