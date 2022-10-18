@@ -108,6 +108,10 @@ class SudokuNotifier extends ChangeNotifier {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
   }
 
+  int? noteValue(int row, int column) {
+    return notesMap[Point(x: row, y: column)];
+  }
+
   void refresh(DateTime dateTime, Difficulty difficulty) {
     init(dateTime, difficulty);
   }
@@ -149,6 +153,13 @@ class SudokuNotifier extends ChangeNotifier {
 
   GameStatus onInput(int value) {
     if (question[tappedX][tappedY] == 0) {
+      if (enableNotes) {
+        if (content[tappedX][tappedY] != answer[tappedX][tappedY]) {
+          notesMap[Point(x: tappedX, y: tappedY)] = value;
+          notifyListeners();
+        }
+        return gameStatus;
+      }
       content[tappedX][tappedY] = value;
       if (answer[tappedX][tappedY] != value) {
         textColorMap[Point(x: tappedX, y: tappedY)] = errorColor;
@@ -216,6 +227,9 @@ class SudokuNotifier extends ChangeNotifier {
 
   void toggleNote() {
     enableNotes = !enableNotes;
+    if (!enableNotes) {
+      notesMap.clear();
+    }
 
     notifyListeners();
   }
