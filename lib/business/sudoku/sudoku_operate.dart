@@ -28,9 +28,15 @@ class SudokuOperate extends StatelessWidget {
             onPressed: () => sudokuNotifier.clear(),
           ),
           OperateItem(
-            icon: const SvgIcon(name: "operate_note", color: themeColor),
+            icon: Badge(
+              padding: const EdgeInsets.all(3),
+              badgeContent: sudokuNotifier.enableNotes
+                  ? const Text("on", style: TextStyle(fontSize: 8))
+                  : const Text("off", style: TextStyle(fontSize: 8)),
+              child: const SvgIcon(name: "operate_note", color: themeColor),
+            ),
             label: "笔记",
-            onPressed: () {},
+            onPressed: () => sudokuNotifier.toggleNote(),
           ),
           OperateItem(
             icon: const SvgIcon(name: "operate_quick_note", color: themeColor),
