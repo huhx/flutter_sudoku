@@ -11,12 +11,13 @@ class SudokuNotifier extends ChangeNotifier {
   late Difficulty difficulty;
   late Map<Point, Color?> colorMap;
   late Map<Point, Color?> textColorMap;
-  late Map<Point, int> notesMap;
 
   late GameStatus gameStatus;
   late int retryCount;
   late int tipCount;
+
   late bool enableNotes;
+  late Map<Point, int> notesMap;
 
   late int tappedX, tappedY;
   late List<List<int>> question;
@@ -211,6 +212,12 @@ class SudokuNotifier extends ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  void toggleNote() {
+    enableNotes = !enableNotes;
+
+    notifyListeners();
   }
 }
 
