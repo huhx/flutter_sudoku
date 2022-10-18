@@ -13,11 +13,11 @@ class ListUtil {
     const Point(x: 2, y: 2),
   ];
 
-  static List<Point> match(List<List<int>> lists, int value) {
+  static List<Point> match(List<List<int>> lists, int row, int column) {
     List<Point> points = [];
     for (int i = 0; i < lists.length; i++) {
       for (int j = 0; j < lists[i].length; j++) {
-        if (value == lists[i][j]) {
+        if ((i != row && j != column) && lists[row][column] == lists[i][j]) {
           points.add(Point(x: i, y: j));
         }
       }

@@ -7,19 +7,18 @@ import 'package:flutter_sudoku/util/list_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
-  late SudokuResponse sudokuResponse;
   late DateTime dateTime;
   late Difficulty difficulty;
-  Map<Point, Color?> colorMap = {};
-  Map<Point, Color?> textColorMap = {};
-  Map<Point, int> notesMap = {};
+  late Map<Point, Color?> colorMap;
+  late Map<Point, Color?> textColorMap;
+  late Map<Point, int> notesMap;
 
-  GameStatus gameStatus = GameStatus.running;
-  int retryCount = 0;
-  int tipCount = 2;
-  bool enableNotes = false;
+  late GameStatus gameStatus;
+  late int retryCount;
+  late int tipCount;
+  late bool enableNotes;
 
-  int tappedX = 0, tappedY = 0;
+  late int tappedX, tappedY;
   late List<List<int>> question;
   late List<List<int>> content;
   late List<List<int>> answer;
@@ -29,9 +28,18 @@ class SudokuNotifier extends ChangeNotifier {
   void init(DateTime dateTime, Difficulty difficulty) async {
     this.dateTime = dateTime;
     this.difficulty = difficulty;
+    colorMap = {};
+    textColorMap = {};
+    notesMap = {};
+    gameStatus = GameStatus.running;
+    retryCount = 0;
+    tipCount = 2;
+    enableNotes = false;
+    tappedX = 0;
+    tappedY = 0;
 
     state = ResultState.loading();
-    sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
+    final SudokuResponse sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
 
     question = sudokuResponse.fromQuestion();
     content = sudokuResponse.fromQuestion();
@@ -42,14 +50,14 @@ class SudokuNotifier extends ChangeNotifier {
       colorMap[Point.first()] = selectedColor;
     } else {
       colorMap[Point.first()] = selectedColor;
-      final List<Point> matchedPoints = ListUtil.match(content, content[0][0]);
+      final List<Point> matchedPoints = ListUtil.match(content, 0, 0);
       for (final Point point in matchedPoints) {
         colorMap[point] = highlightColor;
       }
     }
 
     // input text color
-    ListUtil.empty(content).forEach((element) {
+    ListUtil.empty(question).forEach((element) {
       textColorMap[element] = inputColor;
     });
 
@@ -113,7 +121,7 @@ class SudokuNotifier extends ChangeNotifier {
 
     // highlightColor color
     if (content[row][column] != 0) {
-      final List<Point> matchedPoints = ListUtil.match(content, content[row][column]);
+      final List<Point> matchedPoints = ListUtil.match(content, row, column);
       for (final Point point in matchedPoints) {
         colorMap[point] = highlightColor;
       }
@@ -157,7 +165,7 @@ class SudokuNotifier extends ChangeNotifier {
 
       // highlightColor color
       if (content[tappedX][tappedY] != 0) {
-        final List<Point> matchedPoints = ListUtil.match(content, content[tappedX][tappedY]);
+        final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
         for (final Point point in matchedPoints) {
           colorMap[point] = highlightColor;
         }
@@ -171,6 +179,7 @@ class SudokuNotifier extends ChangeNotifier {
   void useTip() {
     if (content[tappedX][tappedY] != answer[tappedX][tappedY]) {
       textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
+
       content[tappedX][tappedY] = answer[tappedX][tappedY];
       tipCount = tipCount - 1;
 
