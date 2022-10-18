@@ -21,7 +21,7 @@ class SudokuOperate extends StatelessWidget {
           OperateItem(
             icon: const SvgIcon(name: "operate_undo", color: themeColor),
             label: "撤销",
-            onPressed: () {},
+            onPressed: () => sudokuNotifier.undo(),
           ),
           OperateItem(
             icon: const SvgIcon(name: "operate_clear", color: themeColor),
