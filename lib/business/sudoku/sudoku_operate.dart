@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
+import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/theme/theme.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
 
@@ -41,7 +42,14 @@ class SudokuOperate extends StatelessWidget {
           OperateItem(
             icon: const SvgIcon(name: "operate_quick_note", color: themeColor),
             label: "一键笔记",
-            onPressed: () {},
+            onPressed: () {
+              final GameStatus gameStatus = sudokuNotifier.quickNote();
+              if (gameStatus == GameStatus.success) {
+                CommUtil.toast(message: "恭喜你成功过关");
+              } else if (gameStatus == GameStatus.failed) {
+                CommUtil.toast(message: "已达到最大错误次数，游戏失败");
+              }
+            },
           ),
           OperateItem(
             icon: Badge(
