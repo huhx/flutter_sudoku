@@ -7,6 +7,7 @@ import 'package:flutter_sudoku/util/list_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
+  late SudokuResponse sudokuResponse;
   late DateTime dateTime;
   late Difficulty difficulty;
   late Map<Point, Color?> colorMap;
@@ -40,7 +41,7 @@ class SudokuNotifier extends ChangeNotifier {
     tappedY = 0;
 
     state = ResultState.loading();
-    final SudokuResponse sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
+    sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
 
     question = sudokuResponse.fromQuestion();
     content = sudokuResponse.fromQuestion();
@@ -232,6 +233,33 @@ class SudokuNotifier extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  GameStatus quickNote() {
+    if (enableNotes && notesMap.isNotEmpty) {
+      notesMap.forEach((point, value) {
+        content[point.x][point.y] = value;
+        if (answer[point.x][point.y] != value) {
+          textColorMap[Point(x: point.x, y: point.y)] = errorColor;
+          retryCount = retryCount + 1;
+        } else {
+          textColorMap[Point(x: point.x, y: point.y)] = inputColor;
+
+          if (ListUtil.check(content, answer)) {
+            gameStatus = GameStatus.success;
+          }
+        }
+      });
+      enableNotes = false;
+      notesMap.clear();
+
+      if (retryCount >= 3) {
+        gameStatus = GameStatus.failed;
+      }
+
+      notifyListeners();
+    }
+    return gameStatus;
   }
 }
 
