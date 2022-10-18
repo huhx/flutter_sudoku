@@ -12,6 +12,7 @@ class SudokuNotifier extends ChangeNotifier {
   late Difficulty difficulty;
   late Map<Point, Color?> colorMap;
   late Map<Point, Color?> textColorMap;
+  late Map<Point, Color?> highlightColorMap;
 
   late GameStatus gameStatus;
   late int retryCount;
@@ -33,6 +34,7 @@ class SudokuNotifier extends ChangeNotifier {
     colorMap = {};
     textColorMap = {};
     notesMap = {};
+    highlightColorMap = {};
     gameStatus = GameStatus.running;
     retryCount = 0;
     tipCount = 2;
@@ -54,7 +56,7 @@ class SudokuNotifier extends ChangeNotifier {
       colorMap[Point.first()] = selectedColor;
       final List<Point> matchedPoints = ListUtil.match(content, 0, 0);
       for (final Point point in matchedPoints) {
-        colorMap[point] = highlightColor;
+        highlightColorMap[point] = highlightColor;
       }
     }
 
@@ -69,7 +71,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Color? getColor(int row, int column) {
-    return colorMap[Point(x: row, y: column)];
+    return {...colorMap, ...highlightColorMap}[Point(x: row, y: column)];
   }
 
   Color? getTextColor(int row, int column) {
@@ -119,6 +121,7 @@ class SudokuNotifier extends ChangeNotifier {
 
   void onTapped(int row, int column) {
     colorMap.clear();
+    highlightColorMap.clear();
     tappedX = row;
     tappedY = column;
 
@@ -129,7 +132,7 @@ class SudokuNotifier extends ChangeNotifier {
     if (content[row][column] != 0) {
       final List<Point> matchedPoints = ListUtil.match(content, row, column);
       for (final Point point in matchedPoints) {
-        colorMap[point] = highlightColor;
+        highlightColorMap[point] = highlightColor;
       }
     }
 
@@ -177,10 +180,11 @@ class SudokuNotifier extends ChangeNotifier {
       }
 
       // highlightColor color
+      highlightColorMap.clear();
       if (content[tappedX][tappedY] != 0) {
         final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
         for (final Point point in matchedPoints) {
-          colorMap[point] = highlightColor;
+          highlightColorMap[point] = highlightColor;
         }
       }
 
