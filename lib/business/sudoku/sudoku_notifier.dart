@@ -12,12 +12,14 @@ class SudokuNotifier extends ChangeNotifier {
   late Difficulty difficulty;
   Map<Point, Color?> colorMap = {};
   Map<Point, Color?> textColorMap = {};
+  Map<Point, int> notesMap = {};
 
   GameStatus gameStatus = GameStatus.running;
   int retryCount = 0;
   int tipCount = 2;
+  bool enableNotes = false;
 
-  int? tappedX, tappedY;
+  int tappedX = 0, tappedY = 0;
   late List<List<int>> question;
   late List<List<int>> content;
   late List<List<int>> answer;
@@ -126,10 +128,9 @@ class SudokuNotifier extends ChangeNotifier {
         }
         if (i == row || j == column) {
           colorMap[Point(x: i, y: j)] = relatedColor;
-        } else if (content[row][column] != 0) {
-          if (relatedPoints.contains(Point(x: i, y: j))) {
-            colorMap[Point(x: i, y: j)] = relatedColor;
-          }
+        }
+        if (relatedPoints.contains(Point(x: i, y: j))) {
+          colorMap[Point(x: i, y: j)] = relatedColor;
         }
       }
     }
@@ -138,19 +139,27 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   GameStatus onInput(int value) {
-    if (question[tappedX!][tappedY!] == 0) {
-      content[tappedX!][tappedY!] = value;
-      if (answer[tappedX!][tappedY!] != value) {
-        textColorMap[Point(x: tappedX!, y: tappedY!)] = errorColor;
+    if (question[tappedX][tappedY] == 0) {
+      content[tappedX][tappedY] = value;
+      if (answer[tappedX][tappedY] != value) {
+        textColorMap[Point(x: tappedX, y: tappedY)] = errorColor;
         retryCount = retryCount + 1;
         if (retryCount >= 3) {
           gameStatus = GameStatus.failed;
         }
       } else {
-        textColorMap[Point(x: tappedX!, y: tappedY!)] = inputColor;
+        textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
 
         if (ListUtil.check(content, answer)) {
           gameStatus = GameStatus.success;
+        }
+      }
+
+      // highlightColor color
+      if (content[tappedX][tappedY] != 0) {
+        final List<Point> matchedPoints = ListUtil.match(content, content[tappedX][tappedY]);
+        for (final Point point in matchedPoints) {
+          colorMap[point] = highlightColor;
         }
       }
 
@@ -160,14 +169,38 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void useTip() {
-    if (tappedX != null && tappedY != null) {
-      if (content[tappedX!][tappedY!] != answer[tappedX!][tappedY!]) {
-        textColorMap[Point(x: tappedX!, y: tappedY!)] = inputColor;
-        content[tappedX!][tappedY!] = answer[tappedX!][tappedY!];
-        tipCount = tipCount - 1;
+    if (content[tappedX][tappedY] != answer[tappedX][tappedY]) {
+      textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
+      content[tappedX][tappedY] = answer[tappedX][tappedY];
+      tipCount = tipCount - 1;
 
-        notifyListeners();
+      notifyListeners();
+    }
+  }
+
+  void clear() {
+    if (question[tappedX][tappedY] == 0 && (content[tappedX][tappedY] != answer[tappedX][tappedY])) {
+      colorMap.clear();
+      colorMap[Point(x: tappedX, y: tappedY)] = selectedColor;
+
+      final Set<Point> relatedPoints = ListUtil.related(tappedX, tappedY);
+
+      for (int i = 0; i < content.length; i++) {
+        for (int j = 0; j < content[i].length; j++) {
+          if (i == tappedX && j == tappedY) {
+            continue;
+          }
+          if (i == tappedX || j == tappedY) {
+            colorMap[Point(x: i, y: j)] = relatedColor;
+          }
+          if (relatedPoints.contains(Point(x: i, y: j))) {
+            colorMap[Point(x: i, y: j)] = relatedColor;
+          }
+        }
       }
+      content[tappedX][tappedY] = 0;
+
+      notifyListeners();
     }
   }
 }
