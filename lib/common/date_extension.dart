@@ -9,7 +9,5 @@ extension DateExtension on DateTime {
     return year == dateTime.year && month == dateTime.month && day == dateTime.day;
   }
 
-  DateTime toDate() {
-    return DateTime(year, month, day);
-  }
+  DateTime get toDate => DateTime(year, month, day);
 }

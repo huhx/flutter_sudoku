@@ -14,7 +14,7 @@ extension ContextExtensions on BuildContext {
     Navigator.pop<T>(this, result);
   }
 
-  bool isDarkMode() {
+  bool get isDarkMode {
     return MediaQuery.of(this).platformBrightness == Brightness.dark;
   }
 
@@ -27,7 +27,11 @@ extension ContextExtensions on BuildContext {
     );
   }
 
-  void showCommDialog({required VoidCallback callback, title = '删除', content = '确定要删除?'}) {
+  void showCommDialog({
+    required VoidCallback callback,
+    title = '删除',
+    content = '确定要删除?',
+  }) {
     showDialog(
       context: this,
       builder: (_) => CancelConfirmDialog(
