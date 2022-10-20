@@ -83,35 +83,6 @@ class SudokuNotifier extends ChangeNotifier {
     return textColorMap[Point(x: row, y: column)];
   }
 
-  BoxBorder getBorder(int row, int column) {
-    const BorderSide borderSide = BorderSide(color: Colors.blue, width: 2.0);
-    final List<int> columnIndexes = [0, 3, 6];
-    final List<int> rowIndexes = [0, 3, 6];
-    BorderSide top = BorderSide.none, bottom = BorderSide.none, left = BorderSide.none, right = BorderSide.none;
-
-    if (columnIndexes.contains(column)) {
-      left = borderSide;
-    } else {
-      left = const BorderSide(color: Colors.grey);
-    }
-
-    if (rowIndexes.contains(row)) {
-      top = borderSide;
-    } else {
-      top = const BorderSide(color: Colors.grey);
-    }
-
-    if (column == 8) {
-      right = borderSide;
-    }
-
-    if (row == 8) {
-      bottom = borderSide;
-    }
-
-    return Border(top: top, bottom: bottom, left: left, right: right);
-  }
-
   String get retryString {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
   }

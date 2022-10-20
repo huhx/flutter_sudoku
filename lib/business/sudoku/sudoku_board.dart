@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
+import 'package:flutter_sudoku/model/sudoku_point.dart';
 
 class SudokuBoard extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
@@ -30,6 +31,7 @@ class SudokuCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SudokuPoint sudokuPoint = SudokuPoint(x: row, y: column);
     final int? noteValue = sudokuNotifier.noteValue(row, column);
     final int number = sudokuNotifier.content[row][column];
 
@@ -38,7 +40,7 @@ class SudokuCell extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1,
         child: Container(
-          decoration: BoxDecoration(border: sudokuNotifier.getBorder(row, column), color: sudokuNotifier.getColor(row, column)),
+          decoration: BoxDecoration(border: sudokuPoint.border, color: sudokuNotifier.getColor(row, column)),
           alignment: Alignment.center,
           child: sudokuNotifier.enableNotes && noteValue != null
               ? Text("$noteValue", style: const TextStyle(fontSize: 8), textAlign: TextAlign.start)
