@@ -14,6 +14,9 @@ class ListUtil {
   ];
 
   static List<Point> match(List<List<int>> lists, int row, int column) {
+    if (lists[row][column] == 0) {
+      return [];
+    }
     List<Point> points = [];
     for (int i = 0; i < lists.length; i++) {
       for (int j = 0; j < lists[i].length; j++) {
