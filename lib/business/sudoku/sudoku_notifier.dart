@@ -78,6 +78,8 @@ class SudokuNotifier extends ChangeNotifier {
     return textColorMap[Point(x: row, y: column)];
   }
 
+  bool get isNotCorrect => content[tappedX][tappedY] != answer[tappedX][tappedY];
+
   String get retryString {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
   }
@@ -114,7 +116,7 @@ class SudokuNotifier extends ChangeNotifier {
     if (enableNotes) {
       changeStack.add(row: tappedX, column: tappedY, isNote: true, newValue: value);
 
-      if (content[tappedX][tappedY] != answer[tappedX][tappedY]) {
+      if (isNotCorrect) {
         final List<int>? list = notesMap[Point(x: tappedX, y: tappedY)];
         notesMap[Point(x: tappedX, y: tappedY)] = [...?list, value];
 
@@ -128,7 +130,7 @@ class SudokuNotifier extends ChangeNotifier {
     changeStack.add(row: tappedX, column: tappedY, isNote: false, newValue: value);
 
     content[tappedX][tappedY] = value;
-    if (answer[tappedX][tappedY] != value) {
+    if (isNotCorrect) {
       textColorMap[Point(x: tappedX, y: tappedY)] = errorColor;
       retryCount = retryCount + 1;
       if (retryCount >= 3) {
@@ -151,7 +153,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void useTip() {
-    if (content[tappedX][tappedY] != answer[tappedX][tappedY]) {
+    if (isNotCorrect) {
       textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
 
       content[tappedX][tappedY] = answer[tappedX][tappedY];
@@ -164,7 +166,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void clear() {
-    if (question[tappedX][tappedY] == 0 && (content[tappedX][tappedY] != answer[tappedX][tappedY])) {
+    if (question[tappedX][tappedY] == 0 && isNotCorrect) {
       highlightColorMap = {};
 
       content[tappedX][tappedY] = 0;

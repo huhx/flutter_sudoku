@@ -2,25 +2,6 @@ import 'dart:collection';
 
 import 'package:equatable/equatable.dart';
 
-class SudokuStack extends Equatable {
-  final int row;
-  final int column;
-  final bool isNote;
-  final int oldValue;
-  final int newValue;
-
-  const SudokuStack({
-    required this.row,
-    required this.column,
-    required this.isNote,
-    required this.oldValue,
-    required this.newValue,
-  });
-
-  @override
-  List<Object?> get props => [row, column, isNote, oldValue, newValue];
-}
-
 class ChangeStack {
   final Queue<SudokuStack> _sudokuStacks = Queue();
 
@@ -55,4 +36,23 @@ class ChangeStack {
   void clear() {
     _sudokuStacks.clear();
   }
+}
+
+class SudokuStack extends Equatable {
+  final int row;
+  final int column;
+  final bool isNote;
+  final int oldValue;
+  final int newValue;
+
+  const SudokuStack({
+    required this.row,
+    required this.column,
+    required this.isNote,
+    required this.oldValue,
+    required this.newValue,
+  });
+
+  @override
+  List<Object?> get props => [row, column, isNote, oldValue, newValue];
 }
