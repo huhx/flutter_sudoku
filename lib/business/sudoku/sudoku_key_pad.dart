@@ -13,7 +13,7 @@ class SudokuKeyPad extends StatelessWidget {
     return GridView.count(
       shrinkWrap: true,
       crossAxisCount: 9,
-      crossAxisSpacing: 4,
+      crossAxisSpacing: 10,
       children: List.generate(
         9,
         (index) => NumberItem(index + 1, (int num) {
