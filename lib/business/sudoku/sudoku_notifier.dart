@@ -180,6 +180,9 @@ class SudokuNotifier extends ChangeNotifier {
       textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
 
       content[tappedX][tappedY] = answer[tappedX][tappedY];
+      final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
+      highlightColorMap = {for (var point in matchedPoints) point: highlightColor};
+
       tipCount = tipCount - 1;
 
       notifyListeners();
