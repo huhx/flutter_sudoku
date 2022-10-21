@@ -28,8 +28,24 @@ class ChangeStack {
 
   bool get isEmpty => _sudokuStacks.isEmpty;
 
-  void add(SudokuStack sudokuStack) {
-    _sudokuStacks.add(sudokuStack);
+  SudokuStack? current() {
+    return _sudokuStacks.isEmpty ? null : _sudokuStacks.last;
+  }
+
+  void add({required int row, required int column, required int newValue, required bool isNote}) {
+    final SudokuStack? sudokuStack = current();
+    int oldValue = 0;
+    if (sudokuStack != null && sudokuStack.row == row && sudokuStack.column == column) {
+      oldValue = sudokuStack.newValue;
+    }
+    final SudokuStack newSudokuStack = SudokuStack(
+      row: row,
+      column: column,
+      isNote: isNote,
+      oldValue: oldValue,
+      newValue: newValue,
+    );
+    _sudokuStacks.add(newSudokuStack);
   }
 
   SudokuStack undo() {

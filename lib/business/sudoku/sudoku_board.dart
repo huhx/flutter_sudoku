@@ -32,7 +32,7 @@ class SudokuCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SudokuPoint sudokuPoint = SudokuPoint(x: row, y: column);
-    final int? noteValue = sudokuNotifier.noteValue(row, column);
+    final List<int>? noteValue = sudokuNotifier.noteValue(row, column);
     final int number = sudokuNotifier.content[row][column];
 
     return InkWell(
@@ -42,7 +42,7 @@ class SudokuCell extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(border: sudokuPoint.border, color: sudokuNotifier.getColor(row, column)),
           alignment: Alignment.center,
-          child: sudokuNotifier.enableNotes && noteValue != null
+          child: sudokuNotifier.enableNotes && noteValue != null && noteValue.isNotEmpty
               ? Text("$noteValue", style: const TextStyle(fontSize: 8), textAlign: TextAlign.start)
               : Text(
                   number == 0 ? "" : number.toString(),

@@ -23,7 +23,7 @@ class SudokuNotifier extends ChangeNotifier {
   late int tipCount;
 
   late bool enableNotes;
-  late Map<Point, int> notesMap;
+  late Map<Point, List<int>?> notesMap;
 
   int tappedX = 0, tappedY = 0;
   late List<List<int>> question;
@@ -87,7 +87,7 @@ class SudokuNotifier extends ChangeNotifier {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
   }
 
-  int? noteValue(int row, int column) {
+  List<int>? noteValue(int row, int column) {
     return notesMap[Point(x: row, y: column)];
   }
 
@@ -120,34 +120,20 @@ class SudokuNotifier extends ChangeNotifier {
     }
 
     if (enableNotes) {
-      final SudokuStack sudokuStack = SudokuStack(
-        row: tappedX,
-        column: tappedY,
-        isNote: true,
-        oldValue: content[tappedX][tappedY],
-        newValue: value,
-      );
-      changeStack.add(sudokuStack);
+      changeStack.add(row: tappedX, column: tappedY, isNote: true, newValue: value);
 
       if (content[tappedX][tappedY] != answer[tappedX][tappedY]) {
+        final List<int>? list = notesMap[Point(x: tappedX, y: tappedY)];
+        notesMap[Point(x: tappedX, y: tappedY)] = [...?list, value];
+
         content[tappedX][tappedY] = 0;
         highlightColorMap = {};
-        notesMap[Point(x: tappedX, y: tappedY)] = value;
 
         notifyListeners();
       }
       return gameStatus;
     }
-
-    final SudokuStack sudokuStack = SudokuStack(
-      row: tappedX,
-      column: tappedY,
-      isNote: false,
-      oldValue: content[tappedX][tappedY],
-      newValue: value,
-    );
-
-    changeStack.add(sudokuStack);
+    changeStack.add(row: tappedX, column: tappedY, isNote: false, newValue: value);
 
     content[tappedX][tappedY] = value;
     if (answer[tappedX][tappedY] != value) {
@@ -201,38 +187,8 @@ class SudokuNotifier extends ChangeNotifier {
 
   void toggleNote() {
     enableNotes = !enableNotes;
-    if (!enableNotes) {
-      notesMap.clear();
-    }
 
     notifyListeners();
-  }
-
-  GameStatus quickNote() {
-    if (enableNotes && notesMap.isNotEmpty) {
-      notesMap.forEach((point, value) {
-        content[point.x][point.y] = value;
-        if (answer[point.x][point.y] != value) {
-          textColorMap[Point(x: point.x, y: point.y)] = errorColor;
-          retryCount = retryCount + 1;
-        } else {
-          textColorMap[Point(x: point.x, y: point.y)] = inputColor;
-
-          if (ListUtil.check(content, answer)) {
-            gameStatus = GameStatus.success;
-          }
-        }
-      });
-      enableNotes = false;
-      notesMap.clear();
-
-      if (retryCount >= 3) {
-        gameStatus = GameStatus.failed;
-      }
-
-      notifyListeners();
-    }
-    return gameStatus;
   }
 
   GameStatus undo() {
@@ -241,11 +197,20 @@ class SudokuNotifier extends ChangeNotifier {
     }
 
     final SudokuStack sudokuStack = changeStack.undo();
+    tappedX = sudokuStack.row;
+    tappedY = sudokuStack.column;
+    colorMap = {Point(x: sudokuStack.row, y: sudokuStack.column): selectedColor};
+
     if (sudokuStack.isNote) {
       if (sudokuStack.oldValue == 0) {
         notesMap.remove(Point(x: sudokuStack.row, y: sudokuStack.column));
       } else {
-        notesMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = sudokuStack.oldValue;
+        final List<int>? list = notesMap[Point(x: sudokuStack.row, y: sudokuStack.column)];
+        list?.removeLast();
+        notesMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = list;
+        if (list == null || list.isEmpty) {
+          content[sudokuStack.row][sudokuStack.column] = sudokuStack.oldValue;
+        }
       }
     } else {
       content[sudokuStack.row][sudokuStack.column] = sudokuStack.oldValue;
@@ -255,9 +220,12 @@ class SudokuNotifier extends ChangeNotifier {
       } else {
         textColorMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = inputColor;
       }
+      final List<Point> matchedPoints = ListUtil.match(content, sudokuStack.row, sudokuStack.column);
+      highlightColorMap = {for (var point in matchedPoints) point: highlightColor};
     }
 
     notifyListeners();
+
     return gameStatus;
   }
 
