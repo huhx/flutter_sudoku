@@ -191,24 +191,8 @@ class SudokuNotifier extends ChangeNotifier {
 
   void clear() {
     if (question[tappedX][tappedY] == 0 && (content[tappedX][tappedY] != answer[tappedX][tappedY])) {
-      colorMap.clear();
-      colorMap[Point(x: tappedX, y: tappedY)] = selectedColor;
+      highlightColorMap = {};
 
-      final Set<Point> relatedPoints = ListUtil.related(tappedX, tappedY);
-
-      for (int i = 0; i < content.length; i++) {
-        for (int j = 0; j < content[i].length; j++) {
-          if (i == tappedX && j == tappedY) {
-            continue;
-          }
-          if (i == tappedX || j == tappedY) {
-            colorMap[Point(x: i, y: j)] = relatedColor;
-          }
-          if (relatedPoints.contains(Point(x: i, y: j))) {
-            colorMap[Point(x: i, y: j)] = relatedColor;
-          }
-        }
-      }
       content[tappedX][tappedY] = 0;
 
       notifyListeners();
