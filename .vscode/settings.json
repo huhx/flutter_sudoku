@@ -12,6 +12,9 @@
         ".flutter-plugins": true,
         ".flutter-plugins-dependencies": true,
         "symbols": true,
+        "android/.gradle": true,
+        "ios/.symlinks": true,
+        "ios/Pods": true
     },
     "editor.minimap.enabled": false,
     "editor.fontFamily": "Monaco, 'Courier New', monospace",
@@ -20,5 +23,5 @@
     "gitlens.mode.active": "zen",
     "dart.closingLabels": false,
     "dart.lineLength": 120,
-    "editor.rulers": [120],
+    "editor.rulers": [120]
 }
