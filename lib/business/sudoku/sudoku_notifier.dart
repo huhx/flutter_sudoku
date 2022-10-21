@@ -188,6 +188,7 @@ class SudokuNotifier extends ChangeNotifier {
     tappedX = sudokuStack.row;
     tappedY = sudokuStack.column;
     colorMap = {Point(x: sudokuStack.row, y: sudokuStack.column): selectedColor};
+    relatedColorMap = _buildRelateColorMap(tappedX, tappedY);
 
     if (sudokuStack.isNote) {
       if (sudokuStack.oldValue == 0) {
