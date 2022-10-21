@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
+import 'package:flutter_sudoku/theme/color.dart';
 
 class ListUtil {
   static List<Point> lists = [
@@ -26,6 +28,11 @@ class ListUtil {
       }
     }
     return points;
+  }
+
+  static Map<Point, Color?> highlight(List<List<int>> lists, int row, int column) {
+    final List<Point> matchedPoints = match(lists, row, column);
+    return {for (var point in matchedPoints) point: highlightColor};
   }
 
   static List<Point> empty(List<List<int>> lists) {
