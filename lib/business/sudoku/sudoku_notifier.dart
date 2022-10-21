@@ -58,12 +58,7 @@ class SudokuNotifier extends ChangeNotifier {
     colorMap[Point.first()] = selectedColor;
 
     // background color
-    if (content[0][0] != 0) {
-      final List<Point> matchedPoints = ListUtil.match(content, 0, 0);
-      for (final Point point in matchedPoints) {
-        highlightColorMap[point] = highlightColor;
-      }
-    }
+    highlightColorMap = ListUtil.highlight(content, 0, 0);
 
     // input text color
     ListUtil.empty(question).forEach((element) {
@@ -103,10 +98,7 @@ class SudokuNotifier extends ChangeNotifier {
     colorMap = {Point(x: row, y: column): selectedColor};
 
     // highlightColor color
-    if (content[row][column] != 0) {
-      final List<Point> matchedPoints = ListUtil.match(content, row, column);
-      highlightColorMap = {for (var point in matchedPoints) point: highlightColor};
-    }
+    highlightColorMap = ListUtil.highlight(content, row, column);
 
     // related color
     relatedColorMap = _buildRelateColorMap(row, column);
@@ -151,10 +143,7 @@ class SudokuNotifier extends ChangeNotifier {
     }
 
     // highlightColor color
-    if (content[tappedX][tappedY] != 0) {
-      final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
-      highlightColorMap = {for (var point in matchedPoints) point: highlightColor};
-    }
+    highlightColorMap = ListUtil.highlight(content, tappedX, tappedY);
 
     notifyListeners();
 
@@ -166,8 +155,7 @@ class SudokuNotifier extends ChangeNotifier {
       textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
 
       content[tappedX][tappedY] = answer[tappedX][tappedY];
-      final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
-      highlightColorMap = {for (var point in matchedPoints) point: highlightColor};
+      highlightColorMap = ListUtil.highlight(content, tappedX, tappedY);
 
       tipCount = tipCount - 1;
 
@@ -220,8 +208,7 @@ class SudokuNotifier extends ChangeNotifier {
       } else {
         textColorMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = inputColor;
       }
-      final List<Point> matchedPoints = ListUtil.match(content, sudokuStack.row, sudokuStack.column);
-      highlightColorMap = {for (var point in matchedPoints) point: highlightColor};
+      highlightColorMap = ListUtil.highlight(content, tappedX, tappedY);
     }
 
     notifyListeners();
