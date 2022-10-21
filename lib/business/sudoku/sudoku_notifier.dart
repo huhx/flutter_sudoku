@@ -204,7 +204,6 @@ class SudokuNotifier extends ChangeNotifier {
       content[sudokuStack.row][sudokuStack.column] = sudokuStack.oldValue;
       if (answer[sudokuStack.row][sudokuStack.column] != sudokuStack.oldValue) {
         textColorMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = errorColor;
-        retryCount += 1;
       } else {
         textColorMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = inputColor;
       }
