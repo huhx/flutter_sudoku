@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
+import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:flutter_sudoku/model/sudoku_stack.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:flutter_sudoku/util/list_util.dart';
@@ -34,7 +35,7 @@ class SudokuNotifier extends ChangeNotifier {
     gameStatus = GameStatus.running;
     retryCount = 0;
     selectPoint = Point.first();
-    tipCount = 2;
+    tipCount = sudokuConfig.tipCount;
     enableNotes = false;
 
     state = ResultState.loading();
@@ -98,7 +99,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   String get retryString {
-    return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
+    return retryCount == 0 ? "检查无误" : "错误：$retryCount/${sudokuConfig.retryCount}";
   }
 
   List<int>? noteValue(Point point) {
@@ -149,7 +150,7 @@ class SudokuNotifier extends ChangeNotifier {
     if (isNotCorrect) {
       textColorMap[selectPoint] = errorColor;
       retryCount = retryCount + 1;
-      if (retryCount >= 3) {
+      if (retryCount >= sudokuConfig.retryCount) {
         gameStatus = GameStatus.failed;
       }
     } else {
