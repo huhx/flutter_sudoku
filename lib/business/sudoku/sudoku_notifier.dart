@@ -61,8 +61,8 @@ class SudokuNotifier extends ChangeNotifier {
 
   Color? getColor(int row, int column) {
     final Map<Point, Color> selectColorMap = {Point(x: tappedX, y: tappedY): selectedColor};
-    final Map<Point, Color> highlightColorMap = highlight();
-    final Map<Point, Color> relatedColorMap = _buildRelateColorMap(tappedX, tappedY);
+    final Map<Point, Color> highlightColorMap = _highlight();
+    final Map<Point, Color> relatedColorMap = _related();
 
     return {...highlightColorMap, ...relatedColorMap, ...selectColorMap}[Point(x: row, y: column)];
   }
@@ -132,7 +132,7 @@ class SudokuNotifier extends ChangeNotifier {
     return gameStatus;
   }
 
-  Map<Point, Color> highlight() {
+  Map<Point, Color> _highlight() {
     final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
     return {for (var point in matchedPoints) point: highlightColor};
   }
@@ -196,15 +196,15 @@ class SudokuNotifier extends ChangeNotifier {
     return gameStatus;
   }
 
-  Map<Point, Color> _buildRelateColorMap(int row, int column) {
+  Map<Point, Color> _related() {
     Map<Point, Color> relatedColorMap = {};
-    final Set<Point> relatedPoints = ListUtil.related(row, column);
+    final Set<Point> relatedPoints = ListUtil.related(tappedX, tappedY);
     for (int i = 0; i < content.length; i++) {
       for (int j = 0; j < content[i].length; j++) {
-        if (i == row && j == column) {
+        if (i == tappedX && j == tappedY) {
           continue;
         }
-        if (i == row || j == column) {
+        if (i == tappedX || j == tappedY) {
           relatedColorMap[Point(x: i, y: j)] = relatedColor;
         }
         if (relatedPoints.contains(Point(x: i, y: j))) {
