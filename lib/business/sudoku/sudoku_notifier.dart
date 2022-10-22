@@ -12,10 +12,7 @@ class SudokuNotifier extends ChangeNotifier {
   late DateTime dateTime;
   late Difficulty difficulty;
 
-  late Map<Point, Color?> colorMap;
-  late Map<Point, Color?> textColorMap;
-  late Map<Point, Color?> highlightColorMap;
-  late Map<Point, Color?> relatedColorMap;
+  late Map<Point, Color> textColorMap;
 
   late ChangeStack changeStack;
 
@@ -38,11 +35,8 @@ class SudokuNotifier extends ChangeNotifier {
     this.difficulty = difficulty;
     changeStack = ChangeStack();
 
-    colorMap = {};
     textColorMap = {};
     notesMap = {};
-    highlightColorMap = {};
-    relatedColorMap = {};
     gameStatus = GameStatus.running;
     retryCount = 0;
     tipCount = 2;
@@ -55,12 +49,6 @@ class SudokuNotifier extends ChangeNotifier {
     content = sudokuResponse.fromQuestion();
     answer = sudokuResponse.fromAnswer();
 
-    // selected
-    colorMap[Point.first()] = selectedColor;
-
-    // background color
-    highlightColorMap = ListUtil.highlight(content, 0, 0);
-
     // input text color
     ListUtil.empty(question).forEach((element) {
       textColorMap[element] = inputColor;
@@ -72,7 +60,11 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Color? getColor(int row, int column) {
-    return {...highlightColorMap, ...relatedColorMap, ...colorMap}[Point(x: row, y: column)];
+    final Map<Point, Color> selectColorMap = {Point(x: tappedX, y: tappedY): selectedColor};
+    final Map<Point, Color> highlightColorMap = highlight();
+    final Map<Point, Color> relatedColorMap = _buildRelateColorMap(tappedX, tappedY);
+
+    return {...highlightColorMap, ...relatedColorMap, ...selectColorMap}[Point(x: row, y: column)];
   }
 
   Color? getTextColor(int row, int column) {
@@ -97,15 +89,6 @@ class SudokuNotifier extends ChangeNotifier {
     tappedX = row;
     tappedY = column;
 
-    // selectedColor
-    colorMap = {Point(x: row, y: column): selectedColor};
-
-    // highlightColor color
-    highlightColorMap = ListUtil.highlight(content, row, column);
-
-    // related color
-    relatedColorMap = _buildRelateColorMap(row, column);
-
     notifyListeners();
   }
 
@@ -122,7 +105,6 @@ class SudokuNotifier extends ChangeNotifier {
         notesMap[Point(x: tappedX, y: tappedY)] = [...?list, value];
 
         content[tappedX][tappedY] = 0;
-        highlightColorMap = {};
 
         notifyListeners();
       }
@@ -145,12 +127,14 @@ class SudokuNotifier extends ChangeNotifier {
       }
     }
 
-    // highlightColor color
-    highlightColorMap = ListUtil.highlight(content, tappedX, tappedY);
-
     notifyListeners();
 
     return gameStatus;
+  }
+
+  Map<Point, Color> highlight() {
+    final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
+    return {for (var point in matchedPoints) point: highlightColor};
   }
 
   void useTip() {
@@ -158,8 +142,6 @@ class SudokuNotifier extends ChangeNotifier {
       textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
 
       content[tappedX][tappedY] = answer[tappedX][tappedY];
-      highlightColorMap = ListUtil.highlight(content, tappedX, tappedY);
-
       tipCount = tipCount - 1;
 
       notifyListeners();
@@ -168,8 +150,6 @@ class SudokuNotifier extends ChangeNotifier {
 
   void clear() {
     if (question[tappedX][tappedY] == 0 && isNotCorrect) {
-      highlightColorMap = {};
-
       content[tappedX][tappedY] = 0;
 
       notifyListeners();
@@ -190,8 +170,6 @@ class SudokuNotifier extends ChangeNotifier {
     final SudokuStack sudokuStack = changeStack.undo();
     tappedX = sudokuStack.row;
     tappedY = sudokuStack.column;
-    colorMap = {Point(x: sudokuStack.row, y: sudokuStack.column): selectedColor};
-    relatedColorMap = _buildRelateColorMap(tappedX, tappedY);
 
     if (sudokuStack.isNote) {
       if (sudokuStack.oldValue == 0) {
@@ -206,12 +184,11 @@ class SudokuNotifier extends ChangeNotifier {
       }
     } else {
       content[sudokuStack.row][sudokuStack.column] = sudokuStack.oldValue;
-      if (answer[sudokuStack.row][sudokuStack.column] != sudokuStack.oldValue) {
+      if (isNotCorrect) {
         textColorMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = errorColor;
       } else {
         textColorMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = inputColor;
       }
-      highlightColorMap = ListUtil.highlight(content, tappedX, tappedY);
     }
 
     notifyListeners();
@@ -219,8 +196,8 @@ class SudokuNotifier extends ChangeNotifier {
     return gameStatus;
   }
 
-  Map<Point, Color?> _buildRelateColorMap(int row, int column) {
-    Map<Point, Color?> relatedColorMap = {};
+  Map<Point, Color> _buildRelateColorMap(int row, int column) {
+    Map<Point, Color> relatedColorMap = {};
     final Set<Point> relatedPoints = ListUtil.related(row, column);
     for (int i = 0; i < content.length; i++) {
       for (int j = 0; j < content[i].length; j++) {
