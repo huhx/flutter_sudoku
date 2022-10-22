@@ -29,7 +29,7 @@ class SudokuScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
-          child: Text(sudokuModel.dateTime.toDateString()),
+          child: Text(sudokuModel.dateString),
           onTap: () async {
             final DateTime? selectedDateTime = await context.goto(SudokuCalendarScreen(dateTime));
             if (selectedDateTime != null && !selectedDateTime.isSameDay(dateTime)) {
