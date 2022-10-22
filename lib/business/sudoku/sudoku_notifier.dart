@@ -8,7 +8,7 @@ import 'package:flutter_sudoku/util/list_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
-  late SudokuResponse sudokuResponse;
+  late SudokuInfo sudoku;
 
   late Map<Point, Color> textColorMap;
 
@@ -38,12 +38,12 @@ class SudokuNotifier extends ChangeNotifier {
     enableNotes = false;
 
     state = ResultState.loading();
-    sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
+    sudoku = (await sudokuApi.getSudokuData(dateTime, difficulty)).toSudoku();
 
-    sudokuContent = SudokuContent(content: sudokuResponse.fromQuestion());
+    sudokuContent = SudokuContent(content: sudoku.question);
 
     // input text color
-    sudokuResponse.empty().forEach((element) {
+    sudoku.empty().forEach((element) {
       textColorMap[element] = inputColor;
     });
 
@@ -61,30 +61,28 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   BoxBorder getBorder(Point point) {
-    final int x = point.x;
-    final int y = point.y;
     const BorderSide borderSide = BorderSide(color: Colors.blue, width: 2.0);
     final List<int> columnIndexes = [0, 3, 6];
     final List<int> rowIndexes = [0, 3, 6];
     BorderSide top = BorderSide.none, bottom = BorderSide.none, left = BorderSide.none, right = BorderSide.none;
 
-    if (columnIndexes.contains(y)) {
+    if (columnIndexes.contains(point.y)) {
       left = borderSide;
     } else {
       left = const BorderSide(color: Colors.grey);
     }
 
-    if (rowIndexes.contains(x)) {
+    if (rowIndexes.contains(point.x)) {
       top = borderSide;
     } else {
       top = const BorderSide(color: Colors.grey);
     }
 
-    if (y == 8) {
+    if (point.y == 8) {
       right = borderSide;
     }
 
-    if (x == 8) {
+    if (point.x == 8) {
       bottom = borderSide;
     }
 
@@ -96,7 +94,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   bool get isNotCorrect {
-    return sudokuResponse.checkPoint(selectPoint, sudokuContent.fromPoint(selectPoint));
+    return sudoku.checkPoint(selectPoint, sudokuContent.fromPoint(selectPoint));
   }
 
   String get retryString {
@@ -118,17 +116,17 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   String get dateString {
-    return sudokuResponse.dateTime.toString();
+    return sudoku.dateTime.toString();
   }
 
   int valueFromPoint(Point point) {
     return sudokuContent.fromPoint(point);
   }
 
-  Difficulty get difficulty => sudokuResponse.difficulty;
+  Difficulty get difficulty => sudoku.difficulty;
 
   GameStatus onInput(int value) {
-    if (sudokuResponse.hasValue(selectPoint)) {
+    if (sudoku.hasValue(selectPoint)) {
       return gameStatus;
     }
 
@@ -157,7 +155,7 @@ class SudokuNotifier extends ChangeNotifier {
     } else {
       textColorMap[selectPoint] = inputColor;
 
-      if (sudokuResponse.isSuccess(sudokuContent.content)) {
+      if (sudoku.isSuccess(sudokuContent.content)) {
         gameStatus = GameStatus.success;
       }
     }
@@ -176,7 +174,7 @@ class SudokuNotifier extends ChangeNotifier {
     if (isNotCorrect) {
       textColorMap[selectPoint] = inputColor;
 
-      sudokuContent.update(selectPoint, sudokuResponse.correctValue(selectPoint));
+      sudokuContent.update(selectPoint, sudoku.correctValue(selectPoint));
       tipCount = tipCount - 1;
 
       notifyListeners();
@@ -184,7 +182,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void clear() {
-    if (sudokuResponse.hasNoValue(selectPoint) && isNotCorrect) {
+    if (sudoku.hasNoValue(selectPoint) && isNotCorrect) {
       sudokuContent.update(selectPoint, 0);
 
       notifyListeners();

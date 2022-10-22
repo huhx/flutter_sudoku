@@ -53,7 +53,7 @@ void main() {
       [6, 0, 0, 0, 0, 0, 7, 0, 1]
     ];
 
-    final List<SudokuCheck> result = response.check(userAnswer);
+    final List<SudokuCheck> result = response.toSudoku().check(userAnswer);
 
     expect(result, []);
   });
@@ -71,7 +71,7 @@ void main() {
       [6, 0, 0, 0, 0, 0, 7, 0, 1]
     ];
 
-    final List<SudokuCheck> result = response.check(userAnswer);
+    final List<SudokuCheck> result = response.toSudoku().check(userAnswer);
 
     expect(result.length, 3);
     expect(result[0], const SudokuCheck(x: 0, y: 1, actual: 4, expect: 9));
