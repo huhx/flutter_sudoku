@@ -6,7 +6,7 @@ import 'sudoku_counter.dart';
 class SudokuHeader extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
 
-  const SudokuHeader(this.sudokuNotifier, {Key? key}) : super(key: key);
+  const SudokuHeader(this.sudokuNotifier, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -33,7 +33,7 @@ class SudokuScreen extends HookConsumerWidget {
           onTap: () async {
             final DateTime? selectedDateTime = await context.goto(SudokuCalendarScreen(dateTime));
             if (selectedDateTime != null && !selectedDateTime.isSameDay(dateTime)) {
-              sudokuModel.refresh(selectedDateTime, difficulty);
+              await sudokuModel.refresh(selectedDateTime, difficulty);
             }
           },
         ),

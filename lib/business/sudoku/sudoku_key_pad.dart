@@ -6,7 +6,7 @@ import 'package:flutter_sudoku/util/comm_util.dart';
 class SudokuKeyPad extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
 
-  const SudokuKeyPad(this.sudokuNotifier, {Key? key}) : super(key: key);
+  const SudokuKeyPad(this.sudokuNotifier, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class SudokuKeyPad extends StatelessWidget {
           final GameStatus gameStatus = sudokuNotifier.onInput(num);
           if (gameStatus == GameStatus.success) {
             CommUtil.toast(message: "恭喜你成功过关");
-          } else if(gameStatus == GameStatus.failed) {
+          } else if (gameStatus == GameStatus.failed) {
             CommUtil.toast(message: "已达到最大错误次数，游戏失败");
           }
         }),
@@ -33,7 +33,7 @@ class NumberItem extends StatelessWidget {
   final int number;
   final Function(int) onPressed;
 
-  const NumberItem(this.number, this.onPressed, {Key? key}) : super(key: key);
+  const NumberItem(this.number, this.onPressed, {super.key});
 
   @override
   Widget build(BuildContext context) {
