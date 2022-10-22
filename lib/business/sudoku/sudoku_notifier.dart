@@ -21,7 +21,7 @@ class SudokuNotifier extends ChangeNotifier {
   late bool enableNotes;
   late Map<Point, List<int>?> notesMap;
 
-  int tappedX = 0, tappedY = 0;
+  late Point selectPoint;
   late List<List<int>> content;
 
   ResultState state = ResultState.success();
@@ -33,6 +33,7 @@ class SudokuNotifier extends ChangeNotifier {
     notesMap = {};
     gameStatus = GameStatus.running;
     retryCount = 0;
+    selectPoint = Point.first();
     tipCount = 2;
     enableNotes = false;
 
@@ -52,18 +53,22 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Color? getColor(int row, int column) {
-    final Map<Point, Color> selectColorMap = {Point(x: tappedX, y: tappedY): selectedColor};
+    final Point point = Point.from(row, column);
+
+    final Map<Point, Color> selectColorMap = {selectPoint: selectedColor};
     final Map<Point, Color> highlightColorMap = _highlight();
     final Map<Point, Color> relatedColorMap = _related();
 
-    return {...highlightColorMap, ...relatedColorMap, ...selectColorMap}[Point(x: row, y: column)];
+    return {...highlightColorMap, ...relatedColorMap, ...selectColorMap}[point];
   }
 
   Color? getTextColor(int row, int column) {
     return textColorMap[Point(x: row, y: column)];
   }
 
-  bool get isNotCorrect => content[tappedX][tappedY] != sudokuResponse.fromAnswer()[tappedX][tappedY];
+  bool get isNotCorrect {
+    return content[selectPoint.x][selectPoint.y] != sudokuResponse.fromAnswer()[selectPoint.x][selectPoint.y];
+  }
 
   String get retryString {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
@@ -78,8 +83,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void onTapped(int row, int column) {
-    tappedX = row;
-    tappedY = column;
+    selectPoint = Point.from(row, column);
 
     notifyListeners();
   }
@@ -91,6 +95,8 @@ class SudokuNotifier extends ChangeNotifier {
   Difficulty get difficulty => sudokuResponse.difficulty;
 
   GameStatus onInput(int value) {
+    int tappedX = selectPoint.x;
+    int tappedY = selectPoint.y;
     if (sudokuResponse.fromQuestion()[tappedX][tappedY] != 0) {
       return gameStatus;
     }
@@ -131,13 +137,18 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Map<Point, Color> _highlight() {
+    int tappedX = selectPoint.x;
+    int tappedY = selectPoint.y;
     final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
     return {for (var point in matchedPoints) point: highlightColor};
   }
 
   void useTip() {
+    int tappedX = selectPoint.x;
+    int tappedY = selectPoint.y;
+
     if (isNotCorrect) {
-      textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
+      textColorMap[selectPoint] = inputColor;
 
       content[tappedX][tappedY] = sudokuResponse.fromAnswer()[tappedX][tappedY];
       tipCount = tipCount - 1;
@@ -147,6 +158,9 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void clear() {
+    int tappedX = selectPoint.x;
+    int tappedY = selectPoint.y;
+
     if (sudokuResponse.fromQuestion()[tappedX][tappedY] == 0 && isNotCorrect) {
       content[tappedX][tappedY] = 0;
 
@@ -166,8 +180,7 @@ class SudokuNotifier extends ChangeNotifier {
     }
 
     final SudokuStack sudokuStack = changeStack.undo();
-    tappedX = sudokuStack.row;
-    tappedY = sudokuStack.column;
+    selectPoint = Point.from(sudokuStack.row, sudokuStack.column);
 
     if (sudokuStack.isNote) {
       if (sudokuStack.oldValue == 0) {
@@ -195,6 +208,9 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Map<Point, Color> _related() {
+    int tappedX = selectPoint.x;
+    int tappedY = selectPoint.y;
+
     Map<Point, Color> relatedColorMap = {};
     final Set<Point> relatedPoints = ListUtil.related(tappedX, tappedY);
     for (int i = 0; i < content.length; i++) {
