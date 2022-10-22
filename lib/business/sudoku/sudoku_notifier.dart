@@ -124,7 +124,7 @@ class SudokuNotifier extends ChangeNotifier {
     } else {
       textColorMap[selectPoint] = inputColor;
 
-      if (ListUtil.check(content, sudokuResponse.fromAnswer())) {
+      if (sudokuResponse.isSuccess(content)) {
         gameStatus = GameStatus.success;
       }
     }
@@ -135,20 +135,15 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Map<Point, Color> _highlight() {
-    int tappedX = selectPoint.x;
-    int tappedY = selectPoint.y;
-    final List<Point> matchedPoints = ListUtil.match(content, tappedX, tappedY);
+    final List<Point> matchedPoints = ListUtil.match(content, selectPoint);
     return {for (var point in matchedPoints) point: highlightColor};
   }
 
   void useTip() {
-    int tappedX = selectPoint.x;
-    int tappedY = selectPoint.y;
-
     if (isNotCorrect) {
       textColorMap[selectPoint] = inputColor;
 
-      content[tappedX][tappedY] = sudokuResponse.fromAnswer()[tappedX][tappedY];
+      content[selectPoint.x][selectPoint.y] = sudokuResponse.correctValue(selectPoint);
       tipCount = tipCount - 1;
 
       notifyListeners();
@@ -156,11 +151,8 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void clear() {
-    int tappedX = selectPoint.x;
-    int tappedY = selectPoint.y;
-
-    if (sudokuResponse.fromQuestion()[tappedX][tappedY] == 0 && isNotCorrect) {
-      content[tappedX][tappedY] = 0;
+    if (sudokuResponse.hasNoValue(selectPoint) && isNotCorrect) {
+      content[selectPoint.x][selectPoint.y] = 0;
 
       notifyListeners();
     }
@@ -206,17 +198,14 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Map<Point, Color> _related() {
-    int tappedX = selectPoint.x;
-    int tappedY = selectPoint.y;
-
     Map<Point, Color> relatedColorMap = {};
-    final Set<Point> relatedPoints = ListUtil.related(tappedX, tappedY);
+    final Set<Point> relatedPoints = ListUtil.related(selectPoint.x, selectPoint.y);
     for (int i = 0; i < content.length; i++) {
       for (int j = 0; j < content[i].length; j++) {
-        if (i == tappedX && j == tappedY) {
+        if (i == selectPoint.x && j == selectPoint.y) {
           continue;
         }
-        if (i == tappedX || j == tappedY) {
+        if (i == selectPoint.x || j == selectPoint.y) {
           relatedColorMap[Point(x: i, y: j)] = relatedColor;
         }
         if (relatedPoints.contains(Point(x: i, y: j))) {
