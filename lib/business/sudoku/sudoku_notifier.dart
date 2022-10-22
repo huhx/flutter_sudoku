@@ -95,36 +95,34 @@ class SudokuNotifier extends ChangeNotifier {
   Difficulty get difficulty => sudokuResponse.difficulty;
 
   GameStatus onInput(int value) {
-    int tappedX = selectPoint.x;
-    int tappedY = selectPoint.y;
-    if (sudokuResponse.fromQuestion()[tappedX][tappedY] != 0) {
+    if (sudokuResponse.hasValue(selectPoint)) {
       return gameStatus;
     }
 
     if (enableNotes) {
-      changeStack.add(row: tappedX, column: tappedY, isNote: true, newValue: value);
+      changeStack.add(point: selectPoint, isNote: true, newValue: value);
 
       if (isNotCorrect) {
-        final List<int>? list = notesMap[Point(x: tappedX, y: tappedY)];
-        notesMap[Point(x: tappedX, y: tappedY)] = [...?list, value];
+        final List<int>? list = notesMap[selectPoint];
+        notesMap[selectPoint] = [...?list, value];
 
-        content[tappedX][tappedY] = 0;
+        content[selectPoint.x][selectPoint.y] = 0;
 
         notifyListeners();
       }
       return gameStatus;
     }
-    changeStack.add(row: tappedX, column: tappedY, isNote: false, newValue: value);
+    changeStack.add(point: selectPoint, isNote: false, newValue: value);
 
-    content[tappedX][tappedY] = value;
+    content[selectPoint.x][selectPoint.y] = value;
     if (isNotCorrect) {
-      textColorMap[Point(x: tappedX, y: tappedY)] = errorColor;
+      textColorMap[selectPoint] = errorColor;
       retryCount = retryCount + 1;
       if (retryCount >= 3) {
         gameStatus = GameStatus.failed;
       }
     } else {
-      textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
+      textColorMap[selectPoint] = inputColor;
 
       if (ListUtil.check(content, sudokuResponse.fromAnswer())) {
         gameStatus = GameStatus.success;
@@ -180,25 +178,25 @@ class SudokuNotifier extends ChangeNotifier {
     }
 
     final SudokuStack sudokuStack = changeStack.undo();
-    selectPoint = Point.from(sudokuStack.row, sudokuStack.column);
+    selectPoint = sudokuStack.point;
 
     if (sudokuStack.isNote) {
       if (sudokuStack.oldValue == 0) {
-        notesMap.remove(Point(x: sudokuStack.row, y: sudokuStack.column));
+        notesMap.remove(selectPoint);
       } else {
-        final List<int>? list = notesMap[Point(x: sudokuStack.row, y: sudokuStack.column)];
+        final List<int>? list = notesMap[selectPoint];
         list?.removeLast();
-        notesMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = list;
+        notesMap[selectPoint] = list;
         if (list == null || list.isEmpty) {
-          content[sudokuStack.row][sudokuStack.column] = sudokuStack.oldValue;
+          content[selectPoint.x][selectPoint.x] = sudokuStack.oldValue;
         }
       }
     } else {
-      content[sudokuStack.row][sudokuStack.column] = sudokuStack.oldValue;
+      content[selectPoint.x][selectPoint.y] = sudokuStack.oldValue;
       if (isNotCorrect) {
-        textColorMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = errorColor;
+        textColorMap[selectPoint] = errorColor;
       } else {
-        textColorMap[Point(x: sudokuStack.row, y: sudokuStack.column)] = inputColor;
+        textColorMap[selectPoint] = inputColor;
       }
     }
 

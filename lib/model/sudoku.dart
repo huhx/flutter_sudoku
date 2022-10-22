@@ -80,6 +80,10 @@ class SudokuResponse extends Equatable {
   @override
   List<Object?> get props => [question, answer, difficulty, dateTime];
 
+  bool hasValue(Point point) {
+    return fromQuestion()[point.x][point.y] != 0;
+  }
+
   factory SudokuResponse.fromJson(Map<String, dynamic> json) {
     return SudokuResponse(
       question: json['question'] as String,
@@ -138,6 +142,4 @@ class Point extends Equatable {
   List<Object?> get props => [x, y];
 }
 
-enum GameStatus {
-  success, running, failed
-}
+enum GameStatus { success, running, failed }
