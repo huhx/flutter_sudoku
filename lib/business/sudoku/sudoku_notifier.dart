@@ -11,6 +11,7 @@ class SudokuNotifier extends ChangeNotifier {
   late SudokuResponse sudokuResponse;
   late DateTime dateTime;
   late Difficulty difficulty;
+
   late Map<Point, Color?> colorMap;
   late Map<Point, Color?> textColorMap;
   late Map<Point, Color?> highlightColorMap;
@@ -32,7 +33,7 @@ class SudokuNotifier extends ChangeNotifier {
 
   ResultState state = ResultState.success();
 
-  void init(DateTime dateTime, Difficulty difficulty) async {
+  Future<void> init(DateTime dateTime, Difficulty difficulty) async {
     this.dateTime = dateTime;
     this.difficulty = difficulty;
     changeStack = ChangeStack();
@@ -88,8 +89,8 @@ class SudokuNotifier extends ChangeNotifier {
     return notesMap[Point(x: row, y: column)];
   }
 
-  void refresh(DateTime dateTime, Difficulty difficulty) {
-    init(dateTime, difficulty);
+  Future<void> refresh(DateTime dateTime, Difficulty difficulty) async {
+    await init(dateTime, difficulty);
   }
 
   void onTapped(int row, int column) {
