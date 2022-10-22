@@ -15,7 +15,10 @@ class ListUtil {
     const Point(x: 2, y: 2),
   ];
 
-  static List<Point> match(List<List<int>> lists, int row, int column) {
+  static List<Point> match(List<List<int>> lists, Point point) {
+    final int row = point.x;
+    final int column = point.y;
+
     if (lists[row][column] == 0) {
       return [];
     }
@@ -30,8 +33,8 @@ class ListUtil {
     return points;
   }
 
-  static Map<Point, Color?> highlight(List<List<int>> lists, int row, int column) {
-    final List<Point> matchedPoints = match(lists, row, column);
+  static Map<Point, Color?> highlight(List<List<int>> lists, Point point) {
+    final List<Point> matchedPoints = match(lists, point);
     return {for (var point in matchedPoints) point: highlightColor};
   }
 
@@ -45,18 +48,6 @@ class ListUtil {
       }
     }
     return points;
-  }
-
-  static bool check(List<List<int>> content, List<List<int>> answer) {
-    for (int i = 0; i < content.length; i++) {
-      for (int j = 0; j < content[i].length; j++) {
-        final int actual = content[i][j], expect = answer[i][j];
-        if (actual != expect) {
-          return false;
-        }
-      }
-    }
-    return true;
   }
 
   static Set<Point> related(int x, int y) {

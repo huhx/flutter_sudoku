@@ -84,6 +84,30 @@ class SudokuResponse extends Equatable {
     return fromQuestion()[point.x][point.y] != 0;
   }
 
+  bool hasNoValue(Point point) {
+    return fromQuestion()[point.x][point.y] == 0;
+  }
+
+  bool isSuccess(List<List<int>> content) {
+    final List<List<int>> answerArray = fromAnswer();
+
+    for (int i = 0; i < content.length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        final int actual = content[i][j], expect = answerArray[i][j];
+        if (actual != expect) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  int correctValue(Point point) {
+    final List<List<int>> answerArray = fromAnswer();
+
+    return answerArray[point.x][point.y];
+  }
+
   factory SudokuResponse.fromJson(Map<String, dynamic> json) {
     return SudokuResponse(
       question: json['question'] as String,
