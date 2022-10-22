@@ -38,18 +38,6 @@ class ListUtil {
     return {for (var point in matchedPoints) point: highlightColor};
   }
 
-  static List<Point> empty(List<List<int>> lists) {
-    List<Point> points = [];
-    for (int i = 0; i < lists.length; i++) {
-      for (int j = 0; j < lists[i].length; j++) {
-        if (lists[i][j] == 0) {
-          points.add(Point(x: i, y: j));
-        }
-      }
-    }
-    return points;
-  }
-
   static Set<Point> related(int x, int y) {
     final int timeX = (x / 3).floor();
     final int timeY = (y / 3).floor();

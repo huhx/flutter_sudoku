@@ -84,6 +84,22 @@ class SudokuResponse extends Equatable {
     return fromQuestion()[point.x][point.y] != 0;
   }
 
+  List<Point> empty() {
+    List<Point> points = [];
+    for (int i = 0; i < fromQuestion().length; i++) {
+      for (int j = 0; j < fromQuestion()[i].length; j++) {
+        if (fromQuestion()[i][j] == 0) {
+          points.add(Point(x: i, y: j));
+        }
+      }
+    }
+    return points;
+  }
+
+  bool checkPoint(Point point, int value) {
+    return fromQuestion()[point.x][point.y] == value;
+  }
+
   bool hasNoValue(Point point) {
     return fromQuestion()[point.x][point.y] == 0;
   }
@@ -164,6 +180,21 @@ class Point extends Equatable {
 
   @override
   List<Object?> get props => [x, y];
+}
+
+class SudokuContent {
+  final List<List<int>> content;
+
+  const SudokuContent({required this.content});
+
+  SudokuContent update(Point point, int value) {
+    content[point.x][point.y] = value;
+    return this;
+  }
+
+  int fromPoint(Point point) {
+    return content[point.x][point.y];
+  }
 }
 
 enum GameStatus { success, running, failed }
