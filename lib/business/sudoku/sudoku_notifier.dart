@@ -9,8 +9,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
   late SudokuResponse sudokuResponse;
-  late DateTime dateTime;
-  late Difficulty difficulty;
 
   late Map<Point, Color> textColorMap;
 
@@ -24,15 +22,11 @@ class SudokuNotifier extends ChangeNotifier {
   late Map<Point, List<int>?> notesMap;
 
   int tappedX = 0, tappedY = 0;
-  late List<List<int>> question;
   late List<List<int>> content;
-  late List<List<int>> answer;
 
   ResultState state = ResultState.success();
 
   Future<void> init(DateTime dateTime, Difficulty difficulty) async {
-    this.dateTime = dateTime;
-    this.difficulty = difficulty;
     changeStack = ChangeStack();
 
     textColorMap = {};
@@ -45,12 +39,10 @@ class SudokuNotifier extends ChangeNotifier {
     state = ResultState.loading();
     sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
 
-    question = sudokuResponse.fromQuestion();
     content = sudokuResponse.fromQuestion();
-    answer = sudokuResponse.fromAnswer();
 
     // input text color
-    ListUtil.empty(question).forEach((element) {
+    ListUtil.empty(sudokuResponse.fromQuestion()).forEach((element) {
       textColorMap[element] = inputColor;
     });
 
@@ -71,7 +63,7 @@ class SudokuNotifier extends ChangeNotifier {
     return textColorMap[Point(x: row, y: column)];
   }
 
-  bool get isNotCorrect => content[tappedX][tappedY] != answer[tappedX][tappedY];
+  bool get isNotCorrect => content[tappedX][tappedY] != sudokuResponse.fromAnswer()[tappedX][tappedY];
 
   String get retryString {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/3";
@@ -92,8 +84,14 @@ class SudokuNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  String get dateString {
+    return sudokuResponse.dateTime.toString();
+  }
+
+  Difficulty get difficulty => sudokuResponse.difficulty;
+
   GameStatus onInput(int value) {
-    if (question[tappedX][tappedY] != 0) {
+    if (sudokuResponse.fromQuestion()[tappedX][tappedY] != 0) {
       return gameStatus;
     }
 
@@ -122,7 +120,7 @@ class SudokuNotifier extends ChangeNotifier {
     } else {
       textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
 
-      if (ListUtil.check(content, answer)) {
+      if (ListUtil.check(content, sudokuResponse.fromAnswer())) {
         gameStatus = GameStatus.success;
       }
     }
@@ -141,7 +139,7 @@ class SudokuNotifier extends ChangeNotifier {
     if (isNotCorrect) {
       textColorMap[Point(x: tappedX, y: tappedY)] = inputColor;
 
-      content[tappedX][tappedY] = answer[tappedX][tappedY];
+      content[tappedX][tappedY] = sudokuResponse.fromAnswer()[tappedX][tappedY];
       tipCount = tipCount - 1;
 
       notifyListeners();
@@ -149,7 +147,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void clear() {
-    if (question[tappedX][tappedY] == 0 && isNotCorrect) {
+    if (sudokuResponse.fromQuestion()[tappedX][tappedY] == 0 && isNotCorrect) {
       content[tappedX][tappedY] = 0;
 
       notifyListeners();
