@@ -5,7 +5,7 @@ import 'package:flutter_sudoku/model/sudoku.dart';
 class SudokuBoard extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
 
-  const SudokuBoard(this.sudokuNotifier, {Key? key}) : super(key: key);
+  const SudokuBoard(this.sudokuNotifier, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +41,40 @@ class SudokuCell extends StatelessWidget {
           decoration: BoxDecoration(border: sudokuNotifier.getBorder(point), color: sudokuNotifier.getColor(point)),
           alignment: Alignment.center,
           child: sudokuNotifier.enableNotes && noteValue != null && noteValue.isNotEmpty
-              ? Text("$noteValue", style: const TextStyle(fontSize: 8), textAlign: TextAlign.start)
-              : Text(
-                  number == 0 ? "" : number.toString(),
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: sudokuNotifier.getTextColor(point)),
-                ),
+              ? SudokuNoteCell(noteValue)
+              : SudokuNormalCell(number, sudokuNotifier.getTextColor(point)),
         ),
       ),
+    );
+  }
+}
+
+class SudokuNoteCell extends StatelessWidget {
+  final List<int> values;
+
+  const SudokuNoteCell(this.values, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      "$values",
+      style: const TextStyle(fontSize: 8),
+      textAlign: TextAlign.start,
+    );
+  }
+}
+
+class SudokuNormalCell extends StatelessWidget {
+  final int value;
+  final Color? color;
+
+  const SudokuNormalCell(this.value, this.color, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      value == 0 ? "" : value.toString(),
+      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: color),
     );
   }
 }
