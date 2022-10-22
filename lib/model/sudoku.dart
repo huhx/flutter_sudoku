@@ -130,6 +130,10 @@ class Point extends Equatable {
     return const Point(x: 0, y: 0);
   }
 
+  factory Point.from(int x, int y) {
+    return Point(x: x, y: y);
+  }
+
   @override
   List<Object?> get props => [x, y];
 }
