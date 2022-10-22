@@ -77,52 +77,17 @@ class SudokuResponse extends Equatable {
     required this.dateTime,
   });
 
+  SudokuInfo toSudoku() {
+    return SudokuInfo(
+      question: fromQuestion(),
+      answer: fromAnswer(),
+      difficulty: difficulty,
+      dateTime: dateTime,
+    );
+  }
+
   @override
   List<Object?> get props => [question, answer, difficulty, dateTime];
-
-  bool hasValue(Point point) {
-    return fromQuestion()[point.x][point.y] != 0;
-  }
-
-  List<Point> empty() {
-    List<Point> points = [];
-    for (int i = 0; i < fromQuestion().length; i++) {
-      for (int j = 0; j < fromQuestion()[i].length; j++) {
-        if (fromQuestion()[i][j] == 0) {
-          points.add(Point(x: i, y: j));
-        }
-      }
-    }
-    return points;
-  }
-
-  bool checkPoint(Point point, int value) {
-    return fromQuestion()[point.x][point.y] == value;
-  }
-
-  bool hasNoValue(Point point) {
-    return fromQuestion()[point.x][point.y] == 0;
-  }
-
-  bool isSuccess(List<List<int>> content) {
-    final List<List<int>> answerArray = fromAnswer();
-
-    for (int i = 0; i < content.length; i++) {
-      for (int j = 0; j < content[i].length; j++) {
-        final int actual = content[i][j], expect = answerArray[i][j];
-        if (actual != expect) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  int correctValue(Point point) {
-    final List<List<int>> answerArray = fromAnswer();
-
-    return answerArray[point.x][point.y];
-  }
 
   factory SudokuResponse.fromJson(Map<String, dynamic> json) {
     return SudokuResponse(
@@ -143,14 +108,71 @@ class SudokuResponse extends Equatable {
     return firstChunk.map((e) => _toInt(e)).toList();
   }
 
-  List<SudokuCheck> check(List<List<int>> userAnswer) {
-    final List<List<int>> answer = fromAnswer();
-    final int length = userAnswer.length;
+  List<int> _toInt(String string) {
+    return string.split("").map((e) => e.toInt()).toList();
+  }
+}
+
+class SudokuInfo extends Equatable {
+  final List<List<int>> question;
+  final List<List<int>> answer;
+  final Difficulty difficulty;
+  final String dateTime;
+
+  const SudokuInfo({
+    required this.question,
+    required this.answer,
+    required this.difficulty,
+    required this.dateTime,
+  });
+
+  bool hasValue(Point point) {
+    return question[point.x][point.y] != 0;
+  }
+
+  List<Point> empty() {
+    List<Point> points = [];
+    for (int i = 0; i < question.length; i++) {
+      for (int j = 0; j < question[i].length; j++) {
+        if (question[i][j] == 0) {
+          points.add(Point(x: i, y: j));
+        }
+      }
+    }
+    return points;
+  }
+
+  bool checkPoint(Point point, int value) {
+    return question[point.x][point.y] == value;
+  }
+
+  bool hasNoValue(Point point) {
+    return question[point.x][point.y] == 0;
+  }
+
+  bool isSuccess(List<List<int>> content) {
+    for (int i = 0; i < content.length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        final int actual = content[i][j], expect = answer[i][j];
+        if (actual != expect) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  int correctValue(Point point) {
+    return answer[point.x][point.y];
+  }
+
+  List<SudokuCheck> check(List<List<int>> content) {
+    final int length = content.length;
     List<SudokuCheck> result = [];
 
     for (int i = 0; i < length; i++) {
-      for (int j = 0; j < userAnswer[i].length; j++) {
-        final int actual = userAnswer[i][j], expect = answer[i][j];
+      for (int j = 0; j < content[i].length; j++) {
+        final int actual = content[i][j], expect = answer[i][j];
         if (actual != 0 && actual != expect) {
           result.add(SudokuCheck(x: i, y: j, actual: actual, expect: expect));
         }
@@ -159,9 +181,8 @@ class SudokuResponse extends Equatable {
     return result;
   }
 
-  List<int> _toInt(String string) {
-    return string.split("").map((e) => e.toInt()).toList();
-  }
+  @override
+  List<Object?> get props => [question, answer, difficulty, dateTime];
 }
 
 class Point extends Equatable {
