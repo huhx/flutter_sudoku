@@ -39,7 +39,7 @@ class SudokuNotifier extends ChangeNotifier {
     enableNotes = false;
 
     state = ResultState.loading();
-    sudoku = (await sudokuApi.getSudokuData(dateTime, difficulty)).toSudoku();
+    sudoku = await sudokuApi.getSudokuData(dateTime, difficulty);
 
     sudokuContent = SudokuContent(content: sudoku.question);
 
