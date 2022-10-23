@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
+import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
@@ -89,8 +90,10 @@ class SudokuNotifier extends ChangeNotifier {
     return textColorMap[point];
   }
 
-  bool get isNotCorrect {
-    return !sudoku.checkPoint(selectPoint, sudokuContent.fromPoint(selectPoint));
+  bool get isNotCorrect => !isCorrect;
+
+  bool get isCorrect {
+    return sudoku.checkPoint(selectPoint, sudokuContent.fromPoint(selectPoint));
   }
 
   String get retryString {
@@ -122,30 +125,23 @@ class SudokuNotifier extends ChangeNotifier {
   Difficulty get difficulty => sudoku.difficulty;
 
   GameStatus onInput(int value) {
-    if (sudoku.hasValue(selectPoint) || !isNotCorrect) {
+    if (sudoku.hasValue(selectPoint) || isCorrect) {
       return gameStatus;
     }
 
     if (enableNotes) {
-      if (isNotCorrect) {
-        final List<int>? list = notesMap[selectPoint];
-        if (list == null || list.isEmpty) {
-          notesMap[selectPoint] = [value];
-        } else {
-          if (list.contains(value)) {
-            list.remove(value);
-          } else {
-            list.add(value);
-          }
-          notesMap[selectPoint] = list;
-        }
-        sudokuContent.update(selectPoint, 0);
-
-        notifyListeners();
+      final List<int>? list = notesMap[selectPoint];
+      if (list == null || list.isEmpty) {
+        notesMap[selectPoint] = [value];
+      } else {
+        notesMap[selectPoint] = list.addOrRemove(value);
       }
+      sudokuContent.update(selectPoint, 0);
+
+      notifyListeners();
       return gameStatus;
     }
-    
+
     notesMap.remove(selectPoint);
     sudokuContent.update(selectPoint, value);
 
@@ -164,7 +160,6 @@ class SudokuNotifier extends ChangeNotifier {
     }
 
     notifyListeners();
-
     return gameStatus;
   }
 
