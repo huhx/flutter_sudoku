@@ -1,15 +1,82 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/common/list_extension.dart';
+import 'package:flutter_sudoku/model/sudoku.dart';
+import 'package:flutter_sudoku/theme/color.dart';
 
+import 'sudoku_color.dart';
 import 'sudoku_point.dart';
 
-class SudokuContent {
+class Sudoku {
+  Point selected;
+  final List<List<int>> question;
   final List<List<int>> content;
+  final List<List<int>> answer;
   final Map<Point, List<int>?> notesMap;
+  bool enableNotes;
+  final Difficulty difficulty;
+  final String dateTime;
+  late SudokuColor sudokuColor;
 
-  const SudokuContent({required this.content, required this.notesMap});
+  Sudoku({
+    required this.selected,
+    required this.question,
+    required this.content,
+    required this.answer,
+    required this.notesMap,
+    required this.enableNotes,
+    required this.difficulty,
+    required this.dateTime,
+  });
 
-  SudokuContent update(Point point, int value) {
-    content[point.x][point.y] = value;
+  void setSelected(Point point) {
+    selected = point;
+    sudokuColor.update(
+      selected: point,
+      highlightPoints: highlight(),
+      relatedPoints: related(),
+    );
+  }
+
+  void toggleNote() {
+    enableNotes = !enableNotes;
+  }
+
+  static Sudoku from(SudokuResponse sudokuResponse) {
+    return Sudoku(
+      selected: Point.first(),
+      enableNotes: false,
+      question: sudokuResponse.toQuestion(),
+      content: sudokuResponse.toQuestion(),
+      answer: sudokuResponse.toAnswer(),
+      notesMap: {},
+      dateTime: sudokuResponse.dateTime,
+      difficulty: sudokuResponse.difficulty,
+    );
+  }
+
+  void initColor() {
+    sudokuColor = SudokuColor(
+      selected: selected,
+      highlightPoints: highlight(),
+      relatedPoints: related(),
+      textColorMap: {for (var point in empty()) point: inputColor},
+    );
+  }
+
+  List<Point> empty() {
+    List<Point> points = [];
+    for (int i = 0; i < question.length; i++) {
+      for (int j = 0; j < question[i].length; j++) {
+        if (question[i][j] == 0) {
+          points.add(Point(x: i, y: j));
+        }
+      }
+    }
+    return points;
+  }
+
+  Sudoku update(int value) {
+    content[selected.x][selected.y] = value;
     return this;
   }
 
@@ -21,27 +88,74 @@ class SudokuContent {
     return notesMap[point];
   }
 
-  void updateNotesMap(Point point, int value) {
-    final List<int>? list = notesMap[point];
+  void updateNotesMap(int value) {
+    final List<int>? list = notesMap[selected];
     if (list == null || list.isEmpty) {
-      notesMap[point] = [value];
+      notesMap[selected] = [value];
     } else {
-      notesMap[point] = list.addOrRemove(value);
+      notesMap[selected] = list.addOrRemove(value);
     }
   }
 
-  void removeNote(Point point) {
-    notesMap.remove(point);
+  void removeNote() {
+    notesMap.remove(selected);
   }
 
-  List<Point> highlight(Point point) {
-    if (content[point.x][point.y] == 0) {
+  bool hasValue() {
+    return question[selected.x][selected.y] != 0;
+  }
+
+  List<List<int>> deepCopy() {
+    return question.map((e) => e.toList()).toList();
+  }
+
+  bool checkValue() {
+    return answer[selected.x][selected.y] == content[selected.x][selected.y];
+  }
+
+  bool hasNoValue() {
+    return question[selected.x][selected.y] == 0;
+  }
+
+  bool isSuccess() {
+    for (int i = 0; i < content.length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        final int actual = content[i][j], expect = answer[i][j];
+        if (actual != expect) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  int correctValue() {
+    return answer[selected.x][selected.y];
+  }
+
+  List<SudokuCheck> check() {
+    final int length = content.length;
+    List<SudokuCheck> result = [];
+
+    for (int i = 0; i < length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        final int actual = content[i][j], expect = answer[i][j];
+        if (actual != 0 && actual != expect) {
+          result.add(SudokuCheck(x: i, y: j, actual: actual, expect: expect));
+        }
+      }
+    }
+    return result;
+  }
+
+  List<Point> highlight() {
+    if (content[selected.x][selected.y] == 0) {
       return [];
     }
     List<Point> points = [];
     for (int i = 0; i < content.length; i++) {
       for (int j = 0; j < content[i].length; j++) {
-        if ((i != point.x && j != point.y) && content[point.x][point.y] == content[i][j]) {
+        if ((i != selected.x && j != selected.y) && content[selected.x][selected.y] == content[i][j]) {
           points.add(Point(x: i, y: j));
         }
       }
@@ -49,18 +163,35 @@ class SudokuContent {
     return points;
   }
 
-  List<Point> related(Point point) {
+  List<Point> related() {
     List<Point> relatedList = [];
     for (int i = 0; i < content.length; i++) {
       for (int j = 0; j < content[i].length; j++) {
-        if (i == point.x && j == point.y) {
+        if (i == selected.x && j == selected.y) {
           continue;
         }
-        if (i == point.x || j == point.y) {
+        if (i == selected.x || j == selected.y) {
           relatedList.add(Point.from(i, j));
         }
       }
     }
     return relatedList;
   }
+}
+
+class SudokuCheck extends Equatable {
+  final int x;
+  final int y;
+  final int actual;
+  final int expect;
+
+  const SudokuCheck({
+    required this.x,
+    required this.y,
+    required this.actual,
+    required this.expect,
+  });
+
+  @override
+  List<Object?> get props => [x, y, actual, expect];
 }

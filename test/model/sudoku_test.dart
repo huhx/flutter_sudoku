@@ -1,5 +1,4 @@
 import 'package:flutter_sudoku/model/sudoku.dart';
-import 'package:flutter_sudoku/model/sudoku_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -39,44 +38,5 @@ void main() {
       [9, 8, 2, 7, 1, 6, 4, 5, 3],
       [6, 3, 5, 9, 8, 4, 7, 2, 1]
     ]);
-  });
-
-  test("should return empty check list when invoke check given user not answer", () {
-    final List<List<int>> userAnswer = [
-      [8, 0, 0, 0, 7, 0, 0, 0, 0],
-      [0, 0, 3, 8, 0, 9, 0, 0, 0],
-      [0, 5, 4, 0, 0, 0, 0, 6, 0],
-      [0, 6, 0, 0, 5, 7, 1, 0, 0],
-      [0, 0, 8, 3, 0, 1, 0, 0, 5],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 2, 3, 9, 0, 0],
-      [0, 0, 0, 7, 0, 0, 0, 5, 0],
-      [6, 0, 0, 0, 0, 0, 7, 0, 1]
-    ];
-
-    final List<SudokuCheck> result = response.toSudoku().check(userAnswer);
-
-    expect(result, []);
-  });
-
-  test("should return failed check list when invoke check given user answer not correct", () {
-    final List<List<int>> userAnswer = [
-      [8, 4, 6, 4, 7, 0, 0, 0, 0],
-      [0, 9, 3, 8, 0, 9, 0, 0, 0],
-      [0, 5, 4, 0, 0, 0, 0, 6, 0],
-      [0, 6, 0, 0, 5, 7, 1, 0, 0],
-      [0, 0, 8, 3, 0, 1, 7, 0, 5],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 2, 3, 9, 0, 0],
-      [0, 0, 0, 7, 0, 0, 0, 5, 0],
-      [6, 0, 0, 0, 0, 0, 7, 0, 1]
-    ];
-
-    final List<SudokuCheck> result = response.toSudoku().check(userAnswer);
-
-    expect(result.length, 3);
-    expect(result[0], const SudokuCheck(x: 0, y: 1, actual: 4, expect: 9));
-    expect(result[1], const SudokuCheck(x: 1, y: 1, actual: 9, expect: 2));
-    expect(result[2], const SudokuCheck(x: 4, y: 6, actual: 7, expect: 6));
   });
 }

@@ -20,8 +20,8 @@ class SudokuColor {
     return textColorMap[point];
   }
 
-  void putTextColor(Point point, Color color) {
-    textColorMap[point] = color;
+  void putTextColor(Color color) {
+    textColorMap[selected] = color;
   }
 
   void putRelatedColor(List<Point> relatedPoints) {

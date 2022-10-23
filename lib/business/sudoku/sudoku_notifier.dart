@@ -2,46 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
-import 'package:flutter_sudoku/model/sudoku_color.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:flutter_sudoku/model/sudoku_content.dart';
-import 'package:flutter_sudoku/model/sudoku_info.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
-  late SudokuInfo sudoku;
-  late SudokuColor sudokuColor;
-
   late GameStatus gameStatus;
   late int retryCount;
   late int tipCount;
 
-  late bool enableNotes;
-
-  late Point selectPoint;
-  late SudokuContent sudokuContent;
+  late Sudoku sudoku;
 
   ResultState state = ResultState.success();
 
   Future<void> init(DateTime dateTime, Difficulty difficulty) async {
     gameStatus = GameStatus.running;
     retryCount = 0;
-    selectPoint = Point.first();
     tipCount = sudokuConfig.tipCount;
-    enableNotes = false;
 
     state = ResultState.loading();
-    sudoku = await sudokuApi.getSudokuData(dateTime, difficulty);
-    sudokuContent = SudokuContent(content: sudoku.deepCopy(), notesMap: {});
-
-    sudokuColor = SudokuColor(
-      selected: selectPoint,
-      highlightPoints: sudokuContent.highlight(selectPoint),
-      relatedPoints: sudokuContent.related(selectPoint),
-      textColorMap: {for (var point in sudoku.empty()) point: inputColor},
-    );
+    final SudokuResponse sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
+    sudoku = Sudoku.from(sudokuResponse)..initColor();
 
     state = ResultState.success();
 
@@ -49,26 +32,25 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Color? getColor(Point point) {
-    return sudokuColor.getColor(point);
+    return sudoku.sudokuColor.getColor(point);
   }
 
   Color? getTextColor(Point point) {
-    return sudokuColor.getTextColor(point);
+    return sudoku.sudokuColor.getTextColor(point);
   }
+
+  bool get enableNotes => sudoku.enableNotes;
 
   bool get isNotCorrect => !isCorrect;
 
-  bool get isCorrect {
-    final int value = sudokuContent.getValue(selectPoint);
-    return sudoku.checkValue(selectPoint, value);
-  }
+  bool get isCorrect => sudoku.checkValue();
 
   String get retryString {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/${sudokuConfig.retryCount}";
   }
 
   List<int>? noteValue(Point point) {
-    return sudokuContent.getNoteValue(point);
+    return sudoku.getNoteValue(point);
   }
 
   Future<void> refresh(DateTime dateTime, Difficulty difficulty) async {
@@ -76,52 +58,47 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void onTapped(Point point) {
-    selectPoint = point;
-    sudokuColor.update(
-      selected: point,
-      highlightPoints: sudokuContent.highlight(point),
-      relatedPoints: sudokuContent.related(point),
-    );
+    sudoku.setSelected(point);
 
     notifyListeners();
   }
 
-  String get dateString => sudoku.dateTime.toString();
+  String get dateString => sudoku.dateTime;
 
   int getValue(Point point) {
-    return sudokuContent.getValue(point);
+    return sudoku.getValue(point);
   }
 
   Difficulty get difficulty => sudoku.difficulty;
 
   GameStatus onInput(int value) {
-    if (sudoku.hasValue(selectPoint) || isCorrect) {
+    if (sudoku.hasValue() || isCorrect) {
       return gameStatus;
     }
 
-    if (enableNotes) {
-      sudokuContent.updateNotesMap(selectPoint, value);
-      sudokuContent.update(selectPoint, 0);
-      sudokuColor.putHighlightColor([]);
+    if (sudoku.enableNotes) {
+      sudoku.updateNotesMap(value);
+      sudoku.update(0);
+      sudoku.sudokuColor.putHighlightColor([]);
 
       notifyListeners();
       return gameStatus;
     }
 
-    sudokuContent.removeNote(selectPoint);
-    sudokuContent.update(selectPoint, value);
-    sudokuColor.putRelatedColor(sudokuContent.related(selectPoint));
-    sudokuColor.putHighlightColor(sudokuContent.highlight(selectPoint));
+    sudoku.removeNote();
+    sudoku.update(value);
+    sudoku.sudokuColor.putRelatedColor(sudoku.related());
+    sudoku.sudokuColor.putHighlightColor(sudoku.highlight());
 
     if (isNotCorrect) {
-      sudokuColor.putTextColor(selectPoint, errorColor);
+      sudoku.sudokuColor.putTextColor(errorColor);
       retryCount = retryCount + 1;
       if (retryCount >= sudokuConfig.retryCount) {
         gameStatus = GameStatus.failed;
       }
     } else {
-      sudokuColor.putTextColor(selectPoint, inputColor);
-      if (sudoku.isSuccess(sudokuContent.content)) {
+      sudoku.sudokuColor.putTextColor(inputColor);
+      if (sudoku.isSuccess()) {
         gameStatus = GameStatus.success;
       }
     }
@@ -132,11 +109,11 @@ class SudokuNotifier extends ChangeNotifier {
 
   void useTip() {
     if (isNotCorrect) {
-      sudokuContent.update(selectPoint, sudoku.correctValue(selectPoint));
-      sudokuContent.removeNote(selectPoint);
+      sudoku.update(sudoku.correctValue());
+      sudoku.removeNote();
 
-      sudokuColor.putTextColor(selectPoint, inputColor);
-      sudokuColor.putHighlightColor(sudokuContent.highlight(selectPoint));
+      sudoku.sudokuColor.putTextColor(inputColor);
+      sudoku.sudokuColor.putHighlightColor(sudoku.highlight());
 
       tipCount = tipCount - 1;
 
@@ -145,7 +122,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   void toggleNote() {
-    enableNotes = !enableNotes;
+    sudoku.toggleNote();
 
     notifyListeners();
   }

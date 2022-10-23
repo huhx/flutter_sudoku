@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
 
-import 'sudoku_info.dart';
-
 class SudokuRequest extends Equatable {
   final DateTime dateTime;
   final Difficulty difficulty;
@@ -61,15 +59,6 @@ class SudokuResponse extends Equatable {
     required this.difficulty,
     required this.dateTime,
   });
-
-  SudokuInfo toSudoku() {
-    return SudokuInfo(
-      question: toQuestion(),
-      answer: toAnswer(),
-      difficulty: difficulty,
-      dateTime: dateTime,
-    );
-  }
 
   @override
   List<Object?> get props => [question, answer, difficulty, dateTime];
