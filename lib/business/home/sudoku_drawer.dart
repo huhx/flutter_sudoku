@@ -5,7 +5,7 @@ import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
 
 class SudokuDrawer extends StatelessWidget {
-  const SudokuDrawer({Key? key}) : super(key: key);
+  const SudokuDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,10 @@ class SudokuDrawer extends StatelessWidget {
             decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text("每日数独", style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 24, color: Colors.white)),
+              child: Text(
+                "每日数独",
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 24, color: Colors.white),
+              ),
             ),
           ),
           ListTile(
