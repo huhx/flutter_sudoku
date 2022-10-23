@@ -37,11 +37,4 @@ class ListUtil {
     final List<Point> matchedPoints = match(lists, point);
     return {for (var point in matchedPoints) point: highlightColor};
   }
-
-  static Set<Point> related(int x, int y) {
-    final int timeX = (x / 3).floor();
-    final int timeY = (y / 3).floor();
-
-    return lists.map((point) => Point(x: point.x + timeX * 3, y: point.y + timeY * 3)).toSet();
-  }
 }

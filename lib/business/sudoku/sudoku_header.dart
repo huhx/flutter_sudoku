@@ -12,13 +12,16 @@ class SudokuHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color? color = sudokuNotifier.retryCount == 0 ? null : Colors.red;
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(sudokuNotifier.difficulty.label),
-        const SudokuCounter(initSeconds: 0),
-        Text(sudokuNotifier.retryString, style: TextStyle(color: color)),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(sudokuNotifier.difficulty.label),
+          const SudokuCounter(initSeconds: 0),
+          Text(sudokuNotifier.retryString, style: TextStyle(color: color)),
+        ],
+      ),
     );
   }
 }

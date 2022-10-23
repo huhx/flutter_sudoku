@@ -31,6 +31,12 @@ class CounterNotifier extends ChangeNotifier {
     }
   }
 
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   String get secondsString {
     final int second = seconds % 60;
     final int minute = (seconds / 60).floor();
