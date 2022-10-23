@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
+import 'package:flutter_sudoku/util/list_util.dart';
 
 class SudokuRequest extends Equatable {
   final DateTime dateTime;
@@ -146,7 +148,7 @@ class SudokuInfo extends Equatable {
     return points;
   }
 
-  bool checkPoint(Point point, int value) {
+  bool checkValue(Point point, int value) {
     return answer[point.x][point.y] == value;
   }
 
@@ -203,6 +205,35 @@ class Point extends Equatable {
     return Point(x: x, y: y);
   }
 
+  BoxBorder get border {
+    const BorderSide borderSide = BorderSide(color: Colors.blue, width: 2.0);
+    final List<int> columnIndexes = [0, 3, 6];
+    final List<int> rowIndexes = [0, 3, 6];
+    BorderSide top = BorderSide.none, bottom = BorderSide.none, left = BorderSide.none, right = BorderSide.none;
+
+    if (columnIndexes.contains(y)) {
+      left = borderSide;
+    } else {
+      left = const BorderSide(color: Colors.grey);
+    }
+
+    if (rowIndexes.contains(x)) {
+      top = borderSide;
+    } else {
+      top = const BorderSide(color: Colors.grey);
+    }
+
+    if (y == 8) {
+      right = borderSide;
+    }
+
+    if (x == 8) {
+      bottom = borderSide;
+    }
+
+    return Border(top: top, bottom: bottom, left: left, right: right);
+  }
+
   @override
   List<Object?> get props => [x, y];
 }
@@ -217,8 +248,27 @@ class SudokuContent {
     return this;
   }
 
-  int fromPoint(Point point) {
+  int getValue(Point point) {
     return content[point.x][point.y];
+  }
+
+  List<Point> highlight(Point point) {
+    return ListUtil.match(content, point);
+  }
+
+  List<Point> related(Point point) {
+    List<Point> relatedList = [];
+    for (int i = 0; i < content.length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        if (i == point.x && j == point.y) {
+          continue;
+        }
+        if (i == point.x || j == point.y) {
+          relatedList.add(Point.from(i, j));
+        }
+      }
+    }
+    return relatedList;
   }
 }
 

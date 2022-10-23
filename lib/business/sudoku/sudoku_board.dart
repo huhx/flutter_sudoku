@@ -31,14 +31,14 @@ class SudokuCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<int>? noteValue = sudokuNotifier.noteValue(point);
-    final int number = sudokuNotifier.valueFromPoint(point);
+    final int number = sudokuNotifier.getValue(point);
 
     return InkWell(
       onTap: () => sudokuNotifier.onTapped(point),
       child: AspectRatio(
         aspectRatio: 1,
         child: Container(
-          decoration: BoxDecoration(border: sudokuNotifier.getBorder(point), color: sudokuNotifier.getColor(point)),
+          decoration: BoxDecoration(border: point.border, color: sudokuNotifier.getColor(point)),
           alignment: Alignment.center,
           child: noteValue != null && noteValue.isNotEmpty
               ? SudokuNoteCell(noteValue)
