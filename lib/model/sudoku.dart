@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
-import 'package:flutter_sudoku/util/list_util.dart';
 
 class SudokuRequest extends Equatable {
   final DateTime dateTime;
@@ -240,8 +240,9 @@ class Point extends Equatable {
 
 class SudokuContent {
   final List<List<int>> content;
+  final Map<Point, List<int>?> notesMap;
 
-  const SudokuContent({required this.content});
+  const SudokuContent({required this.content, required this.notesMap});
 
   SudokuContent update(Point point, int value) {
     content[point.x][point.y] = value;
@@ -252,8 +253,36 @@ class SudokuContent {
     return content[point.x][point.y];
   }
 
+  List<int>? getNoteValue(Point point) {
+    return notesMap[point];
+  }
+
+  void updateNotesMap(Point point, int value) {
+    final List<int>? list = notesMap[point];
+      if (list == null || list.isEmpty) {
+        notesMap[point] = [value];
+      } else {
+        notesMap[point] = list.addOrRemove(value);
+      }
+  }
+
+  void remove(Point point) {
+    notesMap.remove(point);
+  }
+
   List<Point> highlight(Point point) {
-    return ListUtil.match(content, point);
+    if (content[point.x][point.y] == 0) {
+      return [];
+    }
+    List<Point> points = [];
+    for (int i = 0; i < content.length; i++) {
+      for (int j = 0; j < content[i].length; j++) {
+        if ((i != point.x && j != point.y) && content[point.x][point.y] == content[i][j]) {
+          points.add(Point(x: i, y: j));
+        }
+      }
+    }
+    return points;
   }
 
   List<Point> related(Point point) {
