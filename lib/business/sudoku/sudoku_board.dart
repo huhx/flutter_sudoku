@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
-import 'package:flutter_sudoku/model/sudoku.dart';
+import 'package:flutter_sudoku/model/sudoku_point.dart';
 
 class SudokuBoard extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
