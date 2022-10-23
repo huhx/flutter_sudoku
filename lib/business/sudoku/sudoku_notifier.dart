@@ -5,7 +5,6 @@ import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:flutter_sudoku/theme/color.dart';
-import 'package:flutter_sudoku/util/list_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
@@ -50,40 +49,20 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Color? getColor(Point point) {
-    final Map<Point, Color> selectColorMap = {selectPoint: selectedColor};
-    final Map<Point, Color> highlightColorMap = _highlight();
-    final Map<Point, Color> relatedColorMap = _related();
-
-    return {...highlightColorMap, ...relatedColorMap, ...selectColorMap}[point];
-  }
-
-  BoxBorder getBorder(Point point) {
-    const BorderSide borderSide = BorderSide(color: Colors.blue, width: 2.0);
-    final List<int> columnIndexes = [0, 3, 6];
-    final List<int> rowIndexes = [0, 3, 6];
-    BorderSide top = BorderSide.none, bottom = BorderSide.none, left = BorderSide.none, right = BorderSide.none;
-
-    if (columnIndexes.contains(point.y)) {
-      left = borderSide;
-    } else {
-      left = const BorderSide(color: Colors.grey);
+    if (point == selectPoint) {
+      return selectedColor;
     }
 
-    if (rowIndexes.contains(point.x)) {
-      top = borderSide;
-    } else {
-      top = const BorderSide(color: Colors.grey);
+    final List<Point> highlightPoints = sudokuContent.highlight(selectPoint);
+    if (highlightPoints.contains(point)) {
+      return highlightColor;
     }
 
-    if (point.y == 8) {
-      right = borderSide;
+    final List<Point> relatedPoints = sudokuContent.related(selectPoint);
+    if (relatedPoints.contains(point)) {
+      return relatedColor;
     }
-
-    if (point.x == 8) {
-      bottom = borderSide;
-    }
-
-    return Border(top: top, bottom: bottom, left: left, right: right);
+    return null;
   }
 
   Color? getTextColor(Point point) {
@@ -93,7 +72,8 @@ class SudokuNotifier extends ChangeNotifier {
   bool get isNotCorrect => !isCorrect;
 
   bool get isCorrect {
-    return sudoku.checkPoint(selectPoint, sudokuContent.fromPoint(selectPoint));
+    final int value = sudokuContent.getValue(selectPoint);
+    return sudoku.checkValue(selectPoint, value);
   }
 
   String get retryString {
@@ -118,8 +98,8 @@ class SudokuNotifier extends ChangeNotifier {
     return sudoku.dateTime.toString();
   }
 
-  int valueFromPoint(Point point) {
-    return sudokuContent.fromPoint(point);
+  int getValue(Point point) {
+    return sudokuContent.getValue(point);
   }
 
   Difficulty get difficulty => sudoku.difficulty;
@@ -163,11 +143,6 @@ class SudokuNotifier extends ChangeNotifier {
     return gameStatus;
   }
 
-  Map<Point, Color> _highlight() {
-    final List<Point> matchedPoints = ListUtil.match(sudokuContent.content, selectPoint);
-    return {for (var point in matchedPoints) point: highlightColor};
-  }
-
   void useTip() {
     if (isNotCorrect) {
       textColorMap[selectPoint] = inputColor;
@@ -183,21 +158,6 @@ class SudokuNotifier extends ChangeNotifier {
     enableNotes = !enableNotes;
 
     notifyListeners();
-  }
-
-  Map<Point, Color> _related() {
-    Map<Point, Color> relatedColorMap = {};
-    for (int i = 0; i < sudokuContent.content.length; i++) {
-      for (int j = 0; j < sudokuContent.content[i].length; j++) {
-        if (i == selectPoint.x && j == selectPoint.y) {
-          continue;
-        }
-        if (i == selectPoint.x || j == selectPoint.y) {
-          relatedColorMap[Point(x: i, y: j)] = relatedColor;
-        }
-      }
-    }
-    return relatedColorMap;
   }
 }
 
