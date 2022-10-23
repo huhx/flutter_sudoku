@@ -40,7 +40,7 @@ class SudokuCell extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(border: sudokuNotifier.getBorder(point), color: sudokuNotifier.getColor(point)),
           alignment: Alignment.center,
-          child: sudokuNotifier.enableNotes && noteValue != null && noteValue.isNotEmpty
+          child: noteValue != null && noteValue.isNotEmpty
               ? SudokuNoteCell(noteValue)
               : SudokuNormalCell(number, sudokuNotifier.getTextColor(point)),
         ),

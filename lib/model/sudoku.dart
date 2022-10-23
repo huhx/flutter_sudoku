@@ -130,6 +130,10 @@ class SudokuInfo extends Equatable {
     return question[point.x][point.y] != 0;
   }
 
+  List<List<int>> deepCopy() {
+    return question.map((e) => e.toList()).toList();
+  }
+
   List<Point> empty() {
     List<Point> points = [];
     for (int i = 0; i < question.length; i++) {
@@ -143,7 +147,7 @@ class SudokuInfo extends Equatable {
   }
 
   bool checkPoint(Point point, int value) {
-    return question[point.x][point.y] == value;
+    return answer[point.x][point.y] == value;
   }
 
   bool hasNoValue(Point point) {
