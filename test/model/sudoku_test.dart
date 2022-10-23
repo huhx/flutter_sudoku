@@ -1,4 +1,5 @@
 import 'package:flutter_sudoku/model/sudoku.dart';
+import 'package:flutter_sudoku/model/sudoku_info.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -9,7 +10,7 @@ void main() {
       dateTime: "20220909");
 
   test("should return question arrays when invoke fromQuestion", () {
-    final List<List<int>> result = response.fromQuestion();
+    final List<List<int>> result = response.toQuestion();
 
     expect(result, [
       [8, 0, 0, 0, 7, 0, 0, 0, 0],
@@ -25,7 +26,7 @@ void main() {
   });
 
   test("should return answer arrays when invoke fromAnswer", () {
-    final List<List<int>> result = response.fromAnswer();
+    final List<List<int>> result = response.toAnswer();
 
     expect(result, [
       [8, 9, 6, 4, 7, 5, 3, 1, 2],

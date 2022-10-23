@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
+import 'package:flutter_sudoku/model/sudoku_info.dart';
 import 'package:flutter_sudoku/util/dio_util.dart';
 
 class SudokuApi {

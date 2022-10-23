@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/theme/color.dart';
+
+import 'sudoku_point.dart';
 
 class SudokuColor {
   Point selected;
@@ -23,7 +24,7 @@ class SudokuColor {
     textColorMap[point] = color;
   }
 
-  void putReleatedColor(List<Point> relatedPoints) {
+  void putRelatedColor(List<Point> relatedPoints) {
     this.relatedPoints = relatedPoints;
   }
 

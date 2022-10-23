@@ -4,6 +4,9 @@ import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_color.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
+import 'package:flutter_sudoku/model/sudoku_content.dart';
+import 'package:flutter_sudoku/model/sudoku_info.dart';
+import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -105,9 +108,9 @@ class SudokuNotifier extends ChangeNotifier {
       return gameStatus;
     }
 
-    sudokuContent.remove(selectPoint);
+    sudokuContent.removeNote(selectPoint);
     sudokuContent.update(selectPoint, value);
-    sudokuColor.putReleatedColor(sudokuContent.related(selectPoint));
+    sudokuColor.putRelatedColor(sudokuContent.related(selectPoint));
     sudokuColor.putHighlightColor(sudokuContent.highlight(selectPoint));
 
     if (isNotCorrect) {
@@ -130,7 +133,7 @@ class SudokuNotifier extends ChangeNotifier {
   void useTip() {
     if (isNotCorrect) {
       sudokuContent.update(selectPoint, sudoku.correctValue(selectPoint));
-      sudokuContent.remove(selectPoint);
+      sudokuContent.removeNote(selectPoint);
 
       sudokuColor.putTextColor(selectPoint, inputColor);
       sudokuColor.putHighlightColor(sudokuContent.highlight(selectPoint));
