@@ -110,6 +110,7 @@ class SudokuNotifier extends ChangeNotifier {
 
       relatedPoints = _related();
       highlightPoints = _highlight();
+      textColorMap[selected] = inputColor;
 
       tipCount = tipCount - 1;
 
@@ -168,6 +169,10 @@ class SudokuNotifier extends ChangeNotifier {
 
   int getValue(Point point) {
     return content[point.x][point.y];
+  }
+
+  bool get canUseTip {
+    return question[selected.x][selected.y] == 0 && _isNotCorrect;
   }
 
   bool get canClear {
