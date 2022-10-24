@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_sudoku/common/date_extension.dart';
 
 import 'sudoku.dart';
 
@@ -31,6 +32,18 @@ class SudokuRecord extends Equatable {
     required this.endTime,
     required this.createTime,
   });
+
+  String get dateString {
+    return DateTime(year, month, day).toDateString();
+  }
+
+  String get startString {
+    return DateTime(startTime).toDateTimeString;
+  }
+
+   String get endString {
+    return DateTime(endTime).toDateTimeString;
+  }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

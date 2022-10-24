@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/home/sudoku_calendar_screen.dart';
+import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_board.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_header.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_key_pad.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/component/center_progress_indicator.dart';
 import 'package:flutter_sudoku/component/svg_action_icon.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
-import 'package:flutter_sudoku/util/comm_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'sudoku_setting_screen.dart';
@@ -41,7 +41,7 @@ class SudokuScreen extends HookConsumerWidget {
         actions: [
           SvgActionIcon(
             name: "sudoku_color",
-            onTap: () => CommUtil.toBeDev(),
+            onTap: () => context.goto(const SudokuRecordListScreen()),
           ),
           SvgActionIcon(
             name: "sudoku_setting",

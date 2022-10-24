@@ -10,4 +10,8 @@ extension DateExtension on DateTime {
   }
 
   DateTime get toDate => DateTime(year, month, day);
+
+  String get toDateTimeString {
+    return DateFormat("yyyy-MM-dd hh:mm:ss").format(this);
+  }
 }
