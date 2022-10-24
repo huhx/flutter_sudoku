@@ -74,8 +74,6 @@ class SudokuNotifier extends ChangeNotifier {
       } else {
         notesMap[selected] = list.addOrRemove(value);
       }
-
-      content[selected.x][selected.y] = 0;
       highlightPoints = [];
 
       notifyListeners();
