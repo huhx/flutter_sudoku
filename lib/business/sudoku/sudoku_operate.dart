@@ -18,9 +18,9 @@ class SudokuOperate extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           OperateItem(
-            icon: const SvgIcon(name: "operate_clear", color: themeColor),
+            icon: SvgIcon(name: "operate_clear", color: sudokuNotifier.canClear ? themeColor : Colors.grey),
             label: "擦除",
-            onPressed: () => sudokuNotifier.clear(),
+            onPressed: sudokuNotifier.canClear ? () => sudokuNotifier.clear() : null,
           ),
           OperateItem(
             icon: Badge(
@@ -56,7 +56,7 @@ class SudokuOperate extends StatelessWidget {
 class OperateItem extends StatelessWidget {
   final Widget icon;
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const OperateItem({
     super.key,
