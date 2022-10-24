@@ -45,7 +45,7 @@ class SudokuNotifier extends ChangeNotifier {
     tipCount = sudokuConfig.tipCount;
     highlightPoints = _highlight();
     relatedPoints = _related();
-    textColorMap = {for (var point in _empty()) point: inputColor};
+    textColorMap = {for (final point in _empty()) point: inputColor};
 
     state = ResultState.success();
 

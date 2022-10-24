@@ -13,6 +13,7 @@ class CounterNotifier extends ChangeNotifier {
 
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
       seconds = seconds + 1;
+
       notifyListeners();
     });
   }
@@ -23,18 +24,14 @@ class CounterNotifier extends ChangeNotifier {
     if (isStart) {
       timer = Timer.periodic(const Duration(seconds: 1), (_) {
         seconds = seconds + 1;
+
         notifyListeners();
       });
     } else {
       timer?.cancel();
+
       notifyListeners();
     }
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
   }
 
   String get secondsString {
@@ -45,10 +42,14 @@ class CounterNotifier extends ChangeNotifier {
     final String minuteString = minute < 10 ? "0$minute" : "$minute";
     return "$minuteString:$secondString";
   }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 }
 
 final counterProvider = ChangeNotifierProvider.autoDispose.family<CounterNotifier, int>((ref, seconds) {
-  final CounterNotifier counterNotifier = CounterNotifier();
-  counterNotifier.init(seconds);
-  return counterNotifier;
+  return CounterNotifier()..init(seconds);
 });
