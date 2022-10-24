@@ -132,10 +132,35 @@ class SudokuRecordItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: CircleAvatar(child: Text("${sudokuRecord.duration}")),
-        title: Text(sudokuRecord.dateString),
-        subtitle: Text("${sudokuRecord.startString} ~ ${sudokuRecord.endString}"),
+        leading: CircleAvatar(
+          backgroundColor: _buildColor(sudokuRecord),
+          child: Text("${sudokuRecord.duration}"),
+        ),
+        title: Text(sudokuRecord.startString),
+        subtitle: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Row(
+            children: [
+              TextIcon(icon: "game_status", text: sudokuRecord.gameStatus.label),
+              const SizedBox(width: 16),
+              TextIcon(icon: "user_tips", text: "${sudokuRecord.tips}次"),
+              const SizedBox(width: 16),
+              TextIcon(icon: "difficulty", text: sudokuRecord.difficulty.label),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  Color _buildColor(SudokuRecord sudokuRecord) {
+    final int duration = sudokuRecord.duration;
+    if (duration > 15 * 60) {
+      return Colors.red;
+    } else if (duration > 5 * 60) {
+      return Colors.blue;
+    } else {
+      return Colors.green;
+    }
   }
 }
