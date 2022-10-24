@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
+import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/common/stream_list.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/component/center_progress_indicator.dart';
 import 'package:flutter_sudoku/component/empty_widget.dart';
+import 'package:flutter_sudoku/component/svg_action_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -36,6 +38,20 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
       appBar: AppBar(
         leading: const AppbarBackButton(),
         title: const Text("数独记录"),
+        actions: [
+          SvgActionIcon(
+              name: "delete",
+              onTap: () {
+                context.showCommDialog(
+                  callback: () async {
+                    await sudokuRecordApi.deleteAll();
+                    streamList.reset([]);
+                  },
+                  title: '清空记录',
+                  content: '你确定清空数独记录?',
+                );
+              })
+        ],
       ),
       body: StreamBuilder(
         stream: streamList.stream,

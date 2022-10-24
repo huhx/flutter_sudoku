@@ -9,7 +9,8 @@ class SudokuRecord extends Equatable {
   final int month;
   final int day;
   final Difficulty difficulty;
-  final GameStatus status;
+  final GameStatus gameStatus;
+  final LogStatus logStatus;
   final int duration;
   final int tips;
   final int startTime;
@@ -17,7 +18,8 @@ class SudokuRecord extends Equatable {
   final int createTime;
 
   @override
-  List<Object?> get props => [id, year, month, day, difficulty, status, duration, createTime];
+  List<Object?> get props =>
+      [id, year, month, day, difficulty, gameStatus, logStatus, duration, tips, startTime, endTime, createTime];
 
   const SudokuRecord({
     this.id,
@@ -25,7 +27,8 @@ class SudokuRecord extends Equatable {
     required this.month,
     required this.day,
     required this.difficulty,
-    required this.status,
+    required this.gameStatus,
+    required this.logStatus,
     required this.duration,
     required this.tips,
     required this.startTime,
@@ -38,11 +41,11 @@ class SudokuRecord extends Equatable {
   }
 
   String get startString {
-    return DateTime(startTime).toDateTimeString;
+    return DateTime.fromMillisecondsSinceEpoch(startTime).toDateTimeString;
   }
 
-   String get endString {
-    return DateTime(endTime).toDateTimeString;
+  String get endString {
+    return DateTime.fromMillisecondsSinceEpoch(endTime).toDateTimeString;
   }
 
   Map<String, dynamic> toJson() {
@@ -52,7 +55,8 @@ class SudokuRecord extends Equatable {
       'month': month,
       'day': day,
       'difficulty': difficulty.level,
-      'status': status.name,
+      'gameStatus': gameStatus.name,
+      'logStatus': logStatus.name,
       'duration': duration,
       'tips': tips,
       'startTime': startTime,
@@ -68,7 +72,8 @@ class SudokuRecord extends Equatable {
       month: json['month'] as int,
       day: json['day'] as int,
       difficulty: Difficulty.from(json['difficulty'] as int),
-      status: GameStatus.values.byName(json['status'] as String),
+      gameStatus: GameStatus.values.byName(json['gameStatus'] as String),
+      logStatus: LogStatus.values.byName(json['logStatus'] as String),
       duration: json['duration'] as int,
       tips: json['tips'] as int,
       startTime: json['startTime'] as int,
@@ -77,3 +82,5 @@ class SudokuRecord extends Equatable {
     );
   }
 }
+
+enum LogStatus { normal, delete }

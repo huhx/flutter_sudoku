@@ -13,7 +13,8 @@ class SudokuRecordApi {
       month INTEGER NOT NULL,
       day INTEGER NOT NULL,
       difficulty INTEGER NOT NULL,
-      status TEXT NOT NULL,
+      gameStatus TEXT NOT NULL,
+      logStatus TEXT NOT NULL,
       duration INTEGER NOT NULL,
       tips INTEGER NOT NULL,
       startTime INTEGER NOT NULL,
@@ -25,6 +26,16 @@ class SudokuRecordApi {
   Future<void> insert(SudokuRecord sudokuRecord) async {
     final Database db = await _getDB();
     await db.insert(tableName, sudokuRecord.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<void> deleteAll() async {
+    final Database db = await _getDB();
+    await db.rawUpdate('UPDATE sudoku_record SET logStatus = ?', [LogStatus.delete.name]);
+  }
+
+  Future<void> clear() async {
+    final Database db = await _getDB();
+    await db.delete(tableName);
   }
 
   Future<List<SudokuRecord>> querySudokuRecord(SudokuRequest request) async {
@@ -43,6 +54,8 @@ class SudokuRecordApi {
     final Database db = await _getDB();
     final List<Map<String, dynamic>> maps = await db.query(
       tableName,
+      where: 'logStatus = ?',
+      whereArgs: [LogStatus.normal.name],
       offset: (pageNum - 1) * 20,
       limit: 20,
       orderBy: 'createTime desc',
