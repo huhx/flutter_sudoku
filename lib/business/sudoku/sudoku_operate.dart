@@ -18,6 +18,11 @@ class SudokuOperate extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           OperateItem(
+            icon: const SvgIcon(name: "operate_clear", color: themeColor),
+            label: "擦除",
+            onPressed: () => sudokuNotifier.clear(),
+          ),
+          OperateItem(
             icon: Badge(
               padding: const EdgeInsets.all(3),
               badgeContent: sudokuNotifier.enableNotes

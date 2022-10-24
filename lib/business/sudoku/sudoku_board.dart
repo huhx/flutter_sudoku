@@ -30,7 +30,7 @@ class SudokuCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<int>? noteValue = sudokuNotifier.noteValue(point);
+    final List<int>? noteValue = sudokuNotifier.getNoteValue(point);
     final int number = sudokuNotifier.getValue(point);
 
     return InkWell(
