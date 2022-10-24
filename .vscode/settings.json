@@ -28,5 +28,5 @@
         "list.hoverBackground": "#44475A75",
         "list.focusBackground": "#b975c2"
     },
-    "editor.semanticHighlighting.enabled": true
+    "editor.semanticHighlighting.enabled": false
 }
