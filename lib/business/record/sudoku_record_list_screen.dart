@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
+import 'package:flutter_sudoku/common/int_extension.dart';
+import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/stream_list.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/component/center_progress_indicator.dart';
 import 'package:flutter_sudoku/component/empty_widget.dart';
 import 'package:flutter_sudoku/component/svg_action_icon.dart';
+import 'package:flutter_sudoku/component/text_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
+import 'package:flutter_sudoku/util/date_util.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SudokuRecordListScreen extends StatefulWidget {
@@ -63,19 +67,46 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
             return const EmptyWidget(message: "阅读记录为空");
           }
 
+          final Map<String, List<SudokuRecord>> recordLogMap =
+              sudokuRecords.groupBy((readLog) => readLog.createTime.toDateString());
+
           return SmartRefresher(
             controller: streamList.refreshController,
             onRefresh: () => streamList.onRefresh(),
             onLoading: () => streamList.onLoading(),
             enablePullUp: true,
             child: ListView.builder(
-              itemCount: sudokuRecords.length,
+              itemCount: recordLogMap.length,
               itemBuilder: (_, index) {
-                final SudokuRecord sudokuRecord = sudokuRecords[index];
-                return ListTile(
-                  leading: CircleAvatar(child: Text("${sudokuRecord.duration}")),
-                  title: Text(sudokuRecord.dateString),
-                  subtitle: Text("${sudokuRecord.startString} ~ ${sudokuRecord.endString}"),
+                final String key = recordLogMap.keys.elementAt(index);
+                final List<SudokuRecord> recordLogItems = recordLogMap[key]!;
+
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  primary: false,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SimpleTextIcon(icon: "sudoku_log", text: key),
+                                SimpleTextIcon(icon: "weekday", text: DateUtil.getWeekFromString(key)),
+                              ],
+                            ),
+                          ),
+                          SudokuRecordItem(recordLogItems[index], key: ValueKey(recordLogItems[index].id)),
+                        ],
+                      );
+                    }
+                    return SudokuRecordItem(recordLogItems[index], key: ValueKey(recordLogItems[index].id));
+                  },
+                  itemCount: recordLogItems.length,
                 );
               },
             ),
@@ -89,5 +120,22 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
   void dispose() {
     streamList.dispose();
     super.dispose();
+  }
+}
+
+class SudokuRecordItem extends StatelessWidget {
+  final SudokuRecord sudokuRecord;
+
+  const SudokuRecordItem(this.sudokuRecord, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: CircleAvatar(child: Text("${sudokuRecord.duration}")),
+        title: Text(sudokuRecord.dateString),
+        subtitle: Text("${sudokuRecord.startString} ~ ${sudokuRecord.endString}"),
+      ),
+    );
   }
 }
