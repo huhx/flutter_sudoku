@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
+import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
+import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
   static const List<int> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+  late DateTime startTime;
   late List<List<int>> question;
   late List<List<int>> content;
   late List<List<int>> answer;
   late Map<Point, List<int>?> notesMap;
   late Difficulty difficulty;
-  late String dateTime;
+  late DateTime dateTime;
 
   late List<Point> highlightPoints;
   late List<Point> relatedPoints;
@@ -35,12 +38,13 @@ class SudokuNotifier extends ChangeNotifier {
     final SudokuResponse sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
 
     selected = Point.first();
+    startTime = DateTime.now();
     enableNotes = false;
     question = sudokuResponse.toQuestion();
     content = sudokuResponse.toQuestion();
     answer = sudokuResponse.toAnswer();
     notesMap = {};
-    this.dateTime = sudokuResponse.dateTime;
+    this.dateTime = dateTime;
     this.difficulty = sudokuResponse.difficulty;
     gameStatus = GameStatus.running;
     retryCount = 0;
@@ -89,16 +93,36 @@ class SudokuNotifier extends ChangeNotifier {
       textColorMap[selected] = errorColor;
       if (++retryCount >= sudokuConfig.retryCount) {
         gameStatus = GameStatus.failed;
+        saveSudokuRecord();
       }
     } else {
       textColorMap[selected] = inputColor;
       if (_isSuccess()) {
         gameStatus = GameStatus.success;
+        saveSudokuRecord();
       }
     }
 
     notifyListeners();
     return gameStatus;
+  }
+
+  void saveSudokuRecord() async {
+    final int now = DateTime.now().millisecondsSinceEpoch;
+    final SudokuRecord sudokuRecord = SudokuRecord(
+      year: dateTime.year,
+      month: dateTime.month,
+      day: dateTime.day,
+      difficulty: difficulty,
+      status: gameStatus,
+      duration: ((now - startTime.millisecondsSinceEpoch) / 1000).floor(),
+      tips: retryCount,
+      startTime: startTime.millisecondsSinceEpoch,
+      endTime: now,
+      createTime: now,
+    );
+
+    await sudokuRecordApi.insert(sudokuRecord);
   }
 
   void useTip() {

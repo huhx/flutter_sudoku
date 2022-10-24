@@ -8,13 +8,16 @@ class SudokuRecordApi {
   final dbName = 'sudoku_record.db';
   final tableScript = '''
     CREATE TABLE sudoku_record(
-      id TEXT PRIMARY KEY,
+      id INTEGER PRIMARY KEY,
       year INTEGER NOT NULL,
       month INTEGER NOT NULL,
       day INTEGER NOT NULL,
       difficulty INTEGER NOT NULL,
       status TEXT NOT NULL,
       duration INTEGER NOT NULL,
+      tips INTEGER NOT NULL,
+      startTime INTEGER NOT NULL,
+      endTime INTEGER NOT NULL,
       createTime INTEGER NOT NULL
     )
   ''';
@@ -56,4 +59,4 @@ class SudokuRecordApi {
   }
 }
 
-final readLogApi = SudokuRecordApi();
+final sudokuRecordApi = SudokuRecordApi();
