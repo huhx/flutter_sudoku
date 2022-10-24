@@ -176,7 +176,8 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   bool get canClear {
-    return question[selected.x][selected.y] == 0 && _isNotCorrect;
+    bool hasContent = content[selected.x][selected.y] != 0 || _hasNoteValue;
+    return question[selected.x][selected.y] == 0 && hasContent && _isNotCorrect;
   }
 
   bool isEnable(int value) {
@@ -195,6 +196,11 @@ class SudokuNotifier extends ChangeNotifier {
 
   bool get _isCorrect {
     return answer[selected.x][selected.y] == content[selected.x][selected.y];
+  }
+
+  bool get _hasNoteValue {
+    final List<int>? noteValues = getNoteValue(selected);
+    return noteValues != null && noteValues.isNotEmpty;
   }
 
   bool _isSuccess() {
