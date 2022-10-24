@@ -8,7 +8,7 @@ import 'package:flutter_sudoku/util/comm_util.dart';
 class SudokuOperate extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
 
-  const SudokuOperate(this.sudokuNotifier, {Key? key}) : super(key: key);
+  const SudokuOperate(this.sudokuNotifier, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,21 +35,24 @@ class SudokuOperate extends StatelessWidget {
           ),
           OperateItem(
             icon: Badge(
+              badgeColor: sudokuNotifier.canUseTip ? Colors.red : Colors.grey,
               badgeContent: Text("${sudokuNotifier.tipCount}", style: const TextStyle(fontSize: 10)),
-              child: const SvgIcon(name: "operate_tip", color: themeColor),
+              child: SvgIcon(name: "operate_tip", color: sudokuNotifier.canUseTip ? themeColor : Colors.grey),
             ),
             label: "提示",
-            onPressed: () {
-              if (sudokuNotifier.tipCount <= 0) {
-                CommUtil.toast(message: "您的提示次数已经用完");
-                return;
-              }
-              sudokuNotifier.useTip();
-            },
+            onPressed: sudokuNotifier.canUseTip ? () => useTip(sudokuNotifier) : null,
           ),
         ],
       ),
     );
+  }
+
+  void useTip(SudokuNotifier sudokuNotifier) {
+    if (sudokuNotifier.tipCount <= 0) {
+      CommUtil.toast(message: "您的提示次数已经用完");
+      return;
+    }
+    sudokuNotifier.useTip();
   }
 }
 
