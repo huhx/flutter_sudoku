@@ -121,6 +121,7 @@ class SudokuNotifier extends ChangeNotifier {
     if (question[selected.x][selected.y] == 0 && _isNotCorrect) {
       content[selected.x][selected.y] = 0;
       notesMap[selected] = [];
+      highlightPoints = [];
 
       textColorMap[selected] = inputColor;
 
@@ -167,6 +168,10 @@ class SudokuNotifier extends ChangeNotifier {
 
   int getValue(Point point) {
     return content[point.x][point.y];
+  }
+
+  bool get canClear {
+    return question[selected.x][selected.y] == 0 && _isNotCorrect;
   }
 
   bool isEnable(int value) {
