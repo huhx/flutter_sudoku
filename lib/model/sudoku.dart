@@ -87,4 +87,12 @@ class SudokuResponse extends Equatable {
   }
 }
 
-enum GameStatus { success, running, failed }
+enum GameStatus {
+  success('成功'),
+  running('运行'),
+  failed('失败');
+
+  final String label;
+
+  const GameStatus(this.label);
+}
