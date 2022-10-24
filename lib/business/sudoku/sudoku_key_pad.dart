@@ -16,7 +16,7 @@ class SudokuKeyPad extends StatelessWidget {
       crossAxisSpacing: 10,
       children: List.generate(
         9,
-        (index) => NumberItem(index + 1, (int num) {
+        (index) => NumberItem(sudokuNotifier.isEnable(index + 1), index + 1, (int num) {
           final GameStatus gameStatus = sudokuNotifier.onInput(num);
           if (gameStatus == GameStatus.success) {
             CommUtil.toast(message: "恭喜你成功过关");
@@ -30,15 +30,16 @@ class SudokuKeyPad extends StatelessWidget {
 }
 
 class NumberItem extends StatelessWidget {
+  final bool isEnable;
   final int number;
   final Function(int) onPressed;
 
-  const NumberItem(this.number, this.onPressed, {super.key});
+  const NumberItem(this.isEnable, this.number, this.onPressed, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onPressed(number),
+      onTap: isEnable ? () => onPressed(number) : null,
       child: AspectRatio(
         aspectRatio: 1,
         child: Container(
@@ -49,7 +50,7 @@ class NumberItem extends StatelessWidget {
           alignment: Alignment.center,
           child: Text(
             number.toString(),
-            style: const TextStyle(fontSize: 24, color: Colors.green),
+            style: TextStyle(fontSize: 24, color: isEnable ? Colors.green: Colors.grey),
           ),
         ),
       ),
