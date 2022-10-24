@@ -9,6 +9,8 @@ import 'package:flutter_sudoku/theme/color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
+  static const List<int> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
   late List<List<int>> question;
   late List<List<int>> content;
   late List<List<int>> answer;
@@ -165,6 +167,18 @@ class SudokuNotifier extends ChangeNotifier {
 
   int getValue(Point point) {
     return content[point.x][point.y];
+  }
+
+  bool isEnable(int value) {
+    return !_disabledValues.contains(value);
+  }
+
+  List<int> get _disabledValues {
+    if (question[selected.x][selected.y] != 0 || _isCorrect) {
+      return numbers;
+    }
+
+    return [content[selected.x][selected.y]];
   }
 
   bool get _isNotCorrect => !_isCorrect;
