@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
@@ -24,9 +28,14 @@ class SudokuRecordNotifier extends ChangeNotifier {
   late Point selected;
   late GameStatus gameStatus;
 
+  Timer? timer;
+
   SudokuRecordNotifier(this.sudokuInputLog);
 
   void init() {
+    if (kDebugMode) {
+      print("init method");
+    }
     question = toSudokuArray(sudokuInputLog.question);
     content = toSudokuArray(sudokuInputLog.question);
     answer = toSudokuArray(sudokuInputLog.answer);
@@ -41,7 +50,22 @@ class SudokuRecordNotifier extends ChangeNotifier {
     textColorMap = {for (final point in _empty()) point: inputColor};
   }
 
-  GameStatus onPlay(SudokuInput sudokuInput) {
+  void startPlay() {
+    timer = Timer.periodic(const Duration(seconds: 4), (_) {
+      final SudokuInput? sudokuInput = sudokuInputLog.sudokuInputs.nullableRemoveLast();
+      if (sudokuInput != null) {
+        _onPlay(sudokuInput);
+
+        notifyListeners();
+      }
+    });
+    notifyListeners();
+  }
+
+  void _onPlay(SudokuInput sudokuInput) {
+    if (kDebugMode) {
+      print("on play method");
+    }
     /**
      * There are four kinds of operation:
      * 1. note model
@@ -63,20 +87,13 @@ class SudokuRecordNotifier extends ChangeNotifier {
       content[selected.x][selected.y] = sudokuInput.value;
 
       highlightPoints = [];
-
-      notifyListeners();
-      return gameStatus;
+    } else {
+      // input model
+      content[selected.x][selected.y] = sudokuInput.value;
+      notesMap[selected] = sudokuInput.noteValues;
+      highlightPoints = _highlight();
+      textColorMap[selected] = sudokuInput.isCorrect ? inputColor : errorColor;
     }
-
-    // input model
-    content[selected.x][selected.y] = sudokuInput.value;
-    notesMap[selected] = sudokuInput.noteValues;
-    highlightPoints = _highlight();
-    textColorMap[selected] = sudokuInput.isCorrect ? inputColor : errorColor;
-
-    notifyListeners();
-
-    return gameStatus;
   }
 
   Color? getColor(Point point) {
@@ -155,6 +172,12 @@ class SudokuRecordNotifier extends ChangeNotifier {
 
   List<int> _toInt(String string) {
     return string.split("").map((e) => e.toInt()).toList();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 }
 
