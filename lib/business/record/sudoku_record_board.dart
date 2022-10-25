@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_board.dart';
+import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,15 +15,26 @@ class SudokuRecordBoard extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sudokuRecordModel = ref.watch(sudokuRecordNotifier(sudokuInputLog));
-    
-    return Table(
-      children: List.generate(
-        9,
-        (row) => TableRow(
-          children: List.generate(9, (column) {
-            return TableCell(child: SudokuRecordCell(Point.from(row, column), sudokuRecordModel));
-          }),
-        ),
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        children: [
+          IconButton(
+            icon: const SvgIcon(name: 'delete', color: Colors.red,),
+            onPressed: () => sudokuRecordModel.startPlay(),
+          ),
+          Table(
+            children: List.generate(
+              9,
+              (row) => TableRow(
+                children: List.generate(9, (column) {
+                  return TableCell(child: SudokuRecordCell(Point.from(row, column), sudokuRecordModel));
+                }),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

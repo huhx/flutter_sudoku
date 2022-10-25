@@ -16,10 +16,7 @@ class SudokuRecordScreen extends StatelessWidget {
         leading: const AppbarBackButton(),
         title: const Text("数独记录详情"),
       ),
-      body: Container(
-        alignment: Alignment.center,
-        child: SudokuRecordBoard(sudokuRecord.sudokuInputLog),
-      ),
+      body: SudokuRecordBoard(sudokuRecord.sudokuInputLog),
     );
   }
 }
