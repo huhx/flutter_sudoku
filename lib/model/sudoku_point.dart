@@ -44,6 +44,14 @@ class Point extends Equatable {
     return Border(top: top, bottom: bottom, left: left, right: right);
   }
 
+  factory Point.fromJson(Map<String, dynamic> json) {
+    return Point(x: json['x'] as int, y: json['y'] as int);
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{'x': x, 'y': y};
+  }
+
   @override
   List<Object?> get props => [x, y];
 }
