@@ -15,7 +15,7 @@ class SudokuRecordApi {
       difficulty INTEGER NOT NULL,
       gameStatus TEXT NOT NULL,
       logStatus TEXT NOT NULL,
-      sudokuInputs TEXT NOT NULL,
+      sudokuInputLog TEXT NOT NULL,
       duration INTEGER NOT NULL,
       errorCount INTEGER NOT NULL,
       tipCount INTEGER NOT NULL,
