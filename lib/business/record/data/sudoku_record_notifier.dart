@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
+import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
@@ -21,11 +21,10 @@ class SudokuRecordNotifier extends ChangeNotifier {
   late Map<Point, Color> textColorMap;
   late List<Point> highlightPoints;
   late List<Point> relatedPoints;
-  late List<SudokuInput> sudokuInputs;
+  late int currentIndex;
 
   late Point selected;
-
-  Timer? timer;
+  late bool _disposed;
 
   SudokuRecordNotifier({required this.sudokuInputLog});
 
@@ -41,17 +40,22 @@ class SudokuRecordNotifier extends ChangeNotifier {
     relatedPoints = _related();
     textColorMap = {for (final point in _empty()) point: inputColor};
 
-    sudokuInputs = [...sudokuInputLog.sudokuInputs];
+    _disposed = false;
+    currentIndex = 0;
   }
 
-  void startPlay() {
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      final SudokuInput? sudokuInput = sudokuInputs.nullableRemoveLast();
-      if (sudokuInput != null) {
+  Future<GameStatus> startPlay() async {
+    while (!_disposed && currentIndex < sudokuInputLog.sudokuInputs.length) {
+      await Future.delayed(const Duration(seconds: 1), () {
+        final SudokuInput sudokuInput = sudokuInputLog.sudokuInputs[currentIndex];
         _onPlay(sudokuInput);
-        notifyListeners();
-      }
-    });
+        if (!_disposed) {
+          notifyListeners();
+        }
+        currentIndex++;
+      });
+    }
+    return _disposed ? GameStatus.running : sudokuInputLog.gameStatus;
   }
 
   void _onPlay(SudokuInput sudokuInput) {
@@ -165,7 +169,7 @@ class SudokuRecordNotifier extends ChangeNotifier {
 
   @override
   void dispose() {
-    timer?.cancel();
+    _disposed = true;
     super.dispose();
   }
 }
