@@ -44,7 +44,9 @@ class SudokuRecordNotifier extends ChangeNotifier {
     currentIndex = 0;
   }
 
-  Future<GameStatus> startPlay() async {
+  Future<GameStatus> resetPlay() async {
+    currentIndex = 0;
+
     while (!_disposed && currentIndex < sudokuInputLog.sudokuInputs.length) {
       await Future.delayed(const Duration(seconds: 1), () {
         final SudokuInput sudokuInput = sudokuInputLog.sudokuInputs[currentIndex];
