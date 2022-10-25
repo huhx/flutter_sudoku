@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
-import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
@@ -18,54 +16,45 @@ class SudokuRecordNotifier extends ChangeNotifier {
   late List<List<int>> content;
   late List<List<int>> answer;
 
-  late bool enableNotes;
   late Map<Point, List<int>?> notesMap;
 
   late Map<Point, Color> textColorMap;
   late List<Point> highlightPoints;
   late List<Point> relatedPoints;
+  late List<SudokuInput> sudokuInputs;
 
   late Point selected;
-  late GameStatus gameStatus;
 
   Timer? timer;
 
-  SudokuRecordNotifier(this.sudokuInputLog);
+  SudokuRecordNotifier({required this.sudokuInputLog});
 
   void init() {
-    if (kDebugMode) {
-      print("init method");
-    }
     question = toSudokuArray(sudokuInputLog.question);
     content = toSudokuArray(sudokuInputLog.question);
     answer = toSudokuArray(sudokuInputLog.answer);
 
     selected = Point.first();
-    enableNotes = false;
     notesMap = {};
-    gameStatus = GameStatus.running;
 
     highlightPoints = _highlight();
     relatedPoints = _related();
     textColorMap = {for (final point in _empty()) point: inputColor};
+
+    sudokuInputs = [...sudokuInputLog.sudokuInputs];
   }
 
   void startPlay() {
-    timer = Timer.periodic(const Duration(seconds: 4), (_) {
-      final SudokuInput? sudokuInput = sudokuInputLog.sudokuInputs.nullableRemoveLast();
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      final SudokuInput? sudokuInput = sudokuInputs.nullableRemoveLast();
       if (sudokuInput != null) {
         _onPlay(sudokuInput);
-
         notifyListeners();
       }
     });
-    notifyListeners();
   }
 
   void _onPlay(SudokuInput sudokuInput) {
-    if (kDebugMode) {
-      print("on play method");
-    }
     /**
      * There are four kinds of operation:
      * 1. note model
@@ -183,5 +172,5 @@ class SudokuRecordNotifier extends ChangeNotifier {
 
 final sudokuRecordNotifier =
     ChangeNotifierProvider.autoDispose.family<SudokuRecordNotifier, SudokuInputLog>((ref, sudokuInputLog) {
-  return SudokuRecordNotifier(sudokuInputLog)..init();
+  return SudokuRecordNotifier(sudokuInputLog: sudokuInputLog)..init();
 });
