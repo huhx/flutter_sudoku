@@ -32,6 +32,26 @@ class SudokuInput extends Equatable {
     return SudokuInput(point: point, value: value, isCorrect: isCorrect, useTip: false, noteValues: const []);
   }
 
+  factory SudokuInput.fromJson(Map<String, dynamic> json) {
+    return SudokuInput(
+      point: Point.fromJson(json['point'] as Map<String, dynamic>),
+      value: json['value'] as int,
+      isCorrect: json['isCorrect'] as bool,
+      useTip: json['useTip'] as bool,
+      noteValues: (json['noteValues'] as List<dynamic>).map((e) => e as int).toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'point': point,
+      'value': value,
+      'isCorrect': isCorrect,
+      'useTip': useTip,
+      'noteValues': noteValues,
+    };
+  }
+
   @override
   List<Object?> get props => [point, value, isCorrect, useTip];
 }

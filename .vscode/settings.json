@@ -14,7 +14,8 @@
         "symbols": true,
         "android/.gradle": true,
         "ios/.symlinks": true,
-        "ios/Pods": true
+        "ios/Pods": true,
+        "**/*.g.dart": true
     },
     "editor.minimap.enabled": false,
     "editor.fontFamily": "Monaco, 'Courier New', monospace",
