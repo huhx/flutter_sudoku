@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';
-import 'package:flutter_sudoku/model/sudoku_input.dart';
 
 import 'sudoku.dart';
+import 'sudoku_input_log.dart';
 
 class SudokuRecord extends Equatable {
   final int? id;
@@ -12,7 +12,7 @@ class SudokuRecord extends Equatable {
   final Difficulty difficulty;
   final GameStatus gameStatus;
   final LogStatus logStatus;
-  final List<SudokuInput> sudokuInputs;
+  final SudokuInputLog sudokuInputLog;
   final int duration;
   final int errorCount;
   final int tipCount;
@@ -29,7 +29,7 @@ class SudokuRecord extends Equatable {
         difficulty,
         gameStatus,
         logStatus,
-        sudokuInputs,
+        sudokuInputLog,
         duration,
         errorCount,
         tipCount,
@@ -46,7 +46,7 @@ class SudokuRecord extends Equatable {
     required this.difficulty,
     required this.gameStatus,
     required this.logStatus,
-    required this.sudokuInputs,
+    required this.sudokuInputLog,
     required this.duration,
     required this.errorCount,
     required this.tipCount,
@@ -76,7 +76,7 @@ class SudokuRecord extends Equatable {
       'difficulty': difficulty.level,
       'gameStatus': gameStatus.name,
       'logStatus': logStatus.name,
-      'sudokuInputs': sudokuInputs,
+      'sudokuInputLog': sudokuInputLog,
       'duration': duration,
       'errorCount': errorCount,
       'tipCount': tipCount,
@@ -95,8 +95,7 @@ class SudokuRecord extends Equatable {
       difficulty: Difficulty.from(json['difficulty'] as int),
       gameStatus: GameStatus.values.byName(json['gameStatus'] as String),
       logStatus: LogStatus.values.byName(json['logStatus'] as String),
-      sudokuInputs:
-          (json['sudokuInputs'] as List<dynamic>).map((e) => SudokuInput.fromJson(e as Map<String, dynamic>)).toList(),
+      sudokuInputLog: SudokuInputLog.fromJson(json['sudokuInputLog'] as Map<String, dynamic>),
       duration: json['duration'] as int,
       errorCount: json['errorCount'] as int,
       tipCount: json['tipCount'] as int,
