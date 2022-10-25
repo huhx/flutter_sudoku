@@ -5,6 +5,7 @@ import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
+import 'package:flutter_sudoku/model/sudoku_input.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/theme/color.dart';
@@ -20,6 +21,7 @@ class SudokuNotifier extends ChangeNotifier {
   late Map<Point, List<int>?> notesMap;
   late Difficulty difficulty;
   late DateTime dateTime;
+  late List<SudokuInput> sudokuInputs;
 
   late List<Point> highlightPoints;
   late List<Point> relatedPoints;
@@ -52,6 +54,7 @@ class SudokuNotifier extends ChangeNotifier {
     highlightPoints = _highlight();
     relatedPoints = _related();
     textColorMap = {for (final point in _empty()) point: inputColor};
+    sudokuInputs = [];
 
     state = ResultState.success();
 
@@ -78,6 +81,8 @@ class SudokuNotifier extends ChangeNotifier {
       } else {
         notesMap[selected] = list.addOrRemove(value);
       }
+
+      sudokuInputs.add(SudokuInput.inputNote(selected, notesMap[selected] ?? []));
       highlightPoints = [];
 
       notifyListeners();
@@ -88,43 +93,24 @@ class SudokuNotifier extends ChangeNotifier {
     content[selected.x][selected.y] = value;
     relatedPoints = _related();
     highlightPoints = _highlight();
+    sudokuInputs.add(SudokuInput.inputValue(selected, _isCorrect, value));
 
     if (_isNotCorrect) {
       textColorMap[selected] = errorColor;
       if (++retryCount >= sudokuConfig.retryCount) {
         gameStatus = GameStatus.failed;
-        saveSudokuRecord();
+        _saveSudokuRecord();
       }
     } else {
       textColorMap[selected] = inputColor;
       if (_isSuccess()) {
         gameStatus = GameStatus.success;
-        saveSudokuRecord();
+        _saveSudokuRecord();
       }
     }
 
     notifyListeners();
     return gameStatus;
-  }
-
-  void saveSudokuRecord() async {
-    final int now = DateTime.now().millisecondsSinceEpoch;
-    final SudokuRecord sudokuRecord = SudokuRecord(
-      year: dateTime.year,
-      month: dateTime.month,
-      day: dateTime.day,
-      difficulty: difficulty,
-      gameStatus: gameStatus,
-      logStatus: LogStatus.normal,
-      duration: ((now - startTime.millisecondsSinceEpoch) / 1000).floor(),
-      tipCount: sudokuConfig.retryCount - tipCount,
-      errorCount: retryCount,
-      startTime: startTime.millisecondsSinceEpoch,
-      endTime: now,
-      createTime: now,
-    );
-
-    await sudokuRecordApi.insert(sudokuRecord);
   }
 
   void useTip() {
@@ -137,6 +123,7 @@ class SudokuNotifier extends ChangeNotifier {
       textColorMap[selected] = inputColor;
 
       tipCount = tipCount - 1;
+      sudokuInputs.add(SudokuInput.inputTip(selected, answer[selected.x][selected.y]));
 
       notifyListeners();
     }
@@ -149,6 +136,7 @@ class SudokuNotifier extends ChangeNotifier {
       highlightPoints = [];
 
       textColorMap[selected] = inputColor;
+      sudokuInputs.add(SudokuInput.inputClear(selected));
 
       notifyListeners();
     }
@@ -214,6 +202,26 @@ class SudokuNotifier extends ChangeNotifier {
     }
 
     return [content[selected.x][selected.y]];
+  }
+
+  void _saveSudokuRecord() async {
+    final int now = DateTime.now().millisecondsSinceEpoch;
+    final SudokuRecord sudokuRecord = SudokuRecord(
+      year: dateTime.year,
+      month: dateTime.month,
+      day: dateTime.day,
+      difficulty: difficulty,
+      gameStatus: gameStatus,
+      logStatus: LogStatus.normal,
+      duration: ((now - startTime.millisecondsSinceEpoch) / 1000).floor(),
+      tipCount: sudokuConfig.retryCount - tipCount,
+      errorCount: retryCount,
+      startTime: startTime.millisecondsSinceEpoch,
+      endTime: now,
+      createTime: now,
+    );
+
+    await sudokuRecordApi.insert(sudokuRecord);
   }
 
   bool get _isNotCorrect => !_isCorrect;
