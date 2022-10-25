@@ -16,7 +16,8 @@ class SudokuRecordApi {
       gameStatus TEXT NOT NULL,
       logStatus TEXT NOT NULL,
       duration INTEGER NOT NULL,
-      tips INTEGER NOT NULL,
+      errorCount INTEGER NOT NULL,
+      tipCount INTEGER NOT NULL,
       startTime INTEGER NOT NULL,
       endTime INTEGER NOT NULL,
       createTime INTEGER NOT NULL

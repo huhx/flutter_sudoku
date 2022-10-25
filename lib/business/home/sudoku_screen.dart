@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/home/sudoku_calendar_screen.dart';
 import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
+import 'package:flutter_sudoku/business/setting/sudoku_setting_screen.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_board.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_header.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_key_pad.dart';
@@ -14,8 +15,6 @@ import 'package:flutter_sudoku/component/svg_action_icon.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'sudoku_setting_screen.dart';
-
 class SudokuScreen extends HookConsumerWidget {
   final DateTime dateTime;
   final Difficulty difficulty;
@@ -24,7 +23,8 @@ class SudokuScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sudokuModel = ref.watch(sudokuProvider(SudokuRequest(dateTime: dateTime, difficulty: difficulty)));
+    final SudokuRequest sudokuRequest = SudokuRequest(dateTime: dateTime, difficulty: difficulty);
+    final sudokuModel = ref.watch(sudokuProvider(sudokuRequest));
 
     return Scaffold(
       appBar: AppBar(
