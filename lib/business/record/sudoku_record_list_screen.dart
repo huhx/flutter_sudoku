@@ -7,11 +7,14 @@ import 'package:flutter_sudoku/common/stream_list.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/component/center_progress_indicator.dart';
 import 'package:flutter_sudoku/component/empty_widget.dart';
+import 'package:flutter_sudoku/component/list_tile_trailing.dart';
 import 'package:flutter_sudoku/component/svg_action_icon.dart';
 import 'package:flutter_sudoku/component/text_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/util/date_util.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import 'sudoku_record_screen.dart';
 
 class SudokuRecordListScreen extends StatefulWidget {
   const SudokuRecordListScreen({super.key});
@@ -132,6 +135,7 @@ class SudokuRecordItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () => context.goto(SudokuRecordScreen(sudokuRecord)),
         leading: CircleAvatar(
           backgroundColor: _buildColor(sudokuRecord),
           child: Text("${sudokuRecord.duration}"),
@@ -143,12 +147,15 @@ class SudokuRecordItem extends StatelessWidget {
             children: [
               TextIcon(icon: "game_status", text: sudokuRecord.gameStatus.label),
               const SizedBox(width: 16),
-              TextIcon(icon: "user_tips", text: "${sudokuRecord.tips}次"),
+              TextIcon(icon: "user_tips", text: "${sudokuRecord.tipCount}次"),
+              const SizedBox(width: 16),
+              TextIcon(icon: "error", text: "${sudokuRecord.errorCount}次"),
               const SizedBox(width: 16),
               TextIcon(icon: "difficulty", text: sudokuRecord.difficulty.label),
             ],
           ),
         ),
+        trailing: const ListTileTrailing(),
       ),
     );
   }
