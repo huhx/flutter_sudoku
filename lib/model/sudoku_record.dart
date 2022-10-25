@@ -69,6 +69,15 @@ class SudokuRecord extends Equatable {
     return DateTime.fromMillisecondsSinceEpoch(endTime).toDateTimeString;
   }
 
+  String get secondsString {
+    final int second = duration % 60;
+    final int minute = (duration / 60).floor();
+
+    final String secondString = second < 10 ? "0$second" : "$second";
+    final String minuteString = minute < 10 ? "0$minute" : "$minute";
+    return "$minuteString:$secondString";
+  }
+
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
