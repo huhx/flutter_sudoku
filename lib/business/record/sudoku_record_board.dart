@@ -18,38 +18,35 @@ class SudokuRecordBoard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sudokuRecordModel = ref.watch(sudokuRecordNotifier(sudokuInputLog));
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: const SvgIcon(name: 'sudoku_retry', color: Colors.green),
-                onPressed: () async {
-                  final GameStatus gameStatus = await sudokuRecordModel.resetPlay();
-                  if (gameStatus == GameStatus.success) {
-                    CommUtil.toast(message: "恭喜你成功过关");
-                  } else if (gameStatus == GameStatus.failed) {
-                    CommUtil.toast(message: "已达到最大错误次数，游戏失败");
-                  }
-                },
-              ),
-            ],
-          ),
-          Table(
-            children: List.generate(
-              9,
-              (row) => TableRow(
-                children: List.generate(9, (column) {
-                  return TableCell(child: SudokuRecordCell(Point.from(row, column), sudokuRecordModel));
-                }),
-              ),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: const SvgIcon(name: 'sudoku_retry', color: Colors.green),
+              onPressed: () async {
+                final GameStatus gameStatus = await sudokuRecordModel.resetPlay();
+                if (gameStatus == GameStatus.success) {
+                  CommUtil.toast(message: "恭喜你成功过关");
+                } else if (gameStatus == GameStatus.failed) {
+                  CommUtil.toast(message: "已达到最大错误次数，游戏失败");
+                }
+              },
             ),
-          )
-        ],
-      ),
+          ],
+        ),
+        Table(
+          children: List.generate(
+            9,
+            (row) => TableRow(
+              children: List.generate(9, (column) {
+                return TableCell(child: SudokuRecordCell(Point.from(row, column), sudokuRecordModel));
+              }),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

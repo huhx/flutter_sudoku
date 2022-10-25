@@ -22,6 +22,16 @@ class SudokuInputLog extends Equatable {
     required this.sudokuInputs,
   });
 
+  int get totalSteps => sudokuInputs.length;
+
+  int get inputSteps {
+    return sudokuInputs.where((sudokuInput) => sudokuInput.value != 0).length;
+  }
+
+  int get noteSteps {
+    return sudokuInputs.where((sudokuInput) => sudokuInput.noteValues.isNotEmpty).length;
+  }
+
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'question': question,
