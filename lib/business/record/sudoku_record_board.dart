@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_board.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
+import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
+import 'package:flutter_sudoku/util/comm_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'data/sudoku_record_notifier.dart';
@@ -21,8 +23,15 @@ class SudokuRecordBoard extends HookConsumerWidget {
       child: Column(
         children: [
           IconButton(
-            icon: const SvgIcon(name: 'delete', color: Colors.red,),
-            onPressed: () => sudokuRecordModel.startPlay(),
+            icon: const SvgIcon(name: 'delete', color: Colors.red),
+            onPressed: () async {
+              final GameStatus gameStatus = await sudokuRecordModel.startPlay();
+              if (gameStatus == GameStatus.success) {
+                CommUtil.toast(message: "恭喜你成功过关");
+              } else if (gameStatus == GameStatus.failed) {
+                CommUtil.toast(message: "已达到最大错误次数，游戏失败");
+              }
+            },
           ),
           Table(
             children: List.generate(
