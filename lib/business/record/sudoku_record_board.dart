@@ -22,16 +22,21 @@ class SudokuRecordBoard extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: [
-          IconButton(
-            icon: const SvgIcon(name: 'delete', color: Colors.red),
-            onPressed: () async {
-              final GameStatus gameStatus = await sudokuRecordModel.startPlay();
-              if (gameStatus == GameStatus.success) {
-                CommUtil.toast(message: "恭喜你成功过关");
-              } else if (gameStatus == GameStatus.failed) {
-                CommUtil.toast(message: "已达到最大错误次数，游戏失败");
-              }
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: const SvgIcon(name: 'sudoku_retry', color: Colors.green),
+                onPressed: () async {
+                  final GameStatus gameStatus = await sudokuRecordModel.resetPlay();
+                  if (gameStatus == GameStatus.success) {
+                    CommUtil.toast(message: "恭喜你成功过关");
+                  } else if (gameStatus == GameStatus.failed) {
+                    CommUtil.toast(message: "已达到最大错误次数，游戏失败");
+                  }
+                },
+              ),
+            ],
           ),
           Table(
             children: List.generate(
