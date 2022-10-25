@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'svg_icon.dart';
 
 class ListTileTrailing extends StatelessWidget {
-  const ListTileTrailing({Key? key}) : super(key: key);
+  const ListTileTrailing({super.key});
 
   @override
   Widget build(BuildContext context) {

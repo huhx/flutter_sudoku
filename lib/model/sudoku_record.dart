@@ -12,14 +12,28 @@ class SudokuRecord extends Equatable {
   final GameStatus gameStatus;
   final LogStatus logStatus;
   final int duration;
-  final int tips;
+  final int errorCount;
+  final int tipCount;
   final int startTime;
   final int endTime;
   final int createTime;
 
   @override
-  List<Object?> get props =>
-      [id, year, month, day, difficulty, gameStatus, logStatus, duration, tips, startTime, endTime, createTime];
+  List<Object?> get props => [
+        id,
+        year,
+        month,
+        day,
+        difficulty,
+        gameStatus,
+        logStatus,
+        duration,
+        errorCount,
+        tipCount,
+        startTime,
+        endTime,
+        createTime
+      ];
 
   const SudokuRecord({
     this.id,
@@ -30,7 +44,8 @@ class SudokuRecord extends Equatable {
     required this.gameStatus,
     required this.logStatus,
     required this.duration,
-    required this.tips,
+    required this.errorCount,
+    required this.tipCount,
     required this.startTime,
     required this.endTime,
     required this.createTime,
@@ -58,7 +73,8 @@ class SudokuRecord extends Equatable {
       'gameStatus': gameStatus.name,
       'logStatus': logStatus.name,
       'duration': duration,
-      'tips': tips,
+      'errorCount': errorCount,
+      'tipCount': tipCount,
       'startTime': startTime,
       'endTime': endTime,
       'createTime': createTime,
@@ -75,7 +91,8 @@ class SudokuRecord extends Equatable {
       gameStatus: GameStatus.values.byName(json['gameStatus'] as String),
       logStatus: LogStatus.values.byName(json['logStatus'] as String),
       duration: json['duration'] as int,
-      tips: json['tips'] as int,
+      errorCount: json['errorCount'] as int,
+      tipCount: json['tipCount'] as int,
       startTime: json['startTime'] as int,
       endTime: json['endTime'] as int,
       createTime: json['createTime'] as int,
