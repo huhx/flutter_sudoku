@@ -214,6 +214,7 @@ class SudokuNotifier extends ChangeNotifier {
       answer: sudokuResponse.answer,
       difficulty: difficulty,
       dateTime: dateTime.millisecondsSinceEpoch,
+      gameStatus: gameStatus,
       sudokuInputs: sudokuInputs,
     );
     final SudokuRecord sudokuRecord = SudokuRecord(

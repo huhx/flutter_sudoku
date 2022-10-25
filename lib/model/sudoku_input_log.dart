@@ -10,6 +10,7 @@ class SudokuInputLog extends Equatable {
   final String answer;
   final Difficulty difficulty;
   final int dateTime;
+  final GameStatus gameStatus;
   final List<SudokuInput> sudokuInputs;
 
   const SudokuInputLog({
@@ -17,6 +18,7 @@ class SudokuInputLog extends Equatable {
     required this.answer,
     required this.difficulty,
     required this.dateTime,
+    required this.gameStatus,
     required this.sudokuInputs,
   });
 
@@ -25,6 +27,7 @@ class SudokuInputLog extends Equatable {
       'question': question,
       'answer': answer,
       'difficulty': difficulty.level,
+      'gameStatus': gameStatus.name,
       'dateTime': dateTime,
       'sudokuInputs': jsonEncode(sudokuInputs.map((e) => e.toJson()).toList())
     };
@@ -35,6 +38,7 @@ class SudokuInputLog extends Equatable {
       question: json['question'] as String,
       answer: json['answer'] as String,
       difficulty: Difficulty.from(json['difficulty'] as int),
+      gameStatus: GameStatus.values.byName(json['gameStatus'] as String),
       dateTime: json['dateTime'] as int,
       sudokuInputs: (jsonDecode(json['sudokuInputs']) as List<dynamic>)
           .map((e) => SudokuInput.fromJson(e as Map<String, dynamic>))
