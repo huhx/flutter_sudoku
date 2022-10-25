@@ -6,6 +6,7 @@ import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
+import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/theme/color.dart';
@@ -13,6 +14,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier {
   static const List<int> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  late SudokuResponse sudokuResponse;
 
   late DateTime startTime;
   late List<List<int>> question;
@@ -37,7 +40,7 @@ class SudokuNotifier extends ChangeNotifier {
   Future<void> init(DateTime dateTime, Difficulty difficulty) async {
     state = ResultState.loading();
 
-    final SudokuResponse sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
+    sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
 
     selected = Point.first();
     startTime = DateTime.now();
@@ -206,6 +209,13 @@ class SudokuNotifier extends ChangeNotifier {
 
   void _saveSudokuRecord() async {
     final int now = DateTime.now().millisecondsSinceEpoch;
+    final SudokuInputLog sudokuInputLog = SudokuInputLog(
+      question: sudokuResponse.question,
+      answer: sudokuResponse.answer,
+      difficulty: difficulty,
+      dateTime: dateTime.millisecondsSinceEpoch,
+      sudokuInputs: sudokuInputs,
+    );
     final SudokuRecord sudokuRecord = SudokuRecord(
       year: dateTime.year,
       month: dateTime.month,
@@ -213,7 +223,7 @@ class SudokuNotifier extends ChangeNotifier {
       difficulty: difficulty,
       gameStatus: gameStatus,
       logStatus: LogStatus.normal,
-      sudokuInputs: sudokuInputs,
+      sudokuInputLog: sudokuInputLog,
       duration: ((now - startTime.millisecondsSinceEpoch) / 1000).floor(),
       tipCount: sudokuConfig.retryCount - tipCount,
       errorCount: retryCount,
