@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 
+import 'sudoku_record_board.dart';
+
 class SudokuRecordScreen extends StatelessWidget {
   final SudokuRecord sudokuRecord;
 
@@ -16,7 +18,7 @@ class SudokuRecordScreen extends StatelessWidget {
       ),
       body: Container(
         alignment: Alignment.center,
-        child: const Text("数独记录详情"),
+        child: SudokuRecordBoard(sudokuRecord.sudokuInputLog),
       ),
     );
   }
