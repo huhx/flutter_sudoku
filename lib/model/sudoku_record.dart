@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';
 
@@ -76,7 +78,7 @@ class SudokuRecord extends Equatable {
       'difficulty': difficulty.level,
       'gameStatus': gameStatus.name,
       'logStatus': logStatus.name,
-      'sudokuInputLog': sudokuInputLog,
+      'sudokuInputLog': jsonEncode(sudokuInputLog.toJson()),
       'duration': duration,
       'errorCount': errorCount,
       'tipCount': tipCount,
@@ -95,7 +97,7 @@ class SudokuRecord extends Equatable {
       difficulty: Difficulty.from(json['difficulty'] as int),
       gameStatus: GameStatus.values.byName(json['gameStatus'] as String),
       logStatus: LogStatus.values.byName(json['logStatus'] as String),
-      sudokuInputLog: SudokuInputLog.fromJson(json['sudokuInputLog'] as Map<String, dynamic>),
+      sudokuInputLog: SudokuInputLog.fromJson(jsonDecode(json['sudokuInputLog']) as Map<String, dynamic>),
       duration: json['duration'] as int,
       errorCount: json['errorCount'] as int,
       tipCount: json['tipCount'] as int,

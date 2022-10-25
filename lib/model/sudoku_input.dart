@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 
@@ -34,7 +36,7 @@ class SudokuInput extends Equatable {
 
   factory SudokuInput.fromJson(Map<String, dynamic> json) {
     return SudokuInput(
-      point: Point.fromJson(json['point'] as Map<String, dynamic>),
+      point: Point.fromJson(jsonDecode(json['point']) as Map<String, dynamic>),
       value: json['value'] as int,
       isCorrect: json['isCorrect'] as bool,
       useTip: json['useTip'] as bool,
@@ -44,7 +46,7 @@ class SudokuInput extends Equatable {
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'point': point,
+      'point': jsonEncode(point.toJson()),
       'value': value,
       'isCorrect': isCorrect,
       'useTip': useTip,

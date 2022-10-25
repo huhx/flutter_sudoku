@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
 
@@ -24,7 +26,7 @@ class SudokuInputLog extends Equatable {
       'answer': answer,
       'difficulty': difficulty.level,
       'dateTime': dateTime,
-      'sudokuInputs': sudokuInputs
+      'sudokuInputs': jsonEncode(sudokuInputs.map((e) => e.toJson()).toList())
     };
   }
 
@@ -34,8 +36,9 @@ class SudokuInputLog extends Equatable {
       answer: json['answer'] as String,
       difficulty: Difficulty.from(json['difficulty'] as int),
       dateTime: json['dateTime'] as int,
-      sudokuInputs:
-          (json['sudokuInputs'] as List<dynamic>).map((e) => SudokuInput.fromJson(e as Map<String, dynamic>)).toList(),
+      sudokuInputs: (jsonDecode(json['sudokuInputs']) as List<dynamic>)
+          .map((e) => SudokuInput.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
   }
 
