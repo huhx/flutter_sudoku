@@ -9,6 +9,7 @@ import 'package:flutter_sudoku/model/sudoku_input.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
+import 'package:flutter_sudoku/service/audio_service.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -76,6 +77,7 @@ class SudokuNotifier extends ChangeNotifier {
     if (question[selected.x][selected.y] != 0 || _isCorrect) {
       return gameStatus;
     }
+    audioService.playInput();
 
     if (enableNotes) {
       final List<int>? list = notesMap[selected];
@@ -103,12 +105,14 @@ class SudokuNotifier extends ChangeNotifier {
       if (++retryCount >= sudokuConfig.retryCount) {
         gameStatus = GameStatus.failed;
         _saveSudokuRecord();
+        audioService.playFail();
       }
     } else {
       textColorMap[selected] = inputColor;
       if (_isSuccess()) {
         gameStatus = GameStatus.success;
         _saveSudokuRecord();
+        audioService.playSucess();
       }
     }
 
