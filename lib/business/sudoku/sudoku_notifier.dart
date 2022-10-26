@@ -174,10 +174,6 @@ class SudokuNotifier extends ChangeNotifier {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/${sudokuConfig.retryCount}";
   }
 
-  Future<void> refresh(DateTime dateTime, Difficulty difficulty) async {
-    await init(dateTime, difficulty);
-  }
-
   List<int>? getNoteValue(Point point) {
     return notesMap[point];
   }

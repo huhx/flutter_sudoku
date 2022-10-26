@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sudoku/business/home/sudoku_calendar_screen.dart';
 import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
 import 'package:flutter_sudoku/business/setting/sudoku_setting_screen.dart';
@@ -23,17 +24,23 @@ class SudokuScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final SudokuRequest sudokuRequest = SudokuRequest(dateTime: dateTime, difficulty: difficulty);
+    final dateTimeState = useState(dateTime);
+    final difficultyState = useState(difficulty);
+
+    final SudokuRequest sudokuRequest = SudokuRequest(
+      dateTime: dateTimeState.value,
+      difficulty: difficultyState.value,
+    );
     final sudokuModel = ref.watch(sudokuProvider(sudokuRequest));
 
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
-          child: Text(dateTime.toDateString()),
+          child: Text(dateTimeState.value.toDateString()),
           onTap: () async {
-            final DateTime? selectedDateTime = await context.goto(SudokuCalendarScreen(dateTime));
-            if (selectedDateTime != null && !selectedDateTime.isSameDay(dateTime)) {
-              await sudokuModel.refresh(selectedDateTime, difficulty);
+            final DateTime? selectedDateTime = await context.goto(SudokuCalendarScreen(dateTimeState.value));
+            if (selectedDateTime != null && !selectedDateTime.isSameDay(dateTimeState.value)) {
+              dateTimeState.value = selectedDateTime;
             }
           },
         ),
