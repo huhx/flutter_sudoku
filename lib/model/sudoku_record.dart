@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';
+import 'package:flutter_sudoku/common/int_extension.dart';
 
 import 'sudoku.dart';
 import 'sudoku_input_log.dart';
@@ -69,14 +70,7 @@ class SudokuRecord extends Equatable {
     return DateTime.fromMillisecondsSinceEpoch(endTime).toDateTimeString;
   }
 
-  String get secondsString {
-    final int second = duration % 60;
-    final int minute = (duration / 60).floor();
-
-    final String secondString = second < 10 ? "0$second" : "$second";
-    final String minuteString = minute < 10 ? "0$minute" : "$minute";
-    return "$minuteString:$secondString";
-  }
+  String get secondsString => duration.toTimeString;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

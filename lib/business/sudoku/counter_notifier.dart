@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_sudoku/common/int_extension.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CounterNotifier extends ChangeNotifier {
@@ -34,14 +35,7 @@ class CounterNotifier extends ChangeNotifier {
     }
   }
 
-  String get secondsString {
-    final int second = seconds % 60;
-    final int minute = (seconds / 60).floor();
-
-    final String secondString = second < 10 ? "0$second" : "$second";
-    final String minuteString = minute < 10 ? "0$minute" : "$minute";
-    return "$minuteString:$secondString";
-  }
+  String get secondsString => seconds.toTimeString;
 
   @override
   void dispose() {
