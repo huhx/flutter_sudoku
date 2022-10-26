@@ -5,6 +5,7 @@ class PrefsUtil {
   static const isLightTheme = "app.theme.light";
   static const cookieKey = "cookie";
   static const startTimeKey = "start.time";
+  static const playSoundKey = "play_sound";
 
   static Future init() async {
     prefs = await SharedPreferences.getInstance();
@@ -28,5 +29,14 @@ class PrefsUtil {
 
   static Future<void> removeKey(String key) async {
     await prefs.remove(key);
+  }
+  
+
+  static void saveIsPlaySound(bool isPlaySound) {
+    prefs.setBool(playSoundKey, isPlaySound);
+  }
+
+  static bool getIsPlaySound() {
+    return prefs.getBool(playSoundKey) ?? true;
   }
 }
