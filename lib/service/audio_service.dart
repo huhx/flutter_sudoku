@@ -5,19 +5,19 @@ class AudioService {
   final AudioPlayer _player = AudioPlayer();
 
   Future<void> playSucess() async {
-    if (PrefsUtil.getIsPlaySound()) {
+    if (PrefsUtil.isPlaySound()) {
       await playSound('success.mp3');
     }
   }
 
   Future<void> playInput() async {
-    if (PrefsUtil.getIsPlaySound()) {
+    if (PrefsUtil.isPlaySound()) {
       await playSound('input.mp3');
     }
   }
 
   Future<void> playFail() async {
-    if (PrefsUtil.getIsPlaySound()) {
+    if (PrefsUtil.isPlaySound()) {
       await playSound('fail.mp3');
     }
   }
