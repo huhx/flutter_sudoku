@@ -6,6 +6,7 @@ import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
+import 'package:flutter_sudoku/service/audio_service.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -87,6 +88,7 @@ class SudokuRecordNotifier extends ChangeNotifier {
      * 3. zero value
      * 4. correct value
      */
+    audioService.playInput();
     selected = sudokuInput.point;
     relatedPoints = _related();
 
