@@ -30,13 +30,13 @@ class PrefsUtil {
   static Future<void> removeKey(String key) async {
     await prefs.remove(key);
   }
-  
 
-  static void saveIsPlaySound(bool isPlaySound) {
-    prefs.setBool(playSoundKey, isPlaySound);
+
+  static void enablePlaySound(bool enable) {
+    prefs.setBool(playSoundKey, enable);
   }
 
-  static bool getIsPlaySound() {
+  static bool isPlaySound() {
     return prefs.getBool(playSoundKey) ?? true;
   }
 }
