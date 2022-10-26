@@ -122,6 +122,8 @@ class SudokuNotifier extends ChangeNotifier {
 
   void useTip() {
     if (_isNotCorrect) {
+      audioService.playOperation();
+
       content[selected.x][selected.y] = answer[selected.x][selected.y];
       notesMap.remove(selected);
 
@@ -138,6 +140,8 @@ class SudokuNotifier extends ChangeNotifier {
 
   void clear() {
     if (question[selected.x][selected.y] == 0 && _isNotCorrect) {
+      audioService.playOperation();
+
       content[selected.x][selected.y] = 0;
       notesMap[selected] = [];
       highlightPoints = [];
@@ -151,6 +155,7 @@ class SudokuNotifier extends ChangeNotifier {
 
   void toggleNote() {
     enableNotes = !enableNotes;
+    audioService.playOperation();
 
     notifyListeners();
   }

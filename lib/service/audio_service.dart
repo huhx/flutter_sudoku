@@ -22,6 +22,12 @@ class AudioService {
     }
   }
 
+    Future<void> playOperation() async {
+    if (PrefsUtil.isPlaySound()) {
+      await playSound('operate.mp3');
+    }
+  }
+
   Future<void> playSound(String assetName) async {
     await _player.setAsset('assets/sound/$assetName');
     await _player.play();
