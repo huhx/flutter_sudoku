@@ -85,7 +85,7 @@ class SudokuNotifier extends ChangeNotifier {
         notesMap[selected] = list.addOrRemove(value);
       }
 
-      sudokuInputs.add(SudokuInput.inputNote(selected, notesMap[selected] ?? []));
+      sudokuInputs.add(SudokuInput.inputNote(selected, [...?notesMap[selected]]));
       highlightPoints = [];
 
       notifyListeners();
