@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/sudoku_cell.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
-import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,13 +9,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'data/sudoku_record_notifier.dart';
 
 class SudokuRecordBoard extends HookConsumerWidget {
-  final SudokuInputLog sudokuInputLog;
+  final SudokuRecordNotifier sudokuRecordModel;
 
-  const SudokuRecordBoard(this.sudokuInputLog, {super.key});
+  const SudokuRecordBoard(this.sudokuRecordModel, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sudokuRecordModel = ref.watch(sudokuRecordNotifier(sudokuInputLog));
 
     return Column(
       children: [
