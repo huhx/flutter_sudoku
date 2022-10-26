@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/business/sudoku/sudoku_board.dart';
+import 'package:flutter_sudoku/component/sudoku_cell.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
@@ -41,36 +41,21 @@ class SudokuRecordBoard extends HookConsumerWidget {
             9,
             (row) => TableRow(
               children: List.generate(9, (column) {
-                return TableCell(child: SudokuRecordCell(Point.from(row, column), sudokuRecordModel));
+                final Point point = Point.from(row, column);
+                return TableCell(
+                  child: SudokuCell(
+                    boxBorder: point.border,
+                    value: sudokuRecordModel.getValue(point),
+                    noteValue: sudokuRecordModel.getNoteValue(point),
+                    color: sudokuRecordModel.getColor(point),
+                    textColor: sudokuRecordModel.getTextColor(point),
+                  ),
+                );
               }),
             ),
           ),
         )
       ],
-    );
-  }
-}
-
-class SudokuRecordCell extends StatelessWidget {
-  final Point point;
-  final SudokuRecordNotifier sudokuRecordModel;
-
-  const SudokuRecordCell(this.point, this.sudokuRecordModel, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final List<int>? noteValue = sudokuRecordModel.getNoteValue(point);
-    final int number = sudokuRecordModel.getValue(point);
-
-    return AspectRatio(
-      aspectRatio: 1,
-      child: Container(
-        decoration: BoxDecoration(border: point.border, color: sudokuRecordModel.getColor(point)),
-        alignment: Alignment.center,
-        child: noteValue != null && noteValue.isNotEmpty
-            ? SudokuNoteCell(noteValue)
-            : SudokuNormalCell(number, sudokuRecordModel.getTextColor(point)),
-      ),
     );
   }
 }
