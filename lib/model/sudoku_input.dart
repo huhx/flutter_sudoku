@@ -55,5 +55,5 @@ class SudokuInput extends Equatable {
   }
 
   @override
-  List<Object?> get props => [point, value, isCorrect, useTip];
+  List<Object?> get props => [point, value, isCorrect, useTip, noteValues];
 }
