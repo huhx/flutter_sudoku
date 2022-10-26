@@ -16,10 +16,6 @@ extension ListExtension<T> on List<T> {
     return this;
   }
 
-  T? nullableRemoveLast() {
-    return length > 0 ? removeLast() : null;
-  }
-
   Map<K, List<T>> groupBy<K>(K Function(T element) keyOf) {
     var result = <K, List<T>>{};
     for (var element in this) {

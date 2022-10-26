@@ -57,5 +57,5 @@ class SudokuInputLog extends Equatable {
   }
 
   @override
-  List<Object?> get props => [question, answer, difficulty, dateTime, sudokuInputs];
+  List<Object?> get props => [question, answer, difficulty, dateTime, gameStatus, sudokuInputs];
 }
