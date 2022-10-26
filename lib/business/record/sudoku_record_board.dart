@@ -34,6 +34,10 @@ class SudokuRecordBoard extends HookConsumerWidget {
                 }
               },
             ),
+            IconButton(
+              icon: const SvgIcon(name: 'sudoku_answer', color: Colors.green),
+              onPressed: () => sudokuRecordModel.showAnswer(),
+            ),
           ],
         ),
         Table(

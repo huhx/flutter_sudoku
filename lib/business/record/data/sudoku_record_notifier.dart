@@ -46,6 +46,7 @@ class SudokuRecordNotifier extends ChangeNotifier {
 
   Future<GameStatus> resetPlay() async {
     currentIndex = 0;
+    content = toSudokuArray(sudokuInputLog.question);
 
     while (!_disposed && currentIndex < sudokuInputLog.sudokuInputs.length) {
       await Future.delayed(const Duration(seconds: 1), () {
@@ -58,6 +59,19 @@ class SudokuRecordNotifier extends ChangeNotifier {
       });
     }
     return _disposed ? GameStatus.running : sudokuInputLog.gameStatus;
+  }
+
+  void showAnswer() {
+    highlightPoints = [];
+    relatedPoints = [];
+
+    textColorMap = {for (final point in _empty()) point: inputColor};
+    notesMap.clear();
+    selected = Point.from(-1, -1);
+
+    content = toSudokuArray(sudokuInputLog.answer);
+
+    notifyListeners();
   }
 
   void _onPlay(SudokuInput sudokuInput) {
