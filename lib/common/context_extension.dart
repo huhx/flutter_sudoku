@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/cancel_confirm_dialog.dart';
+import 'package:share_plus/share_plus.dart';
 
 extension ContextExtensions on BuildContext {
   Future<T?> goto<T extends Object?>(Widget widget) async {
@@ -39,6 +40,16 @@ extension ContextExtensions on BuildContext {
         content: content,
         callback: callback,
       ),
+    );
+  }
+
+  Future<void> share(String title, String subject) async {
+    final box = findRenderObject() as RenderBox?;
+
+    await Share.share(
+      title,
+      subject: subject,
+      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
     );
   }
 }
