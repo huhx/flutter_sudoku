@@ -239,7 +239,7 @@ class SudokuNotifier extends ChangeNotifier {
       gameStatus: gameStatus,
       logStatus: LogStatus.normal,
       sudokuInputLog: sudokuInputLog,
-      duration: ((now - startTime.millisecondsSinceEpoch) / 1000).floor(),
+      duration: ref.read(counterProvider(0)).seconds,
       tipCount: sudokuConfig.retryCount - tipCount,
       errorCount: retryCount,
       startTime: startTime.millisecondsSinceEpoch,
