@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
+import 'package:flutter_sudoku/business/sudoku/counter_notifier.dart';
 import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
@@ -37,6 +38,10 @@ class SudokuNotifier extends ChangeNotifier {
   late int retryCount;
   late int tipCount;
   ResultState state = ResultState.success();
+
+  final Ref ref;
+
+  SudokuNotifier(this.ref);
 
   Future<void> init(DateTime dateTime, Difficulty difficulty) async {
     state = ResultState.loading();
@@ -104,6 +109,8 @@ class SudokuNotifier extends ChangeNotifier {
       textColorMap[selected] = errorColor;
       if (++retryCount >= sudokuConfig.retryCount) {
         gameStatus = GameStatus.failed;
+        ref.read(counterProvider(0)).stop();
+
         _saveSudokuRecord();
         audioService.playFail();
       }
@@ -111,6 +118,8 @@ class SudokuNotifier extends ChangeNotifier {
       textColorMap[selected] = inputColor;
       if (_isSuccess()) {
         gameStatus = GameStatus.success;
+
+        ref.read(counterProvider(0)).stop();
         _saveSudokuRecord();
         audioService.playSucess();
       }
@@ -308,5 +317,5 @@ class SudokuNotifier extends ChangeNotifier {
 }
 
 final sudokuProvider = ChangeNotifierProvider.autoDispose.family<SudokuNotifier, SudokuRequest>((ref, request) {
-  return SudokuNotifier()..init(request.dateTime, request.difficulty);
+  return SudokuNotifier(ref)..init(request.dateTime, request.difficulty);
 });

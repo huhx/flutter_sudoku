@@ -10,4 +10,4 @@ class SudokuConfig extends Equatable {
   List<Object?> get props => [retryCount, tipCount];
 }
 
-const sudokuConfig = SudokuConfig(retryCount: 10, tipCount: 10);
+const sudokuConfig = SudokuConfig(retryCount: 3, tipCount: 10);
