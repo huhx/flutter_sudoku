@@ -37,10 +37,11 @@ class CounterNotifier extends ChangeNotifier {
 
   String get secondsString => seconds.toTimeString;
 
-  @override
-  void dispose() {
+  void stop() {
+    isStart = false;
+
     timer?.cancel();
-    super.dispose();
+    notifyListeners();
   }
 }
 
