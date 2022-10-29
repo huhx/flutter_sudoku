@@ -9,6 +9,7 @@ import 'package:flutter_sudoku/business/home/sudoku_screen.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:uni_links/uni_links.dart';
@@ -22,6 +23,7 @@ import 'util/comm_util.dart';
 import 'util/prefs_util.dart';
 
 bool _initialUriIsHandled = false;
+final Logger logger = Logger(printer: PrettyPrinter());
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,11 +72,11 @@ class _MainAppState extends ConsumerState<MainApp> {
   void _handleIncomingLinks() {
     _sub = uriLinkStream.listen((Uri? uri) {
       if (!mounted) return;
-      print('got uri: $uri');
+      logger.d('got uri: $uri');
       setState(() => _latestUri = uri);
     }, onError: (Object err) {
       if (!mounted) return;
-      print('got err: $err');
+      logger.d('got err: $err');
       setState(() => _latestUri = null);
     });
   }
@@ -85,17 +87,17 @@ class _MainAppState extends ConsumerState<MainApp> {
       try {
         final uri = await getInitialUri();
         if (uri == null) {
-          print('no initial uri');
+          logger.d('no initial uri');
         } else {
-          print('got initial uri: $uri');
+          logger.d('got initial uri: $uri');
         }
         if (!mounted) return;
         setState(() => _initialUri = uri);
       } on PlatformException {
-        print('falied to get initial uri');
+        logger.d('falied to get initial uri');
       } on FormatException catch (_) {
         if (!mounted) return;
-        print('malformed initial uri');
+        logger.d('malformed initial uri');
       }
     }
   }
@@ -140,6 +142,6 @@ class _MainAppState extends ConsumerState<MainApp> {
 
       return SudokuScreen(dateTime, difficulty);
     }
-    return SudokuScreen(DateTime.now(), Difficulty.a);
+    return SudokuScreen(DateTime.now(), Difficulty.d);
   }
 }
