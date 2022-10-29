@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
-import 'package:flutter_sudoku/component/svg_action_icon.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
@@ -23,12 +22,6 @@ class SudokuRecordScreen extends HookConsumerWidget {
       appBar: AppBar(
         leading: const AppbarBackButton(),
         title: const Text("数独记录详情"),
-        actions: [
-          SvgActionIcon(
-            name: "sudoku_share",
-            onTap: () => CommUtil.toBeDev(),
-          ),
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
