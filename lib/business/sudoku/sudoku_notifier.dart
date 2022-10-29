@@ -65,9 +65,17 @@ class SudokuNotifier extends ChangeNotifier {
     textColorMap = {for (final point in _empty()) point: inputColor};
     sudokuInputs = [];
 
+    ref.refresh(counterProvider(0));
+    
     state = ResultState.success();
 
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    ref.refresh(counterProvider(0));
+    super.dispose();
   }
 
   void onTapped(Point point) {

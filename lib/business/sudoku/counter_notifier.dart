@@ -43,6 +43,14 @@ class CounterNotifier extends ChangeNotifier {
     timer?.cancel();
     notifyListeners();
   }
+
+  @override
+  void dispose() {
+    isStart = false;
+
+    timer?.cancel();
+    super.dispose();
+  }
 }
 
 final counterProvider = ChangeNotifierProvider.autoDispose.family<CounterNotifier, int>((ref, seconds) {
