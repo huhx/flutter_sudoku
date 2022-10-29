@@ -40,8 +40,9 @@ class SudokuScreen extends HookConsumerWidget {
           SvgActionIcon(
             name: "sudoku_share",
             onTap: () => context.share(
-                title: dateTime.toDateString(),
-                subject: "huhx://sudoku?dateTime=${dateTime.toDateString()}&difficulty=${difficulty.level}"),
+              title: "huhx://sudoku?dateTime=${dateTime.toDateString()}&difficulty=${difficulty.level}",
+              subject: "sudoku",
+            ),
           ),
           SvgActionIcon(
             name: "sudoku_color",
