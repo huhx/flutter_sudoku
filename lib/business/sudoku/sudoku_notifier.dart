@@ -38,14 +38,14 @@ class SudokuNotifier extends ChangeNotifier {
   late GameStatus gameStatus;
   late int retryCount;
   late int tipCount;
-  ResultState state = ResultState.success();
+  Result state = Result.success();
 
   final Ref ref;
 
   SudokuNotifier(this.ref);
 
   Future<void> init(DateTime dateTime, Difficulty difficulty) async {
-    state = ResultState.loading();
+    state = Result.loading();
 
     sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
 
@@ -68,7 +68,7 @@ class SudokuNotifier extends ChangeNotifier {
 
     ref.invalidate(counterProvider(0));
 
-    state = ResultState.success();
+    state = Result.success();
 
     notifyListeners();
   }

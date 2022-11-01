@@ -1,11 +1,11 @@
-class ResultState {
-  ResultState._();
+class Result {
+  Result._();
 
-  factory ResultState.loading() = _Loading;
+  factory Result.loading() = _Loading;
 
-  factory ResultState.error(String errorTest) = _Error;
+  factory Result.error(String errorTest) = _Error;
 
-  factory ResultState.success() = _Success;
+  factory Result.success() = _Success;
 
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
@@ -15,7 +15,7 @@ class ResultState {
       throw UnsupportedError("Class extends ResultState must implement when method");
 }
 
-class _Loading extends ResultState {
+class _Loading extends Result {
   _Loading() : super._();
 
   @override
@@ -28,7 +28,7 @@ class _Loading extends ResultState {
   }
 }
 
-class _Error extends ResultState {
+class _Error extends Result {
   final String errorTest;
 
   _Error(this.errorTest) : super._();
@@ -43,7 +43,7 @@ class _Error extends ResultState {
   }
 }
 
-class _Success extends ResultState {
+class _Success extends Result {
   _Success() : super._();
 
   @override
