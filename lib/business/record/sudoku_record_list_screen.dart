@@ -66,7 +66,7 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
           final List<SudokuRecord> sudokuRecords = snap.data as List<SudokuRecord>;
 
           if (sudokuRecords.isEmpty) {
-            return const EmptyWidget(message: "阅读记录为空");
+            return const EmptyWidget(message: "数独记录为空");
           }
 
           final Map<String, List<SudokuRecord>> recordLogMap =
