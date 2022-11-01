@@ -35,8 +35,9 @@ class SudokuOperate extends StatelessWidget {
           ),
           OperateItem(
             icon: Badge(
+              padding: const EdgeInsets.all(3),
               badgeColor: sudokuNotifier.canUseTip ? Colors.red : Colors.grey,
-              badgeContent: Text("${sudokuNotifier.tipCount}", style: const TextStyle(fontSize: 10)),
+              badgeContent: Text("${sudokuNotifier.tipCount}", style: const TextStyle(fontSize: 8)),
               child: SvgIcon(name: "operate_tip", color: sudokuNotifier.canUseTip ? themeColor : Colors.grey),
             ),
             label: "提示",
