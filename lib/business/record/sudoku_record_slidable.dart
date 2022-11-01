@@ -9,8 +9,9 @@ import 'sudoku_record_list_screen.dart';
 
 class SudokuRecordSlidable extends ConsumerWidget {
   final SudokuRecord sudokuRecord;
+  final Function(int) deleteCallback;
 
-  const SudokuRecordSlidable(this.sudokuRecord, {super.key});
+  const SudokuRecordSlidable(this.sudokuRecord, this.deleteCallback, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +21,10 @@ class SudokuRecordSlidable extends ConsumerWidget {
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (_) async => await sudokuRecordApi.delete(sudokuRecord.id!),
+            onPressed: (_) async {
+              await sudokuRecordApi.delete(sudokuRecord.id!);
+              deleteCallback(sudokuRecord.id!);
+            },
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,
