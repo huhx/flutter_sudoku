@@ -14,7 +14,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:uni_links/uni_links.dart';
 
-import 'business/main/theme_provider.dart';
+import 'provider/theme_provider.dart';
 import 'component/custom_load_footer.dart';
 import 'component/custom_water_drop_header.dart';
 import 'theme/theme.dart';
