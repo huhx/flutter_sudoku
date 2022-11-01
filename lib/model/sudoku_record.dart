@@ -58,6 +58,10 @@ class SudokuRecord extends Equatable {
     required this.createTime,
   });
 
+  String get shareTitle {
+    return "huhx://sudoku?dateTime=$dateString&difficulty=${difficulty.level}";
+  }
+
   String get dateString {
     return DateTime(year, month, day).toDateString();
   }
