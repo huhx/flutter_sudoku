@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/business/sudoku/counter_notifier.dart';
+import 'package:flutter_sudoku/common/date_extension.dart';
 import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
@@ -65,8 +66,8 @@ class SudokuNotifier extends ChangeNotifier {
     textColorMap = {for (final point in _empty()) point: inputColor};
     sudokuInputs = [];
 
-    ref.refresh(counterProvider(0));
-    
+    ref.invalidate(counterProvider(0));
+
     state = ResultState.success();
 
     notifyListeners();
@@ -74,7 +75,7 @@ class SudokuNotifier extends ChangeNotifier {
 
   @override
   void dispose() {
-    ref.refresh(counterProvider(0));
+    ref.invalidate(counterProvider(0));
     super.dispose();
   }
 
@@ -194,6 +195,10 @@ class SudokuNotifier extends ChangeNotifier {
 
   Color? getTextColor(Point point) {
     return textColorMap[point];
+  }
+
+  String get shareTitle {
+    return "huhx://sudoku?dateTime=${dateTime.toDateString()}&difficulty=${difficulty.level}";
   }
 
   String get retryString {
