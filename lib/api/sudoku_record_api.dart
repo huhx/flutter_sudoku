@@ -52,6 +52,11 @@ class SudokuRecordApi {
     return maps.map((json) => SudokuRecord.fromJson(json)).toList();
   }
 
+  Future<void> delete(int id) async {
+    final Database db = await _getDB();
+    await db.rawUpdate('UPDATE sudoku_record SET logStatus = ? where id = ?', [LogStatus.delete.name, id]);
+  }
+
   Future<List<SudokuRecord>> querySudokuRecords(int pageNum) async {
     final Database db = await _getDB();
     final List<Map<String, dynamic>> maps = await db.query(
