@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 
 import 'cache/clear_cache_item.dart';
+import 'dark/dark_item.dart';
 import 'sound/play_sound_item.dart';
 
 class SudokuSettingScreen extends StatelessWidget {
@@ -21,6 +22,8 @@ class SudokuSettingScreen extends StatelessWidget {
             ClearCacheItem(),
             Divider(),
             PlaySoundItem(),
+            Divider(),
+            DarkItem(),
           ],
         ),
       ),
