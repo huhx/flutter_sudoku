@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
+import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
-import 'package:flutter_sudoku/util/comm_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'sudoku_record_list_screen.dart';
@@ -27,7 +27,7 @@ class SudokuRecordSlidable extends ConsumerWidget {
             label: 'Delete',
           ),
           SlidableAction(
-            onPressed: (_) => CommUtil.toBeDev(),
+            onPressed: (_) => context.share(title: sudokuRecord.shareTitle, subject: "sudoku"),
             backgroundColor: const Color(0xFF21B7CA),
             foregroundColor: Colors.white,
             icon: Icons.share,
