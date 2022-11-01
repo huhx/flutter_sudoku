@@ -13,7 +13,11 @@ class SudokuRecordSlidable extends ConsumerWidget {
   final SudokuRecord sudokuRecord;
   final Function(int) deleteCallback;
 
-  const SudokuRecordSlidable(this.sudokuRecord, this.deleteCallback, {super.key});
+  const SudokuRecordSlidable({
+    super.key,
+    required this.sudokuRecord,
+    required this.deleteCallback,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

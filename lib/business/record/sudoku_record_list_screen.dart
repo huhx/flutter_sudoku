@@ -103,17 +103,17 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
                             ),
                           ),
                           SudokuRecordSlidable(
-                            recordLogItems[index],
                             key: ValueKey(recordLogItems[index].id),
-                            (id) => streamList.reset(sudokuRecords.where((element) => element.id != id).toList()),
+                            sudokuRecord: recordLogItems[index],
+                            deleteCallback: (id) => streamList.reset(sudokuRecords.where((element) => element.id != id).toList()),
                           ),
                         ],
                       );
                     }
                     return SudokuRecordSlidable(
-                      recordLogItems[index],
                       key: ValueKey(recordLogItems[index].id),
-                      (id) => streamList.reset(sudokuRecords.where((element) => element.id != id).toList()),
+                      sudokuRecord: recordLogItems[index],
+                      deleteCallback: (id) => streamList.reset(sudokuRecords.where((element) => element.id != id).toList()),
                     );
                   },
                   itemCount: recordLogItems.length,
