@@ -4,7 +4,7 @@
     <application
         android:label="每日数独"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name="com.huhx.flutter_sudoku.MainActivity"
             android:exported="true"
