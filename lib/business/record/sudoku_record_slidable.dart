@@ -62,9 +62,9 @@ class SudokuRecordItem extends StatelessWidget {
         onTap: () => context.goto(SudokuRecordScreen(sudokuRecord)),
         leading: CircleAvatar(
           backgroundColor: _buildColor(sudokuRecord),
-          child: Text("${sudokuRecord.duration}"),
+          child: Text("${sudokuRecord.duration}", style: const TextStyle(color: Colors.white)),
         ),
-        title: Text(sudokuRecord.startString),
+        title: Text(sudokuRecord.startString, style: Theme.of(context).textTheme.bodyText2),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Row(
