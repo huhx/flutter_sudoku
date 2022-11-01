@@ -15,6 +15,7 @@ import 'package:flutter_sudoku/util/date_util.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'sudoku_record_screen.dart';
+import 'sudoku_record_slidable.dart';
 
 class SudokuRecordListScreen extends StatefulWidget {
   const SudokuRecordListScreen({super.key});
@@ -103,11 +104,11 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
                               ],
                             ),
                           ),
-                          SudokuRecordItem(recordLogItems[index], key: ValueKey(recordLogItems[index].id)),
+                          SudokuRecordSlidable(recordLogItems[index], key: ValueKey(recordLogItems[index].id)),
                         ],
                       );
                     }
-                    return SudokuRecordItem(recordLogItems[index], key: ValueKey(recordLogItems[index].id));
+                    return SudokuRecordSlidable(recordLogItems[index], key: ValueKey(recordLogItems[index].id));
                   },
                   itemCount: recordLogItems.length,
                 );
