@@ -73,6 +73,19 @@ class SudokuNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> reset() async {
+    await init(dateTime, difficulty);
+  }
+
+  Future<void> next() async {
+    Difficulty? newDifficulty = Difficulty.next(difficulty);
+    if (newDifficulty == null) {
+      await init(dateTime.previous, Difficulty.d);
+    } else {
+      await init(dateTime, newDifficulty);
+    }
+  }
+
   @override
   void dispose() {
     ref.invalidate(counterProvider(0));
@@ -261,6 +274,10 @@ class SudokuNotifier extends ChangeNotifier {
     );
 
     await sudokuRecordApi.insert(sudokuRecord);
+  }
+
+  String get dateString {
+    return ref.read(counterProvider(0)).secondsString;
   }
 
   bool get _isNotCorrect => !_isCorrect;

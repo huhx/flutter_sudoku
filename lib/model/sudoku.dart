@@ -45,6 +45,13 @@ enum Difficulty {
   static Difficulty from(int level) {
     return Difficulty.values.firstWhere((element) => element.level == level);
   }
+
+  static Difficulty? next(Difficulty difficulty) {
+    if (difficulty.level + 1 > Difficulty.s.level) {
+      return null;
+    }
+    return Difficulty.from(difficulty.level + 1);
+  }
 }
 
 class SudokuResponse extends Equatable {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/business/home/sudoku_failed_screen.dart';
+import 'package:flutter_sudoku/business/home/sudoku_success_screen.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
@@ -19,9 +21,9 @@ class SudokuKeyPad extends StatelessWidget {
         (index) => NumberItem(sudokuNotifier.isEnable(index + 1), index + 1, (int num) {
           final GameStatus gameStatus = sudokuNotifier.onInput(num);
           if (gameStatus == GameStatus.success) {
-            context.successDialog();
+            context.goto(SudokuSuccessScreen(sudokuNotifier));
           } else if (gameStatus == GameStatus.failed) {
-            context.failedDialog();
+            context.goto(SudokuFailedScreen(sudokuNotifier));
           }
         }),
       ),

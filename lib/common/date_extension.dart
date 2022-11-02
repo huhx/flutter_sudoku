@@ -14,4 +14,6 @@ extension DateExtension on DateTime {
   String get toDateTimeString {
     return DateFormat("yyyy-MM-dd hh:mm:ss").format(this);
   }
+
+  DateTime get previous => add(const Duration(days: -1));
 }

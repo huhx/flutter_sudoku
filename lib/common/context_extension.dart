@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/cancel_confirm_dialog.dart';
-import 'package:flutter_sudoku/component/failed_dialog.dart';
-import 'package:flutter_sudoku/component/success_dialog.dart';
 import 'package:share_plus/share_plus.dart';
 
 extension ContextExtensions on BuildContext {
@@ -42,20 +40,6 @@ extension ContextExtensions on BuildContext {
         content: content,
         callback: callback,
       ),
-    );
-  }
-
-  void successDialog() {
-    showDialog(
-      context: this,
-      builder: (_) => const SuccessDialog(),
-    );
-  }
-
-  void failedDialog() {
-    showDialog(
-      context: this,
-      builder: (_) => const FailedDialog(),
     );
   }
 
