@@ -62,6 +62,7 @@ dependencies:
   logger: ^1.1.0
   envied: ^0.2.3
   flutter_slidable: ^2.0.0
+  sticky_headers: ^0.3.0+2
 
 dependency_overrides:
   pull_to_refresh:

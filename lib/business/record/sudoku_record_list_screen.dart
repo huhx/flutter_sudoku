@@ -12,6 +12,7 @@ import 'package:flutter_sudoku/component/text_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/util/date_util.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 import 'sudoku_record_slidable.dart';
 
@@ -83,40 +84,32 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
                 final String key = recordLogMap.keys.elementAt(index);
                 final List<SudokuRecord> recordLogItems = recordLogMap[key]!;
 
-                return ListView.builder(
-                  padding: EdgeInsets.zero,
-                  primary: false,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SimpleTextIcon(icon: "sudoku_log", text: key),
-                                SimpleTextIcon(icon: "weekday", text: DateUtil.getWeekFromString(key)),
-                              ],
-                            ),
-                          ),
-                          SudokuRecordSlidable(
-                            key: ValueKey(recordLogItems[index].id),
-                            sudokuRecord: recordLogItems[index],
-                            deleteCallback: (id) => streamList.reset(sudokuRecords.where((element) => element.id != id).toList()),
-                          ),
-                        ],
+                return StickyHeader(
+                  header: Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SimpleTextIcon(icon: "sudoku_log", text: key),
+                        SimpleTextIcon(icon: "weekday", text: DateUtil.getWeekFromString(key)),
+                      ],
+                    ),
+                  ),
+                  content: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    primary: false,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return SudokuRecordSlidable(
+                        key: ValueKey(recordLogItems[index].id),
+                        sudokuRecord: recordLogItems[index],
+                        deleteCallback: (id) =>
+                            streamList.reset(sudokuRecords.where((element) => element.id != id).toList()),
                       );
-                    }
-                    return SudokuRecordSlidable(
-                      key: ValueKey(recordLogItems[index].id),
-                      sudokuRecord: recordLogItems[index],
-                      deleteCallback: (id) => streamList.reset(sudokuRecords.where((element) => element.id != id).toList()),
-                    );
-                  },
-                  itemCount: recordLogItems.length,
+                    },
+                    itemCount: recordLogItems.length,
+                  ),
                 );
               },
             ),
