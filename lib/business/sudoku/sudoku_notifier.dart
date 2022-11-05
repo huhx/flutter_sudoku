@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
+import 'package:flutter_sudoku/business/sudoku/base_sudoku.dart';
 import 'package:flutter_sudoku/business/sudoku/counter_notifier.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';
 import 'package:flutter_sudoku/common/list_extension.dart';
@@ -15,26 +16,17 @@ import 'package:flutter_sudoku/service/audio_service.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SudokuNotifier extends ChangeNotifier {
+class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   static const List<int> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   late SudokuResponse sudokuResponse;
 
   late DateTime startTime;
-  late List<List<int>> question;
-  late List<List<int>> content;
-  late List<List<int>> answer;
-  late Map<Point, List<int>?> notesMap;
   late Difficulty difficulty;
   late DateTime dateTime;
   late List<SudokuInput> sudokuInputs;
 
-  late List<Point> highlightPoints;
-  late List<Point> relatedPoints;
-  late Map<Point, Color> textColorMap;
-
   late bool enableNotes;
-  late Point selected;
   late GameStatus gameStatus;
   late int retryCount;
   late int tipCount;
@@ -61,9 +53,9 @@ class SudokuNotifier extends ChangeNotifier {
     gameStatus = GameStatus.running;
     retryCount = 0;
     tipCount = sudokuConfig.tipCount;
-    highlightPoints = _highlight();
-    relatedPoints = _related();
-    textColorMap = {for (final point in _empty()) point: inputColor};
+    highlightPoints = highlight();
+    relatedPoints = related();
+    textColorMap = {for (final point in empty()) point: inputColor};
     sudokuInputs = [];
 
     ref.invalidate(counterProvider(0));
@@ -78,7 +70,7 @@ class SudokuNotifier extends ChangeNotifier {
   }
 
   Future<void> next() async {
-    Difficulty? newDifficulty = Difficulty.next(difficulty);
+    final Difficulty? newDifficulty = Difficulty.next(difficulty);
     if (newDifficulty == null) {
       await init(dateTime.previous, Difficulty.d);
     } else {
@@ -86,16 +78,10 @@ class SudokuNotifier extends ChangeNotifier {
     }
   }
 
-  @override
-  void dispose() {
-    ref.invalidate(counterProvider(0));
-    super.dispose();
-  }
-
   void onTapped(Point point) {
     selected = point;
-    relatedPoints = _related();
-    highlightPoints = _highlight();
+    relatedPoints = related();
+    highlightPoints = highlight();
 
     notifyListeners();
   }
@@ -123,8 +109,8 @@ class SudokuNotifier extends ChangeNotifier {
 
     notesMap.remove(selected);
     content[selected.x][selected.y] = value;
-    relatedPoints = _related();
-    highlightPoints = _highlight();
+    relatedPoints = related();
+    highlightPoints = highlight();
     sudokuInputs.add(SudokuInput.inputValue(selected, _isCorrect, value));
 
     if (_isNotCorrect) {
@@ -158,8 +144,8 @@ class SudokuNotifier extends ChangeNotifier {
       content[selected.x][selected.y] = answer[selected.x][selected.y];
       notesMap.remove(selected);
 
-      relatedPoints = _related();
-      highlightPoints = _highlight();
+      relatedPoints = related();
+      highlightPoints = highlight();
       textColorMap[selected] = inputColor;
 
       tipCount = tipCount - 1;
@@ -191,39 +177,12 @@ class SudokuNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Color? getColor(Point point) {
-    if (point == selected) {
-      return selectedColor;
-    }
-
-    if (highlightPoints.contains(point)) {
-      return highlightColor;
-    }
-
-    if (relatedPoints.contains(point)) {
-      return relatedColor;
-    }
-    return null;
-  }
-
-  Color? getTextColor(Point point) {
-    return textColorMap[point];
-  }
-
   String get shareTitle {
     return "huhx://sudoku?dateTime=${dateTime.toDateString()}&difficulty=${difficulty.level}";
   }
 
   String get retryString {
     return retryCount == 0 ? "检查无误" : "错误：$retryCount/${sudokuConfig.retryCount}";
-  }
-
-  List<int>? getNoteValue(Point point) {
-    return notesMap[point];
-  }
-
-  int getValue(Point point) {
-    return content[point.x][point.y];
   }
 
   bool get canUseTip {
@@ -303,46 +262,10 @@ class SudokuNotifier extends ChangeNotifier {
     return true;
   }
 
-  List<Point> _empty() {
-    List<Point> points = [];
-    for (int i = 0; i < question.length; i++) {
-      for (int j = 0; j < question[i].length; j++) {
-        if (question[i][j] == 0) {
-          points.add(Point(x: i, y: j));
-        }
-      }
-    }
-    return points;
-  }
-
-  List<Point> _highlight() {
-    if (content[selected.x][selected.y] == 0) {
-      return [];
-    }
-    List<Point> points = [];
-    for (int i = 0; i < content.length; i++) {
-      for (int j = 0; j < content[i].length; j++) {
-        if ((i != selected.x && j != selected.y) && content[selected.x][selected.y] == content[i][j]) {
-          points.add(Point(x: i, y: j));
-        }
-      }
-    }
-    return points;
-  }
-
-  List<Point> _related() {
-    List<Point> relatedList = [];
-    for (int i = 0; i < content.length; i++) {
-      for (int j = 0; j < content[i].length; j++) {
-        if (i == selected.x && j == selected.y) {
-          continue;
-        }
-        if (i == selected.x || j == selected.y) {
-          relatedList.add(Point.from(i, j));
-        }
-      }
-    }
-    return relatedList;
+  @override
+  void dispose() {
+    ref.invalidate(counterProvider(0));
+    super.dispose();
   }
 }
 
