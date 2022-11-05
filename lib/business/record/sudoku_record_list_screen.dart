@@ -104,8 +104,10 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
                       return SudokuRecordSlidable(
                         key: ValueKey(recordLogItems[index].id),
                         sudokuRecord: recordLogItems[index],
-                        deleteCallback: (id) =>
-                            streamList.reset(sudokuRecords.where((element) => element.id != id).toList()),
+                        onDelete: (id) async {
+                          streamList.reset(sudokuRecords.where((element) => element.id != id).toList());
+                          await sudokuRecordApi.delete(id);
+                        },
                       );
                     },
                     itemCount: recordLogItems.length,

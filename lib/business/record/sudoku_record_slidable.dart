@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/list_tile_trailing.dart';
 import 'package:flutter_sudoku/component/text_icon.dart';
@@ -11,12 +10,12 @@ import 'sudoku_record_screen.dart';
 
 class SudokuRecordSlidable extends ConsumerWidget {
   final SudokuRecord sudokuRecord;
-  final Function(int) deleteCallback;
+  final Function(int) onDelete;
 
   const SudokuRecordSlidable({
     super.key,
     required this.sudokuRecord,
-    required this.deleteCallback,
+    required this.onDelete,
   });
 
   @override
@@ -27,10 +26,7 @@ class SudokuRecordSlidable extends ConsumerWidget {
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (_) async {
-              await sudokuRecordApi.delete(sudokuRecord.id!);
-              deleteCallback(sudokuRecord.id!);
-            },
+            onPressed: (_) => onDelete(sudokuRecord.id!),
             backgroundColor: const Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,
