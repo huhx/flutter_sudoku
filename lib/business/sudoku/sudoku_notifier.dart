@@ -44,9 +44,9 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     selected = Point.first();
     startTime = DateTime.now();
     enableNotes = false;
-    question = sudokuResponse.toQuestion();
-    content = sudokuResponse.toQuestion();
-    answer = sudokuResponse.toAnswer();
+    question = toArray(sudokuResponse.question);
+    content = toArray(sudokuResponse.question);
+    answer = toArray(sudokuResponse.answer);
     notesMap = {};
     this.dateTime = dateTime;
     this.difficulty = sudokuResponse.difficulty;

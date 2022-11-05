@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 
@@ -81,5 +82,10 @@ mixin BaseSudoku {
       }
     }
     return relatedList;
+  }
+
+  List<List<int>> toArray(String string) {
+    final List<String> firstChunk = string.chunk(9);
+    return firstChunk.map((e) => e.split("").map((e) => e.toInt()).toList()).toList();
   }
 }

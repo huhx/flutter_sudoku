@@ -4,7 +4,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'page_state.dart';
 
-
 typedef RequestListener<int> = Future<void> Function(int pageKey);
 
 class StreamList<T> {
@@ -40,17 +39,17 @@ class StreamList<T> {
   Future<void> onRefresh() async {
     await _init();
 
-    refreshController.refreshCompleted();
+    _refreshController.refreshCompleted();
   }
 
   Future<void> onLoading() async {
     if (pageState.nextKey == null) {
-      refreshController.loadNoData();
+      _refreshController.loadNoData();
       return;
     }
     await _listener(pageState.nextKey!);
 
-    refreshController.loadComplete();
+    _refreshController.loadComplete();
   }
 
   void fetch(List<T> list, int pageKey, {int pageSize = 20, bool reverse = false}) {

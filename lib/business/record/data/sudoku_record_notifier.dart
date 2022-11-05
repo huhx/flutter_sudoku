@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/base_sudoku.dart';
-import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
@@ -20,9 +19,9 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
   SudokuRecordNotifier({required this.sudokuInputLog});
 
   void init() {
-    question = toSudokuArray(sudokuInputLog.question);
-    content = toSudokuArray(sudokuInputLog.question);
-    answer = toSudokuArray(sudokuInputLog.answer);
+    question = toArray(sudokuInputLog.question);
+    content = toArray(sudokuInputLog.question);
+    answer = toArray(sudokuInputLog.answer);
 
     selected = Point.first();
     notesMap = {};
@@ -37,7 +36,7 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
 
   Future<GameStatus> resetPlay() async {
     currentIndex = 0;
-    content = toSudokuArray(sudokuInputLog.question);
+    content = toArray(sudokuInputLog.question);
 
     while (!_disposed && currentIndex < sudokuInputLog.sudokuInputs.length) {
       await Future.delayed(const Duration(seconds: 1), () {
@@ -60,7 +59,7 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
     notesMap.clear();
     selected = Point.from(-1, -1);
 
-    content = toSudokuArray(sudokuInputLog.answer);
+    content = toArray(sudokuInputLog.answer);
 
     notifyListeners();
   }
@@ -95,15 +94,6 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
       highlightPoints = highlight();
       textColorMap[selected] = sudokuInput.isCorrect ? inputColor : errorColor;
     }
-  }
-
-  List<List<int>> toSudokuArray(String string) {
-    final List<String> firstChunk = string.chunk(9);
-    return firstChunk.map((e) => _toInt(e)).toList();
-  }
-
-  List<int> _toInt(String string) {
-    return string.split("").map((e) => e.toInt()).toList();
   }
 
   @override

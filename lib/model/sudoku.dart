@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_sudoku/common/string_extension.dart';
 
 class SudokuRequest extends Equatable {
   final DateTime dateTime;
@@ -77,20 +76,6 @@ class SudokuResponse extends Equatable {
       difficulty: Difficulty.from(json['difficulty'] as int),
       dateTime: json['dateTime'] as String,
     );
-  }
-
-  List<List<int>> toQuestion() {
-    final List<String> firstChunk = question.chunk(9);
-    return firstChunk.map((e) => _toInt(e)).toList();
-  }
-
-  List<List<int>> toAnswer() {
-    final List<String> firstChunk = answer.chunk(9);
-    return firstChunk.map((e) => _toInt(e)).toList();
-  }
-
-  List<int> _toInt(String string) {
-    return string.split("").map((e) => e.toInt()).toList();
   }
 }
 
