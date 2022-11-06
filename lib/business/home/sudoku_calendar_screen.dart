@@ -7,7 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 class SudokuCalendarScreen extends StatelessWidget {
   final DateTime dateTime;
 
-  const SudokuCalendarScreen(this.dateTime, {Key? key}) : super(key: key);
+  const SudokuCalendarScreen(this.dateTime, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,7 +5,7 @@ import 'package:flutter_sudoku/theme/shape.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
 class OnboardScreen extends StatelessWidget {
-  const OnboardScreen({Key? key}) : super(key: key);
+  const OnboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
