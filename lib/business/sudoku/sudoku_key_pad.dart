@@ -45,11 +45,11 @@ class NumberItem extends StatelessWidget {
       child: AspectRatio(
         aspectRatio: 1,
         child: Container(
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(6)),
             border: Border.all(width: 1, color: Colors.grey),
           ),
-          alignment: Alignment.center,
           child: Text(
             number.toString(),
             style: TextStyle(fontSize: 24, color: isEnable ? Colors.green : Colors.grey),

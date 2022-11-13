@@ -16,4 +16,6 @@ extension DateExtension on DateTime {
   }
 
   DateTime get previous => add(const Duration(days: -1));
+
+  DateTime get next => add(const Duration(days: 1));
 }
