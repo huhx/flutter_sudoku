@@ -82,7 +82,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   envied_generator: ^0.2.3
   build_runner: ^2.3.2
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
 
 flutter_icons:
   android: "launcher_icon"

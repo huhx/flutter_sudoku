@@ -32,7 +32,7 @@ class OnboardScreen extends StatelessWidget {
           PageViewModel(
             decoration: pageDecoration,
             title: "数独的规则",
-            body: "数独的解题过程就是在9×9的方格内填入1-9的数字，要求每行每列和每组（粗线方框内的3×3的格子）的数字不能重复。",
+            body: "数独的解题过程就是在9*9的方格内填入1-9的数字, 要求每行每列和每组(粗线方框内的3*3的格子)的数字不能重复。",
             image: Image.asset("assets/image/sudoku_1.png"),
           ),
           PageViewModel(
