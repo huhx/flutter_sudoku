@@ -60,7 +60,7 @@ dependencies:
   share_plus: ^6.1.0
   uni_links: ^0.5.1
   logger: ^1.1.0
-  envied: ^0.2.3
+  envied: ^0.3.0
   flutter_slidable: ^2.0.0
   sticky_headers: ^0.3.0+2
 
@@ -80,7 +80,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  envied_generator: ^0.2.3
+  envied_generator: ^0.3.0
   build_runner: ^2.3.2
   flutter_launcher_icons: ^0.11.0
 

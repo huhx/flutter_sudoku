@@ -1,16 +1,14 @@
 # flutter_sudoku
 
-A new Flutter project of sudoku.
+一个使用Flutter编写的每日数独小🎮游戏
 
-## Getting Started
+## Preview
 
-This project is a starting point for a Flutter application.
+| 数独首页                    | 数独记录列表                  | 数独设置                    |
+|-------------------------|-------------------------|-------------------------|
+| ![](images/image_1.png) | ![](images/image_2.png) | ![](images/image_3.png) |
 
-A few resources to get you started if this is your first Flutter project:
+| 数独记录详情                  | 数独分享                    | 数独主题                    |
+|-------------------------|-------------------------|-------------------------|
+| ![](images/image_4.png) | ![](images/image_5.png) | ![](images/image_6.png) |
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
