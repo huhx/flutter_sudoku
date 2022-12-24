@@ -40,7 +40,7 @@ class SudokuInput extends Equatable {
       value: json['value'] as int,
       isCorrect: json['isCorrect'] as bool,
       useTip: json['useTip'] as bool,
-      noteValues: (json['noteValues'] as List<dynamic>).map((e) => e as int).toList(),
+      noteValues: (json['noteValues'] as List<dynamic>).map((noteValue) => noteValue as int).toList(),
     );
   }
 

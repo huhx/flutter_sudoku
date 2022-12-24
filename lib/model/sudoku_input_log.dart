@@ -39,7 +39,7 @@ class SudokuInputLog extends Equatable {
       'difficulty': difficulty.level,
       'gameStatus': gameStatus.name,
       'dateTime': dateTime,
-      'sudokuInputs': jsonEncode(sudokuInputs.map((e) => e.toJson()).toList())
+      'sudokuInputs': jsonEncode(sudokuInputs.map((sudokuInput) => sudokuInput.toJson()).toList())
     };
   }
 
@@ -51,7 +51,7 @@ class SudokuInputLog extends Equatable {
       gameStatus: GameStatus.values.byName(json['gameStatus'] as String),
       dateTime: json['dateTime'] as int,
       sudokuInputs: (jsonDecode(json['sudokuInputs']) as List<dynamic>)
-          .map((e) => SudokuInput.fromJson(e as Map<String, dynamic>))
+          .map((sudokuInput) => SudokuInput.fromJson(sudokuInput as Map<String, dynamic>))
           .toList(),
     );
   }
