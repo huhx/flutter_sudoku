@@ -1,4 +1,4 @@
-package com.huhx.flutter_sudoku
+package com.huhx.sudoku
 
 import io.flutter.embedding.android.FlutterActivity
 
