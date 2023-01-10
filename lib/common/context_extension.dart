@@ -19,7 +19,10 @@ extension ContextExtensions on BuildContext {
     return MediaQuery.of(this).platformBrightness == Brightness.dark;
   }
 
-  void showSnackBar(String content, {duration = 1}) {
+  void showSnackBar(
+    String content, {
+    duration = 1,
+  }) {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         content: Text(content),
@@ -43,8 +46,11 @@ extension ContextExtensions on BuildContext {
     );
   }
 
-  Future<void> share({required String title, required String subject}) async {
-    final box = findRenderObject() as RenderBox?;
+  Future<void> share({
+    required String title,
+    required String subject,
+  }) async {
+    final RenderBox? box = findRenderObject() as RenderBox?;
 
     await Share.share(
       title,

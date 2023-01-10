@@ -5,7 +5,7 @@ extension StringExtension on String {
     return int.tryParse(this) ?? defaultValue!;
   }
 
-   DateTime toDate({String pattern = "yyyy-MM-dd"}) {
+  DateTime toDate({String pattern = "yyyy-MM-dd"}) {
     return DateFormat(pattern).parse(this);
   }
 
@@ -14,8 +14,8 @@ extension StringExtension on String {
     final int chunkCount = (length / chunkSize).ceil();
 
     return List<String>.generate(chunkCount, (index) {
-      final sliceStart = index * chunkSize;
-      final sliceEnd = sliceStart + chunkSize;
+      final int sliceStart = index * chunkSize;
+      final int sliceEnd = sliceStart + chunkSize;
       return substring(sliceStart, (sliceEnd < length) ? sliceEnd : length);
     });
   }

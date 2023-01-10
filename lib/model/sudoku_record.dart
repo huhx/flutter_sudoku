@@ -38,7 +38,7 @@ class SudokuRecord extends Equatable {
         tipCount,
         startTime,
         endTime,
-        createTime
+        createTime,
       ];
 
   const SudokuRecord({
