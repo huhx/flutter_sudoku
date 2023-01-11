@@ -57,7 +57,7 @@ class SudokuRecordItem extends StatelessWidget {
       child: ListTile(
         onTap: () => context.goto(SudokuRecordScreen(sudokuRecord)),
         leading: CircleAvatar(
-          backgroundColor: _buildColor(sudokuRecord),
+          backgroundColor: sudokuRecord.color,
           child: Text("${sudokuRecord.duration}", style: const TextStyle(color: Colors.white)),
         ),
         title: Text(sudokuRecord.startString, style: Theme.of(context).textTheme.bodyText2),
@@ -78,16 +78,5 @@ class SudokuRecordItem extends StatelessWidget {
         trailing: const ListTileTrailing(),
       ),
     );
-  }
-
-  Color _buildColor(SudokuRecord sudokuRecord) {
-    final int duration = sudokuRecord.duration;
-    if (duration > 15 * 60) {
-      return Colors.red;
-    } else if (duration > 5 * 60) {
-      return Colors.blue;
-    } else {
-      return Colors.green;
-    }
   }
 }

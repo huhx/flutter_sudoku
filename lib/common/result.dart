@@ -11,8 +11,9 @@ class Result {
     required TResult Function() loading,
     required TResult Function(String errorTest) error,
     required TResult Function() success,
-  }) =>
-      throw UnsupportedError("Class extends ResultState must implement when method");
+  }) {
+    throw UnsupportedError("Class extends ResultState must implement when method");
+  }
 }
 
 class _Loading extends Result {

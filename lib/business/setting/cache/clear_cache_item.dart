@@ -10,7 +10,7 @@ class ClearCacheItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () => _buildShowConfirmDialog(context),
+        onTap: () => _showConfirmDialog(context),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const <Widget>[
@@ -22,7 +22,7 @@ class ClearCacheItem extends StatelessWidget {
     );
   }
 
-  Future<void> _buildShowConfirmDialog(BuildContext context) async {
+  Future<void> _showConfirmDialog(BuildContext context) async {
     context.showCommDialog(
       callback: () async {
         await sudokuRecordApi.clear();

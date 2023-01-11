@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';
 import 'package:flutter_sudoku/common/int_extension.dart';
 
@@ -72,6 +73,16 @@ class SudokuRecord extends Equatable {
 
   String get endString {
     return DateTime.fromMillisecondsSinceEpoch(endTime).toDateTimeString;
+  }
+
+  Color get color {
+    if (duration > 15 * 60) {
+      return Colors.red;
+    } else if (duration > 5 * 60) {
+      return Colors.blue;
+    } else {
+      return Colors.green;
+    }
   }
 
   String get secondsString => duration.toTimeString;
