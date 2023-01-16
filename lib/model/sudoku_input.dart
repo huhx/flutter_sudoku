@@ -19,19 +19,43 @@ class SudokuInput extends Equatable {
   });
 
   factory SudokuInput.inputClear(Point point) {
-    return SudokuInput(point: point, value: 0, isCorrect: false, useTip: false, noteValues: const []);
+    return SudokuInput(
+      point: point,
+      value: 0,
+      isCorrect: false,
+      useTip: false,
+      noteValues: const [],
+    );
   }
 
   factory SudokuInput.inputNote(Point point, List<int> noteValue) {
-    return SudokuInput(point: point, value: 0, isCorrect: false, useTip: false, noteValues: noteValue);
+    return SudokuInput(
+      point: point,
+      value: 0,
+      isCorrect: false,
+      useTip: false,
+      noteValues: noteValue,
+    );
   }
 
   factory SudokuInput.inputTip(Point point, int value) {
-    return SudokuInput(point: point, value: value, isCorrect: true, useTip: true, noteValues: const []);
+    return SudokuInput(
+      point: point,
+      value: value,
+      isCorrect: true,
+      useTip: true,
+      noteValues: const [],
+    );
   }
 
   factory SudokuInput.inputValue(Point point, bool isCorrect, int value) {
-    return SudokuInput(point: point, value: value, isCorrect: isCorrect, useTip: false, noteValues: const []);
+    return SudokuInput(
+      point: point,
+      value: value,
+      isCorrect: isCorrect,
+      useTip: false,
+      noteValues: const [],
+    );
   }
 
   factory SudokuInput.fromJson(Map<String, dynamic> json) {

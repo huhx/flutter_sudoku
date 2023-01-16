@@ -26,13 +26,20 @@ class StreamList<T> {
   late PageState<int, T> pageState;
   late RequestListener<int> _listener;
 
-  void addRequestListener(RequestListener<int> requestListener, {bool init = true}) {
+  void addRequestListener(
+    RequestListener<int> requestListener, {
+    bool init = true,
+  }) {
     _listener = requestListener;
     init ? _init() : reset([]);
   }
 
   Future<void> _init() async {
-    pageState = PageState<int, T>(nextKey: firstKey, error: null, itemList: null);
+    pageState = PageState<int, T>(
+      nextKey: firstKey,
+      error: null,
+      itemList: null,
+    );
     await _listener(firstKey);
   }
 
@@ -52,7 +59,12 @@ class StreamList<T> {
     _refreshController.loadComplete();
   }
 
-  void fetch(List<T> list, int pageKey, {int pageSize = 20, bool reverse = false}) {
+  void fetch(
+    List<T> list,
+    int pageKey, {
+    int pageSize = 20,
+    bool reverse = false,
+  }) {
     final bool isLastPage = list.length < pageSize;
     if (isLastPage) {
       _appendLastPage(reverse, list);
@@ -68,13 +80,21 @@ class StreamList<T> {
   void _appendPage(bool reverse, List<T> newItems, int? nextPageKey) {
     final List<T> previousItems = pageState.itemList ?? [];
     final List<T> itemList = reverse ? newItems + previousItems : previousItems + newItems;
-    pageState = PageState<int, T>(itemList: itemList, error: null, nextKey: nextPageKey);
+    pageState = PageState<int, T>(
+      itemList: itemList,
+      error: null,
+      nextKey: nextPageKey,
+    );
 
     _streamController.add(itemList);
   }
 
   void reset(List<T> newItems) {
-    pageState = PageState<int, T>(itemList: newItems, error: null, nextKey: firstKey);
+    pageState = PageState<int, T>(
+      itemList: newItems,
+      error: null,
+      nextKey: firstKey,
+    );
 
     _streamController.add(pageState.itemList);
   }

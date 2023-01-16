@@ -3,11 +3,12 @@ import 'package:flutter_sudoku/util/prefs_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final themeProvider = ChangeNotifierProvider((ref) {
-  return AppThemeState(PrefsUtil.getIsLightTheme() == null
-      ? ThemeMode.system
-      : PrefsUtil.getIsLightTheme()!
-          ? ThemeMode.light
-          : ThemeMode.dark);
+  final bool? isLightTheme = PrefsUtil.getIsLightTheme();
+
+  if (isLightTheme == null) {
+    return AppThemeState(ThemeMode.system);
+  }
+  return AppThemeState(isLightTheme ? ThemeMode.light : ThemeMode.dark);
 });
 
 class AppThemeState extends ChangeNotifier {
