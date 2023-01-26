@@ -26,7 +26,7 @@ class ClearCacheItem extends StatelessWidget {
     context.showCommDialog(
       callback: () async {
         await sudokuRecordApi.clear();
-        context.pop();
+        if (context.mounted) context.pop();
       },
       title: '清除缓存',
       content: '你确定清除缓存?',

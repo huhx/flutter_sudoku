@@ -26,7 +26,7 @@ class SudokuFailedScreen extends ConsumerWidget {
           TextButton(
             onPressed: () async {
               await sudokuNotifier.reset();
-              context.pop();
+              if (context.mounted) context.pop();
             },
             child: const Text("再次挑战"),
           ),

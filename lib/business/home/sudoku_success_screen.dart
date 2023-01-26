@@ -22,7 +22,7 @@ class SudokuSuccessScreen extends ConsumerWidget {
         TextButton(
           onPressed: () async {
             await sudokuNotifier.next();
-            context.pop();
+             if (context.mounted) context.pop();
           },
           child: const Text("下一关"),
         ),
