@@ -94,7 +94,7 @@ class _MainAppState extends ConsumerState<MainApp> {
         if (!mounted) return;
         setState(() => _initialUri = uri);
       } on PlatformException {
-        logger.d('falied to get initial uri');
+        logger.d('failed to get initial uri');
       } on FormatException catch (_) {
         if (!mounted) return;
         logger.d('malformed initial uri');

@@ -60,7 +60,7 @@ class SudokuRecordItem extends StatelessWidget {
           backgroundColor: sudokuRecord.color,
           child: Text("${sudokuRecord.duration}", style: const TextStyle(color: Colors.white)),
         ),
-        title: Text(sudokuRecord.startString, style: Theme.of(context).textTheme.bodyText2),
+        title: Text(sudokuRecord.startString, style: Theme.of(context).textTheme.bodyMedium),
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Row(

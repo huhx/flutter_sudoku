@@ -20,7 +20,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=2.19.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -54,7 +54,6 @@ dependencies:
   introduction_screen: ^3.0.2
   sqflite: ^2.1.0+1
   path: ^1.8.2
-  badges: ^2.0.3
   pull_to_refresh: ^2.0.0
   just_audio: ^0.9.30
   share_plus: ^6.1.0
