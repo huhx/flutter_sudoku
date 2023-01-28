@@ -12,7 +12,7 @@ final themeProvider = ChangeNotifierProvider((ref) {
 });
 
 class AppThemeState extends ChangeNotifier {
-  ThemeMode themeMode;
+  late ThemeMode themeMode;
 
   AppThemeState(this.themeMode);
 
