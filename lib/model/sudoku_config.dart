@@ -20,5 +20,5 @@ class SudokuConfig extends Equatable {
 const SudokuConfig sudokuConfig = SudokuConfig(
   retryCount: 3,
   tipCount: 10,
-  tipLevel: TipLevel.first,
+  tipLevel: TipLevel.none,
 );
