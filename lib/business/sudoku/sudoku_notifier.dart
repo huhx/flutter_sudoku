@@ -92,7 +92,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   GameStatus onInput(int value) {
-    if (question[selected.x][selected.y] != 0 || _isCorrect) {
+    if (questionValue != 0 || _isCorrect) {
       return gameStatus;
     }
     audioService.playInput();
@@ -146,7 +146,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     if (_isNotCorrect) {
       audioService.playOperation();
 
-      content[selected.x][selected.y] = answer[selected.x][selected.y];
+      content[selected.x][selected.y] = answerValue;
       notesMap.remove(selected);
 
       relatedPoints = related();
@@ -154,14 +154,14 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       textColorMap[selected] = inputColor;
 
       tipCount = tipCount - 1;
-      sudokuInputs.add(SudokuInput.inputTip(selected, answer[selected.x][selected.y]));
+      sudokuInputs.add(SudokuInput.inputTip(selected, answerValue));
 
       notifyListeners();
     }
   }
 
   void clear() {
-    if (question[selected.x][selected.y] == 0 && _isNotCorrect) {
+    if (questionValue == 0 && _isNotCorrect) {
       audioService.playOperation();
 
       content[selected.x][selected.y] = 0;
@@ -191,12 +191,12 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   bool get canUseTip {
-    return question[selected.x][selected.y] == 0 && _isNotCorrect;
+    return questionValue == 0 && _isNotCorrect;
   }
 
   bool get canClear {
-    final bool hasContent = content[selected.x][selected.y] != 0 || _hasNoteValue;
-    return question[selected.x][selected.y] == 0 && hasContent && _isNotCorrect;
+    final bool hasContent = contentValue != 0 || _hasNoteValue;
+    return questionValue == 0 && hasContent && _isNotCorrect;
   }
 
   bool isEnable(int value) {
@@ -204,12 +204,11 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   Set<int> get _disabledValues {
-    if (question[selected.x][selected.y] != 0 || _isCorrect) {
+    if (questionValue != 0 || _isCorrect) {
       return numbers;
     }
 
-    final Set<int> disabledNumbers = _disabledNumbers(tipLevel);
-    return {content[selected.x][selected.y], ...disabledNumbers};
+    return {contentValue, ..._disabledNumbers(tipLevel)};
   }
 
   Set<int> _disabledNumbers(TipLevel tipLevel) {
@@ -260,9 +259,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
 
   bool get _isNotCorrect => !_isCorrect;
 
-  bool get _isCorrect {
-    return answer[selected.x][selected.y] == content[selected.x][selected.y];
-  }
+  bool get _isCorrect => contentValue == answerValue;
 
   bool get _hasNoteValue {
     final List<int>? noteValues = getNoteValue(selected);

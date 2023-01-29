@@ -43,6 +43,10 @@ mixin BaseSudoku {
     return content[point.x][point.y];
   }
 
+  int get contentValue => content[selected.x][selected.y];
+  int get questionValue => question[selected.x][selected.y];
+  int get answerValue => answer[selected.x][selected.y];
+
   List<Point> empty() {
     List<Point> points = [];
     for (int i = 0; i < question.length; i++) {
@@ -56,13 +60,13 @@ mixin BaseSudoku {
   }
 
   List<Point> highlight() {
-    if (content[selected.x][selected.y] == 0) {
+    if (contentValue == 0) {
       return [];
     }
     List<Point> points = [];
     for (int i = 0; i < content.length; i++) {
       for (int j = 0; j < content[i].length; j++) {
-        if ((i != selected.x && j != selected.y) && content[selected.x][selected.y] == content[i][j]) {
+        if ((i != selected.x && j != selected.y) && contentValue == content[i][j]) {
           points.add(Point(x: i, y: j));
         }
       }
