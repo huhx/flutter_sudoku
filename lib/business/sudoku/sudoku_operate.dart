@@ -3,6 +3,7 @@ import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/theme/theme.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
+import 'package:badges/badges.dart' as badges;
 
 class SudokuOperate extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
@@ -22,9 +23,12 @@ class SudokuOperate extends StatelessWidget {
             onPressed: sudokuNotifier.canClear ? () => sudokuNotifier.clear() : null,
           ),
           OperateItem(
-            icon: Badge(
-              padding: const EdgeInsets.all(3),
-              label: sudokuNotifier.enableNotes
+            icon: badges.Badge(
+              badgeStyle: badges.BadgeStyle(
+                padding: const EdgeInsets.all(3),
+                badgeColor: sudokuNotifier.enableNotes ? Colors.red : Colors.grey,
+              ),
+              badgeContent: sudokuNotifier.enableNotes
                   ? const Text("on", style: TextStyle(fontSize: 8))
                   : const Text("off", style: TextStyle(fontSize: 8)),
               child: const SvgIcon(name: "operate_note", color: themeColor),
@@ -33,10 +37,12 @@ class SudokuOperate extends StatelessWidget {
             onPressed: () => sudokuNotifier.toggleNote(),
           ),
           OperateItem(
-            icon: Badge(
-              padding: const EdgeInsets.all(3),
-              backgroundColor: sudokuNotifier.canUseTip ? Colors.red : Colors.grey,
-              label: Text("${sudokuNotifier.tipCount}", style: const TextStyle(fontSize: 8)),
+            icon: badges.Badge(
+              badgeStyle: badges.BadgeStyle(
+                padding: const EdgeInsets.all(3),
+                badgeColor: sudokuNotifier.canUseTip ? Colors.red : Colors.grey,
+              ),
+              badgeContent: Text("${sudokuNotifier.tipCount}", style: const TextStyle(fontSize: 8)),
               child: SvgIcon(name: "operate_tip", color: sudokuNotifier.canUseTip ? themeColor : Colors.grey),
             ),
             label: "提示",
