@@ -6,6 +6,7 @@ import 'package:flutter_sudoku/business/sudoku/counter_notifier.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';
 import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/result.dart';
+import 'package:flutter_sudoku/common/set_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
@@ -194,7 +195,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   bool get canClear {
-    bool hasContent = content[selected.x][selected.y] != 0 || _hasNoteValue;
+    final bool hasContent = content[selected.x][selected.y] != 0 || _hasNoteValue;
     return question[selected.x][selected.y] == 0 && hasContent && _isNotCorrect;
   }
 
@@ -218,9 +219,9 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       case TipLevel.first:
         return horizontalSet();
       case TipLevel.second:
-        return {...horizontalSet(), ...verticalSet()};
+        return horizontalSet() + verticalSet();
       case TipLevel.third:
-        return {...horizontalSet(), ...verticalSet(), ...insideSet()};
+        return horizontalSet() + verticalSet() + insideSet();
     }
   }
 
