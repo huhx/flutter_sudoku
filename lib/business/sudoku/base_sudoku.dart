@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/theme/color.dart';
+import 'package:flutter_sudoku/util/list_util.dart';
 
 mixin BaseSudoku {
   late List<List<int>> question;
@@ -67,6 +68,39 @@ mixin BaseSudoku {
       }
     }
     return points;
+  }
+
+  Set<int> horizontalSet() {
+    Set<int> result = {};
+    for (int i = 0; i < content.length; i++) {
+      final int value = content[i][selected.y];
+      if (value != 0 && value == answer[i][selected.y]) {
+        result.add(value);
+      }
+    }
+    return result;
+  }
+
+  Set<int> verticalSet() {
+    Set<int> result = {};
+    for (int i = 0; i < content.length; i++) {
+      final int value = content[selected.x][i];
+      if (value != 0 && value == answer[selected.x][i]) {
+        result.add(value);
+      }
+    }
+    return result;
+  }
+
+  Set<int> insideSet() {
+    Set<int> result = {};
+    ListUtil.related(selected).forEach((point) {
+      final int value = content[point.x][point.y];
+      if (value != 0 && value == answer[point.x][point.y]) {
+        result.add(value);
+      }
+    });
+    return result;
   }
 
   List<Point> related() {

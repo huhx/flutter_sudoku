@@ -12,14 +12,17 @@ import 'package:flutter_sudoku/model/sudoku_input.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
+import 'package:flutter_sudoku/model/sudoku_tip.dart';
+import 'package:flutter_sudoku/provider/tip_level_provider.dart';
 import 'package:flutter_sudoku/service/audio_service.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier with BaseSudoku {
-  static const List<int> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  static const Set<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
   late SudokuResponse sudokuResponse;
+  late TipLevel tipLevel;
 
   late DateTime startTime;
   late Difficulty difficulty;
@@ -57,6 +60,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     relatedPoints = related();
     textColorMap = {for (final point in empty()) point: inputColor};
     sudokuInputs = [];
+    tipLevel = ref.read(tipLevelProvider).tipLevel;
 
     ref.invalidate(counterProvider(0));
 
@@ -198,12 +202,26 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     return !_disabledValues.contains(value);
   }
 
-  List<int> get _disabledValues {
+  Set<int> get _disabledValues {
     if (question[selected.x][selected.y] != 0 || _isCorrect) {
       return numbers;
     }
 
-    return [content[selected.x][selected.y]];
+    final Set<int> disabledNumbers = _disabledNumbers(tipLevel);
+    return {content[selected.x][selected.y], ...disabledNumbers};
+  }
+
+  Set<int> _disabledNumbers(TipLevel tipLevel) {
+    switch (tipLevel) {
+      case TipLevel.none:
+        return {};
+      case TipLevel.first:
+        return horizontalSet();
+      case TipLevel.second:
+        return {...horizontalSet(), ...verticalSet()};
+      case TipLevel.third:
+        return {...horizontalSet(), ...verticalSet(), ...insideSet()};
+    }
   }
 
   void _saveSudokuRecord() async {
