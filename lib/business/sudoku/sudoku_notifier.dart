@@ -208,10 +208,10 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       return numbers;
     }
 
-    return {contentValue, ..._disabledNumbers(tipLevel)};
+    return {contentValue, ..._disabledNumbers()};
   }
 
-  Set<int> _disabledNumbers(TipLevel tipLevel) {
+  Set<int> _disabledNumbers() {
     switch (tipLevel) {
       case TipLevel.none:
         return {};
