@@ -92,7 +92,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   GameStatus onInput(int value) {
-    if (questionValue != 0 || _isCorrect) {
+    if (questionValue != 0 || contentValue == answerValue) {
       return gameStatus;
     }
     audioService.playInput();
@@ -116,9 +116,9 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     content[selected.x][selected.y] = value;
     relatedPoints = related();
     highlightPoints = highlight();
-    sudokuInputs.add(SudokuInput.inputValue(selected, _isCorrect, value));
+    sudokuInputs.add(SudokuInput.inputValue(selected, contentValue == answerValue, value));
 
-    if (_isNotCorrect) {
+    if (contentValue != answerValue) {
       textColorMap[selected] = errorColor;
       if (++retryCount >= sudokuConfig.retryCount) {
         gameStatus = GameStatus.failed;
@@ -143,7 +143,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   void useTip() {
-    if (_isNotCorrect) {
+    if (contentValue != answerValue) {
       audioService.playOperation();
 
       content[selected.x][selected.y] = answerValue;
@@ -161,7 +161,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   void clear() {
-    if (questionValue == 0 && _isNotCorrect) {
+    if (questionValue == 0 && contentValue != answerValue) {
       audioService.playOperation();
 
       content[selected.x][selected.y] = 0;
@@ -191,12 +191,12 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   bool get canUseTip {
-    return questionValue == 0 && _isNotCorrect;
+    return questionValue == 0 && contentValue != answerValue;
   }
 
   bool get canClear {
     final bool hasContent = contentValue != 0 || _hasNoteValue;
-    return questionValue == 0 && hasContent && _isNotCorrect;
+    return questionValue == 0 && hasContent && contentValue != answerValue;
   }
 
   bool isEnable(int value) {
@@ -204,7 +204,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   Set<int> get _disabledValues {
-    if (questionValue != 0 || _isCorrect) {
+    if (questionValue != 0 || contentValue == answerValue) {
       return numbers;
     }
 
@@ -256,10 +256,6 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   String get dateString {
     return ref.read(counterProvider(0)).secondsString;
   }
-
-  bool get _isNotCorrect => !_isCorrect;
-
-  bool get _isCorrect => contentValue == answerValue;
 
   bool get _hasNoteValue {
     final List<int>? noteValues = getNoteValue(selected);
