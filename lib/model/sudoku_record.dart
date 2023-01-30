@@ -67,6 +67,10 @@ class SudokuRecord extends Equatable {
     return DateTime(year, month, day).toDateString();
   }
 
+  String get createTimeString {
+    return createTime.toDateString();
+  }
+
   String get startString {
     return DateTime.fromMillisecondsSinceEpoch(startTime).toDateTimeString;
   }

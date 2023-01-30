@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
-import 'package:flutter_sudoku/common/int_extension.dart';
 import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/stream_list.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
@@ -47,17 +46,18 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
         title: const Text("数独记录"),
         actions: [
           SvgActionIcon(
-              name: "delete",
-              onTap: () {
-                context.showCommDialog(
-                  callback: () async {
-                    await sudokuRecordApi.deleteAll();
-                    streamList.reset([]);
-                  },
-                  title: '清空记录',
-                  content: '你确定清空数独记录?',
-                );
-              })
+            name: "delete",
+            onTap: () {
+              context.showCommDialog(
+                callback: () async {
+                  await sudokuRecordApi.deleteAll();
+                  streamList.reset([]);
+                },
+                title: '清空记录',
+                content: '你确定清空数独记录?',
+              );
+            },
+          )
         ],
       ),
       body: StreamBuilder(
@@ -71,7 +71,7 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
           }
 
           final Map<String, List<SudokuRecord>> recordLogMap =
-              sudokuRecords.groupBy((readLog) => readLog.createTime.toDateString());
+              sudokuRecords.groupBy((readLog) => readLog.createTimeString);
 
           return SmartRefresher(
             controller: streamList.refreshController,
@@ -81,8 +81,8 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
             child: ListView.builder(
               itemCount: recordLogMap.length,
               itemBuilder: (_, index) {
-                final String key = recordLogMap.keys.elementAt(index);
-                final List<SudokuRecord> recordLogItems = recordLogMap[key]!;
+                final String dateString = recordLogMap.keys.elementAt(index);
+                final List<SudokuRecord> recordLogItems = recordLogMap[dateString]!;
 
                 return StickyHeader(
                   header: Container(
@@ -91,8 +91,8 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SimpleTextIcon(icon: "sudoku_log", text: key),
-                        SimpleTextIcon(icon: "weekday", text: DateUtil.getWeekFromString(key)),
+                        SimpleTextIcon(icon: "sudoku_log", text: dateString),
+                        SimpleTextIcon(icon: "weekday", text: DateUtil.getWeekFromString(dateString)),
                       ],
                     ),
                   ),
