@@ -34,10 +34,7 @@ class TipLevelSettingScreen extends HookConsumerWidget {
             isChecked: tipLevelState.value == tipLevel,
             tipLevel: tipLevel,
             label: tipLevel.description,
-            callback: () {
-              tipLevelState.value = tipLevel;
-              return tipLevel;
-            },
+            callback: () => tipLevelState.value = tipLevel,
           );
         }).toList(),
       ),
@@ -49,7 +46,7 @@ class TipLevelItem extends StatelessWidget {
   final bool isChecked;
   final TipLevel tipLevel;
   final String label;
-  final TipLevel Function() callback;
+  final VoidCallback callback;
 
   const TipLevelItem({
     super.key,
