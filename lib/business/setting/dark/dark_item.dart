@@ -17,9 +17,7 @@ class DarkItem extends HookConsumerWidget {
           const Text('夜间模式', style: TextStyle(fontSize: 14)),
           Switch(
             value: provider.themeMode == ThemeMode.dark,
-            onChanged: (isDark) {
-              provider.setDark(isDark);
-            },
+            onChanged: (isDark) => provider.setDark(isDark),
           )
         ],
       ),

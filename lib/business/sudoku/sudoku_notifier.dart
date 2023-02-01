@@ -63,7 +63,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     sudokuInputs = [];
     tipLevel = ref.watch(tipLevelProvider).tipLevel;
 
-    ref.invalidate(counterProvider(0));
+    ref.invalidate(counterProvider);
 
     state = Result.success();
 
@@ -122,7 +122,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       textColorMap[selected] = errorColor;
       if (++retryCount >= sudokuConfig.retryCount) {
         gameStatus = GameStatus.failed;
-        ref.read(counterProvider(0)).stop();
+        ref.read(counterProvider).reset();
 
         _saveSudokuRecord();
         audioService.playFail();
@@ -132,7 +132,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       if (_isSuccess()) {
         gameStatus = GameStatus.success;
 
-        ref.read(counterProvider(0)).stop();
+        ref.read(counterProvider).reset();
         _saveSudokuRecord();
         audioService.playSucess();
       }
@@ -242,7 +242,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       gameStatus: gameStatus,
       logStatus: LogStatus.normal,
       sudokuInputLog: sudokuInputLog,
-      duration: ref.read(counterProvider(0)).seconds,
+      duration: ref.read(counterProvider).seconds,
       tipCount: sudokuConfig.tipCount - tipCount,
       errorCount: retryCount,
       startTime: startTime.millisecondsSinceEpoch,
@@ -254,7 +254,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   String get dateString {
-    return ref.read(counterProvider(0)).secondsString;
+    return ref.read(counterProvider).secondsString;
   }
 
   bool get _hasNoteValue {
@@ -276,7 +276,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
 
   @override
   void dispose() {
-    ref.invalidate(counterProvider(0));
+    ref.invalidate(counterProvider);
     super.dispose();
   }
 }

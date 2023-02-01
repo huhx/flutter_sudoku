@@ -13,4 +13,4 @@ class SudokuApi {
   }
 }
 
-final sudokuApi = SudokuApi();
+final SudokuApi sudokuApi = SudokuApi();

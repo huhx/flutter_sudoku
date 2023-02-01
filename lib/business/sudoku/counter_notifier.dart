@@ -37,7 +37,7 @@ class CounterNotifier extends ChangeNotifier {
 
   String get secondsString => seconds.toTimeString;
 
-  void stop() {
+  void reset() {
     isStart = false;
 
     timer?.cancel();
@@ -53,6 +53,6 @@ class CounterNotifier extends ChangeNotifier {
   }
 }
 
-final counterProvider = ChangeNotifierProvider.autoDispose.family<CounterNotifier, int>((ref, seconds) {
-  return CounterNotifier()..init(seconds);
+final counterProvider = ChangeNotifierProvider.autoDispose((ref) {
+  return CounterNotifier()..init(0);
 });

@@ -9,7 +9,7 @@ class SudokuCounter extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final counterModel = ref.watch(counterProvider(initSeconds));
+    final counterModel = ref.watch(counterProvider);
 
     return Text(counterModel.secondsString);
   }
