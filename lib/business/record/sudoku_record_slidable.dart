@@ -53,30 +53,28 @@ class SudokuRecordItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        onTap: () => context.goto(SudokuRecordScreen(sudokuRecord)),
-        leading: CircleAvatar(
-          backgroundColor: sudokuRecord.color,
-          child: Text("${sudokuRecord.duration}", style: const TextStyle(color: Colors.white)),
-        ),
-        title: Text(sudokuRecord.startString, style: Theme.of(context).textTheme.bodyMedium),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Row(
-            children: [
-              TextIcon(icon: "game_status", text: sudokuRecord.gameStatus.label),
-              const SizedBox(width: 16),
-              TextIcon(icon: "user_tips", text: "${sudokuRecord.tipCount}次"),
-              const SizedBox(width: 16),
-              TextIcon(icon: "error", text: "${sudokuRecord.errorCount}次"),
-              const SizedBox(width: 16),
-              TextIcon(icon: "difficulty", text: sudokuRecord.difficulty.label),
-            ],
-          ),
-        ),
-        trailing: const ListTileTrailing(),
+    return ListTile(
+      onTap: () => context.goto(SudokuRecordScreen(sudokuRecord)),
+      leading: CircleAvatar(
+        backgroundColor: sudokuRecord.color,
+        child: Text("${sudokuRecord.duration}", style: const TextStyle(color: Colors.white)),
       ),
+      title: Text(sudokuRecord.startString, style: Theme.of(context).textTheme.bodyMedium),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Row(
+          children: [
+            TextIcon(icon: "game_status", text: sudokuRecord.gameStatus.label),
+            const SizedBox(width: 16),
+            TextIcon(icon: "user_tips", text: "${sudokuRecord.tipCount}次"),
+            const SizedBox(width: 16),
+            TextIcon(icon: "error", text: "${sudokuRecord.errorCount}次"),
+            const SizedBox(width: 16),
+            TextIcon(icon: "difficulty", text: sudokuRecord.difficulty.label),
+          ],
+        ),
+      ),
+      trailing: const ListTileTrailing(),
     );
   }
 }
