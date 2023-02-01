@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class TipLevelNotifier extends StateNotifier<TipLevel> {
   TipLevelNotifier() : super(PrefsUtil.getTipLevel());
 
-  void setTipLevel(TipLevel tipLevel) {
+  void set(TipLevel tipLevel) {
     PrefsUtil.setTipLevel(tipLevel);
 
     state = tipLevel;

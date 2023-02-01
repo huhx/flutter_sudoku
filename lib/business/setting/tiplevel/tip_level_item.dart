@@ -18,7 +18,7 @@ class TipLevelItem extends HookConsumerWidget {
         onTap: () async {
           final TipLevel? result = await context.goto(TipLevelSettingScreen(tipLevel: tipLevel));
           if (result != null) {
-            ref.read(tipLevelProvider.notifier).setTipLevel(result);
+            ref.read(tipLevelProvider.notifier).set(result);
           }
         },
         child: Row(
