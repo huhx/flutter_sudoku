@@ -14,6 +14,7 @@ import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/model/sudoku_tip.dart';
+import 'package:flutter_sudoku/provider/error_count_provider.dart';
 import 'package:flutter_sudoku/provider/tip_level_provider.dart';
 import 'package:flutter_sudoku/service/audio_service.dart';
 import 'package:flutter_sudoku/theme/color.dart';
@@ -120,7 +121,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
 
     if (contentValue != answerValue) {
       textColorMap[selected] = errorColor;
-      if (++retryCount >= sudokuConfig.retryCount) {
+      if (++retryCount >= ref.read(errorCountProvider)) {
         gameStatus = GameStatus.failed;
         ref.read(counterProvider).reset();
 
@@ -187,7 +188,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   String get retryString {
-    return retryCount == 0 ? "检查无误" : "错误：$retryCount/${sudokuConfig.retryCount}";
+    return retryCount == 0 ? "检查无误" : "错误：$retryCount/${ref.read(errorCountProvider)}";
   }
 
   bool get canUseTip {
