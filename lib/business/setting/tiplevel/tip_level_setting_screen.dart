@@ -26,23 +26,20 @@ class TipLevelSettingScreen extends HookConsumerWidget {
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        color: const Color.fromRGBO(245, 246, 249, 1),
-        child: ListView(
-          physics: const ListScrollPhysics(),
-          children: TipLevel.values.map((tipLevel) {
-            return TipLevelItem(
-              isChecked: tipLevelState.value == tipLevel,
-              tipLevel: tipLevel,
-              label: tipLevel.description,
-              callback: () {
-                tipLevelState.value = tipLevel;
-                return tipLevel;
-              },
-            );
-          }).toList(),
-        ),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        physics: const ListScrollPhysics(),
+        children: TipLevel.values.map((tipLevel) {
+          return TipLevelItem(
+            isChecked: tipLevelState.value == tipLevel,
+            tipLevel: tipLevel,
+            label: tipLevel.description,
+            callback: () {
+              tipLevelState.value = tipLevel;
+              return tipLevel;
+            },
+          );
+        }).toList(),
       ),
     );
   }
