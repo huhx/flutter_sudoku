@@ -10,6 +10,7 @@ class PrefsUtil {
   static const playSoundKey = "play_sound";
   static const tipLevelKey = "tip_level";
   static const errorCountKey = "error_count";
+  static const tipCountKey = "tip_count";
 
   static Future init() async {
     prefs = await SharedPreferences.getInstance();
@@ -61,5 +62,13 @@ class PrefsUtil {
 
   static void setErrorCount(int errorCount) {
     prefs.setInt(errorCountKey, errorCount);
+  }
+
+  static int getTipCount() {
+    return prefs.getInt(tipCountKey) ?? sudokuConfig.tipCount;
+  }
+
+  static void setTipCount(int tipCount) {
+    prefs.setInt(tipCountKey, tipCount);
   }
 }

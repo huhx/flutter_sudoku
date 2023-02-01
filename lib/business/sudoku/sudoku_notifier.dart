@@ -8,13 +8,13 @@ import 'package:flutter_sudoku/common/list_extension.dart';
 import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/common/set_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
-import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
 import 'package:flutter_sudoku/model/sudoku_input_log.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/model/sudoku_tip.dart';
 import 'package:flutter_sudoku/provider/error_count_provider.dart';
+import 'package:flutter_sudoku/provider/tip_count_provider.dart';
 import 'package:flutter_sudoku/provider/tip_level_provider.dart';
 import 'package:flutter_sudoku/service/audio_service.dart';
 import 'package:flutter_sudoku/theme/color.dart';
@@ -57,7 +57,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     this.difficulty = sudokuResponse.difficulty;
     gameStatus = GameStatus.running;
     retryCount = 0;
-    tipCount = sudokuConfig.tipCount;
+    tipCount = ref.read(tipCountProvider);
     highlightPoints = highlight();
     relatedPoints = related();
     textColorMap = {for (final point in empty()) point: inputColor};
@@ -244,7 +244,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       logStatus: LogStatus.normal,
       sudokuInputLog: sudokuInputLog,
       duration: ref.read(counterProvider).seconds,
-      tipCount: sudokuConfig.tipCount - tipCount,
+      tipCount: ref.read(tipCountProvider) - tipCount,
       errorCount: retryCount,
       startTime: startTime.millisecondsSinceEpoch,
       endTime: now,
