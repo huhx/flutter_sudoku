@@ -10,15 +10,15 @@ class TipLevelItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(tipLevelProvider);
+    final tipLevel = ref.watch(tipLevelProvider);
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () async {
-          final TipLevel? result = await context.goto(TipLevelSettingScreen(tipLevel: provider.tipLevel));
+          final TipLevel? result = await context.goto(TipLevelSettingScreen(tipLevel: tipLevel));
           if (result != null) {
-            provider.setTipLevel(result);
+            ref.read(tipLevelProvider.notifier).setTipLevel(result);
           }
         },
         child: Row(
@@ -26,7 +26,7 @@ class TipLevelItem extends HookConsumerWidget {
           children: <Widget>[
             const Text('智能等级', style: TextStyle(fontSize: 14)),
             Text(
-              provider.tipLevel.description,
+              tipLevel.description,
               style: const TextStyle(fontSize: 14),
             )
           ],

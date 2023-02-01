@@ -7,7 +7,7 @@ class DarkItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(themeProvider);
+    final themeMode = ref.watch(themeProvider);
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4),
@@ -16,8 +16,8 @@ class DarkItem extends HookConsumerWidget {
         children: <Widget>[
           const Text('夜间模式', style: TextStyle(fontSize: 14)),
           Switch(
-            value: provider.themeMode == ThemeMode.dark,
-            onChanged: (isDark) => provider.setDark(isDark),
+            value: themeMode == ThemeMode.dark,
+            onChanged: (isDark) => ref.read(themeProvider.notifier).setDark(isDark),
           )
         ],
       ),

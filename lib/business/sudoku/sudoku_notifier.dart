@@ -61,7 +61,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     relatedPoints = related();
     textColorMap = {for (final point in empty()) point: inputColor};
     sudokuInputs = [];
-    tipLevel = ref.watch(tipLevelProvider).tipLevel;
+    tipLevel = ref.watch(tipLevelProvider);
 
     ref.invalidate(counterProvider);
 

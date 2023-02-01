@@ -121,7 +121,7 @@ class _MainAppState extends ConsumerState<MainApp> {
         ),
         theme: appThemeData[AppTheme.light],
         darkTheme: appThemeData[AppTheme.dark],
-        themeMode: ref.watch(themeProvider).themeMode,
+        themeMode: ref.watch(themeProvider),
       ),
     );
   }

@@ -4,9 +4,6 @@ class SudokuRequest extends Equatable {
   final DateTime dateTime;
   final Difficulty difficulty;
 
-  @override
-  List<Object?> get props => [dateTime, difficulty];
-
   const SudokuRequest({
     required this.dateTime,
     required this.difficulty,
@@ -27,6 +24,9 @@ class SudokuRequest extends Equatable {
       'difficulty': difficulty.level,
     };
   }
+
+  @override
+  List<Object?> get props => [dateTime, difficulty];
 }
 
 enum Difficulty {
@@ -66,9 +66,6 @@ class SudokuResponse extends Equatable {
     required this.dateTime,
   });
 
-  @override
-  List<Object?> get props => [question, answer, difficulty, dateTime];
-
   factory SudokuResponse.fromJson(Map<String, dynamic> json) {
     return SudokuResponse(
       question: json['question'] as String,
@@ -77,6 +74,9 @@ class SudokuResponse extends Equatable {
       dateTime: json['dateTime'] as String,
     );
   }
+
+  @override
+  List<Object?> get props => [question, answer, difficulty, dateTime];
 }
 
 enum GameStatus {
