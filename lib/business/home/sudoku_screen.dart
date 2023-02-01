@@ -42,7 +42,7 @@ class SudokuScreen extends HookConsumerWidget {
             onTap: () => context.share(title: sudokuModel.shareTitle, subject: "sudoku"),
           ),
           SvgActionIcon(
-            name: "sudoku_color",
+            name: "sudoku_record",
             onTap: () => context.goto(const SudokuRecordListScreen()),
           ),
           SvgActionIcon(
