@@ -21,6 +21,7 @@ class SudokuRecordSlidable extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Slidable(
+      groupTag: "sudoku",
       key: ValueKey(sudokuRecord.id),
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
@@ -54,7 +55,9 @@ class SudokuRecordItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => context.goto(SudokuRecordScreen(sudokuRecord)),
+      onTap: () {
+        context.goto(SudokuRecordScreen(sudokuRecord));
+      },
       leading: CircleAvatar(
         backgroundColor: sudokuRecord.color,
         child: Text("${sudokuRecord.duration}", style: const TextStyle(color: Colors.white)),
