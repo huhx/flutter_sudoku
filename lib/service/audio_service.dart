@@ -38,5 +38,3 @@ class AudioService {
     await _player.play();
   }
 }
-
-final AudioService audioService = AudioService();

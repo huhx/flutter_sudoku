@@ -12,5 +12,3 @@ class SudokuApi {
     return SudokuResponse.fromJson(response.data);
   }
 }
-
-final SudokuApi sudokuApi = SudokuApi();

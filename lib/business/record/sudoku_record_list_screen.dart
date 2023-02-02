@@ -11,6 +11,7 @@ import 'package:flutter_sudoku/component/svg_action_icon.dart';
 import 'package:flutter_sudoku/component/text_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/util/date_util.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
@@ -34,7 +35,7 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
 
   Future<void> _fetchPage(int pageKey) async {
     if (streamList.isOpen) {
-      final List<SudokuRecord> sudokuRecords = await sudokuRecordApi.querySudokuRecords(pageKey);
+      final List<SudokuRecord> sudokuRecords = await GetIt.I<SudokuRecordApi>().querySudokuRecords(pageKey);
       streamList.fetch(sudokuRecords, pageKey);
     }
   }
@@ -51,7 +52,7 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
             onTap: () {
               context.showCommDialog(
                 callback: () async {
-                  await sudokuRecordApi.deleteAll();
+                  await GetIt.I<SudokuRecordApi>().deleteAll();
                   streamList.reset([]);
                 },
                 title: '清空记录',
@@ -108,7 +109,7 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
                           sudokuRecord: recordLogItems[index],
                           onDelete: (id) async {
                             streamList.reset(sudokuRecords.where((element) => element.id != id).toList());
-                            await sudokuRecordApi.delete(id);
+                            await GetIt.I<SudokuRecordApi>().delete(id);
                           },
                         );
                       },

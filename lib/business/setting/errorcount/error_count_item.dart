@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ErrorCountItem extends HookConsumerWidget {
   const ErrorCountItem({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final errorCount = ref.watch(errorCountProvider);

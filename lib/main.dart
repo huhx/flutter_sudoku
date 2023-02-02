@@ -8,15 +8,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_sudoku/business/home/sudoku_screen.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:uni_links/uni_links.dart';
 
+import 'api/sudoku_api.dart';
+import 'api/sudoku_record_api.dart';
 import 'provider/theme_provider.dart';
 import 'component/custom_load_footer.dart';
 import 'component/custom_water_drop_header.dart';
+import 'service/audio_service.dart';
 import 'theme/theme.dart';
 import 'util/app_config.dart';
 import 'util/comm_util.dart';
@@ -29,6 +33,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PrefsUtil.init();
   await _initApplicationPath();
+  _initServices();
 
   if (Platform.isAndroid) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -38,6 +43,12 @@ void main() async {
   runApp(
     const ProviderScope(child: MainApp()),
   );
+}
+
+void _initServices() {
+  GetIt.I.registerLazySingleton<AudioService>(() => AudioService());
+  GetIt.I.registerLazySingleton<SudokuApi>(() => SudokuApi());
+  GetIt.I.registerLazySingleton<SudokuRecordApi>(() => SudokuRecordApi());
 }
 
 Future<void> _initApplicationPath() async {

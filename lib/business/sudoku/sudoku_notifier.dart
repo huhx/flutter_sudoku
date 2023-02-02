@@ -18,10 +18,12 @@ import 'package:flutter_sudoku/provider/tip_count_provider.dart';
 import 'package:flutter_sudoku/provider/tip_level_provider.dart';
 import 'package:flutter_sudoku/service/audio_service.dart';
 import 'package:flutter_sudoku/theme/color.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   static const Set<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+  final AudioService audioService = GetIt.I<AudioService>();
 
   late SudokuResponse sudokuResponse;
   late TipLevel tipLevel;
@@ -44,7 +46,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   Future<void> init(DateTime dateTime, Difficulty difficulty) async {
     state = Result.loading();
 
-    sudokuResponse = await sudokuApi.getSudokuData(dateTime, difficulty);
+    sudokuResponse = await GetIt.I<SudokuApi>().getSudokuData(dateTime, difficulty);
 
     selected = Point.first();
     startTime = DateTime.now();
@@ -251,7 +253,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       createTime: now,
     );
 
-    await sudokuRecordApi.insert(sudokuRecord);
+    await GetIt.I<SudokuRecordApi>().insert(sudokuRecord);
   }
 
   String get dateString {

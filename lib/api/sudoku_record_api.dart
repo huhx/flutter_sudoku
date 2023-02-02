@@ -78,5 +78,3 @@ class SudokuRecordApi {
     );
   }
 }
-
-final sudokuRecordApi = SudokuRecordApi();

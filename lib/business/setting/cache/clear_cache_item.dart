@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
+import 'package:get_it/get_it.dart';
 
 class ClearCacheItem extends StatelessWidget {
   const ClearCacheItem({super.key});
@@ -25,7 +26,7 @@ class ClearCacheItem extends StatelessWidget {
   Future<void> _showConfirmDialog(BuildContext context) async {
     context.showCommDialog(
       callback: () async {
-        await sudokuRecordApi.clear();
+        await GetIt.I<SudokuRecordApi>().clear();
         if (context.mounted) context.pop();
       },
       title: '清除缓存',
