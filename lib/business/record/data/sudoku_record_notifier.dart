@@ -103,6 +103,6 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
   }
 }
 
-final sudokuRecordNotifier = ChangeNotifierProvider.autoDispose.family<SudokuRecordNotifier, SudokuInputLog>(
+final sudokuRecordProvider = ChangeNotifierProvider.autoDispose.family<SudokuRecordNotifier, SudokuInputLog>(
   (ref, sudokuInputLog) => SudokuRecordNotifier(sudokuInputLog: sudokuInputLog)..init(),
 );

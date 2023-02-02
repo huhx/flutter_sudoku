@@ -16,7 +16,7 @@ class SudokuRecordScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sudokuRecordModel = ref.watch(sudokuRecordNotifier(sudokuRecord.sudokuInputLog));
+    final sudokuRecordModel = ref.watch(sudokuRecordProvider(sudokuRecord.sudokuInputLog));
 
     return Scaffold(
       appBar: AppBar(
