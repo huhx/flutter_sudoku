@@ -13,6 +13,7 @@ class SudokuKeyPad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       crossAxisCount: 9,
       crossAxisSpacing: 10,
