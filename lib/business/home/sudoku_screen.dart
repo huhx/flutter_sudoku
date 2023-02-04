@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/home/sudoku_calendar_screen.dart';
-import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
+import 'package:flutter_sudoku/business/home/sudoku_drawer.dart';
 import 'package:flutter_sudoku/business/setting/sudoku_setting_screen.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_board.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_header.dart';
@@ -27,6 +27,12 @@ class SudokuScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (context) => SvgActionIcon(
+            name: "drawer_menu",
+            onTap: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
         title: InkWell(
           child: const Text("数独"),
           onTap: () async {
@@ -42,15 +48,12 @@ class SudokuScreen extends HookConsumerWidget {
             onTap: () => context.share(title: sudokuModel.shareTitle, subject: "sudoku"),
           ),
           SvgActionIcon(
-            name: "sudoku_record",
-            onTap: () => context.goto(const SudokuRecordListScreen()),
-          ),
-          SvgActionIcon(
             name: "sudoku_setting",
             onTap: () => context.goto(const SudokuSettingScreen()),
           ),
         ],
       ),
+      drawer: const SudokuDrawer(),
       body: sudokuModel.state.when(
         loading: () => const CenterProgressIndicator(),
         error: (errorText) => const CenterProgressIndicator(),

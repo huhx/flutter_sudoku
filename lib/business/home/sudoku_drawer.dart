@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/profile/onboard_screen.dart';
+import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
@@ -14,37 +15,36 @@ class SudokuDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(color: Theme.of(context).primaryColor),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "每日数独",
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 24, color: Colors.white),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 24),
               ),
             ),
           ),
           ListTile(
-            leading: const SvgIcon(name: "main_category"),
-            title: const Text("玩法介绍"),
+            leading: const SvgIcon(name: "item_onboarding"),
+            title: Text("玩法介绍", style: Theme.of(context).textTheme.bodyMedium),
             onTap: () {
               context.pop();
               context.goto(const OnboardScreen());
             },
           ),
           ListTile(
-            leading: const SvgIcon(name: "main_category"),
-            title: const Text("统计"),
+            leading: const SvgIcon(name: "item_ analyze"),
+            title: Text("统计", style: Theme.of(context).textTheme.bodyMedium),
             onTap: () {
               CommUtil.toBeDev();
               context.pop();
             },
           ),
           ListTile(
-            leading: const SvgIcon(name: "main_category"),
-            title: const Text("设置"),
+            leading: const SvgIcon(name: "item_record"),
+            title: Text("记录", style: Theme.of(context).textTheme.bodyMedium),
             onTap: () {
-              CommUtil.toBeDev();
               context.pop();
+              context.goto(const SudokuRecordListScreen());
             },
           ),
         ],

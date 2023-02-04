@@ -10,8 +10,6 @@ class SudokuHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color? color = sudokuNotifier.retryCount == 0 ? null : Colors.red;
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -19,7 +17,10 @@ class SudokuHeader extends StatelessWidget {
         children: [
           Text(sudokuNotifier.difficulty.label),
           const SudokuCounter(initSeconds: 0),
-          Text(sudokuNotifier.retryString, style: TextStyle(color: color)),
+          Text(
+            sudokuNotifier.retryString,
+            style: TextStyle(color: sudokuNotifier.retryCount == 0 ? null : Colors.red),
+          ),
         ],
       ),
     );
