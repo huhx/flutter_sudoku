@@ -35,7 +35,7 @@ class CounterNotifier extends ChangeNotifier {
     }
   }
 
-  String get secondsString => seconds.toTimeString;
+  String get secondsString => seconds.timeString;
 
   void reset() {
     isStart = false;

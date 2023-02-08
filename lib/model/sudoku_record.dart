@@ -89,7 +89,7 @@ class SudokuRecord extends Equatable {
     }
   }
 
-  String get secondsString => duration.toTimeString;
+  String get secondsString => duration.timeString;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{

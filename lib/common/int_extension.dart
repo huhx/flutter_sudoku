@@ -5,7 +5,7 @@ extension IntExtension on int {
     return DateFormat(dateFormat).format(DateTime.fromMillisecondsSinceEpoch(this));
   }
 
-  String get toTimeString  {
+  String get timeString  {
     final int second = this % 60;
     final int minute = (this / 60).floor();
 
