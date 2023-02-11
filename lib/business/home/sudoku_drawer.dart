@@ -73,10 +73,11 @@ class SudokuDrawer extends StatelessWidget {
             title: Text("意见反馈", style: Theme.of(context).textTheme.bodyMedium),
             onTap: () async {
               context.pop();
-              final String email = Uri.encodeComponent("gohuhx@gmail.com");
-              final String subject = Uri.encodeComponent("[数独]意见反馈");
-              final String body = Uri.encodeComponent("意见反馈:");
-              final Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+              final Uri mail = Uri(
+                scheme: 'mailto',
+                path: 'gohuhx@gmail.com',
+                query: 'subject=[数独]意见反馈&body=意见反馈:',
+              );
               if (await canLaunchUrl(mail)) {
                 await launchUrl(mail);
               } else {
