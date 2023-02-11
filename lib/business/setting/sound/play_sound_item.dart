@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sudoku/util/prefs_util.dart';
@@ -10,20 +11,14 @@ class PlaySoundItem extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isPlaySound = useState(PrefsUtil.isPlaySound());
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          const Text('音效', style: TextStyle(fontSize: 14)),
-          Switch(
-            value: isPlaySound.value,
-            onChanged: (isPlay) {
-              isPlaySound.value = isPlay;
-              PrefsUtil.enablePlaySound(isPlay);
-            },
-          )
-        ],
+    return CupertinoListTile(
+      title: const Text('音效'),
+      trailing: Switch(
+        value: isPlaySound.value,
+        onChanged: (isPlay) {
+          isPlaySound.value = isPlay;
+          PrefsUtil.enablePlaySound(isPlay);
+        },
       ),
     );
   }

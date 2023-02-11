@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 
@@ -18,23 +19,28 @@ class SudokuSettingScreen extends StatelessWidget {
         leading: const AppbarBackButton(),
         title: const Text("设置"),
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-        child: ListView(
-          children: const [
-            ClearCacheItem(),
-            Divider(),
-            PlaySoundItem(),
-            Divider(),
-            DarkItem(),
-            Divider(),
-            TipLevelItem(),
-            Divider(),
-            ErrorCountItem(),
-            Divider(),
-            TipCountItem(),
-          ],
-        ),
+      body: Column(
+        children: [
+          CupertinoListSection(
+            hasLeading: false,
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            children: const [
+              ClearCacheItem(),
+              PlaySoundItem(),
+              DarkItem(),
+              TipLevelItem(),
+            ],
+          ),
+          CupertinoListSection(
+            hasLeading: false,
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            header: const Text("次数(0~9)"),
+            children: const [
+              ErrorCountItem(),
+              TipCountItem(),
+            ],
+          ),
+        ],
       ),
     );
   }

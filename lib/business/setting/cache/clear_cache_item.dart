@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
+import 'package:flutter_sudoku/component/list_tile_trailing.dart';
 import 'package:get_it/get_it.dart';
 
 class ClearCacheItem extends StatelessWidget {
@@ -8,18 +9,10 @@ class ClearCacheItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: InkWell(
-        onTap: () => _showConfirmDialog(context),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const <Widget>[
-            Text('清除缓存', style: TextStyle(fontSize: 14)),
-            IconTheme(data: IconThemeData(color: Colors.grey), child: Icon(Icons.keyboard_arrow_right))
-          ],
-        ),
-      ),
+    return CupertinoListTile(
+      title: const Text('清除缓存'),
+      trailing: const ListTileTrailing(),
+      onTap: () => _showConfirmDialog(context),
     );
   }
 

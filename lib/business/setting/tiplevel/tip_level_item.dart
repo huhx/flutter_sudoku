@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_sudoku/business/setting/tiplevel/tip_level_setting_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/model/sudoku_tip.dart';
@@ -12,26 +12,15 @@ class TipLevelItem extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final tipLevel = ref.watch(tipLevelProvider);
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: InkWell(
-        onTap: () async {
-          final TipLevel? result = await context.goto(TipLevelSettingScreen(tipLevel: tipLevel));
-          if (result != null) {
-            ref.read(tipLevelProvider.notifier).set(result);
-          }
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            const Text('智能等级', style: TextStyle(fontSize: 14)),
-            Text(
-              tipLevel.description,
-              style: const TextStyle(fontSize: 14),
-            )
-          ],
-        ),
-      ),
+    return CupertinoListTile(
+      title: const Text('智能等级'),
+      trailing: Text(tipLevel.description),
+      onTap: () async {
+        final TipLevel? result = await context.goto(TipLevelSettingScreen(tipLevel: tipLevel));
+        if (result != null) {
+          ref.read(tipLevelProvider.notifier).set(result);
+        }
+      },
     );
   }
 }
