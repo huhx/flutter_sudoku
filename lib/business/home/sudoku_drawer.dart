@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/profile/onboard_screen.dart';
 import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
+import 'package:flutter_sudoku/business/setting/sudoku_setting_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/util/comm_util.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SudokuDrawer extends StatelessWidget {
   const SudokuDrawer({super.key});
@@ -45,6 +48,38 @@ class SudokuDrawer extends StatelessWidget {
             onTap: () {
               context.pop();
               context.goto(const SudokuRecordListScreen());
+            },
+          ),
+          ListTile(
+            leading: const SvgIcon(name: "sudoku_share"),
+            title: Text("分享", style: Theme.of(context).textTheme.bodyMedium),
+            onTap: () {
+              context.pop();
+              context.share(title: '分享一款非常棒的数独游戏, 休闲益智.', subject: "sudoku");
+            },
+          ),
+          ListTile(
+            leading: const SvgIcon(name: "item_feedback"),
+            title: Text("意见反馈", style: Theme.of(context).textTheme.bodyMedium),
+            onTap: () async {
+              context.pop();
+              final String email = Uri.encodeComponent("gohuhx@gmail.com");
+              final String subject = Uri.encodeComponent("[数独]意见反馈");
+              final String body = Uri.encodeComponent("意见反馈:");
+              final Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+              if (await canLaunchUrl(mail)) {
+                await launchUrl(mail);
+              } else {
+                Fluttertoast.showToast(msg: 'Can not open email app.');
+              }
+            },
+          ),
+          ListTile(
+            leading: const SvgIcon(name: "sudoku_setting"),
+            title: Text("设置", style: Theme.of(context).textTheme.bodyMedium),
+            onTap: () {
+              context.pop();
+              context.goto(const SudokuSettingScreen());
             },
           ),
         ],
