@@ -11,9 +11,7 @@ class SudokuStatisticsScreen extends StatelessWidget {
         leading: const AppbarBackButton(),
         title: const Text("统计"),
       ),
-      body: Container(
-        child: Text("sudoku screen"),
-      ),
+      body: const Text("sudoku screen"),
     );
   }
 }
