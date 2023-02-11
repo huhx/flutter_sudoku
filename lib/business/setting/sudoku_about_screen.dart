@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/util/app_config.dart';
 
-class AboutDetailScreen extends StatelessWidget {
-  const AboutDetailScreen({super.key});
+class SudokuAboutScreen extends StatelessWidget {
+  const SudokuAboutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

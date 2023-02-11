@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/profile/onboard_screen.dart';
 import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
+import 'package:flutter_sudoku/business/setting/sudoku_about_screen.dart';
 import 'package:flutter_sudoku/business/setting/sudoku_setting_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
@@ -57,6 +58,14 @@ class SudokuDrawer extends StatelessWidget {
             onTap: () {
               context.pop();
               context.share(title: '分享一款非常棒的数独游戏, 休闲益智.', subject: "sudoku");
+            },
+          ),
+          ListTile(
+            leading: const SvgIcon(name: "item_about"),
+            title: Text("关于", style: Theme.of(context).textTheme.bodyMedium),
+            onTap: () {
+              context.pop();
+              context.goto(const SudokuAboutScreen());
             },
           ),
           ListTile(

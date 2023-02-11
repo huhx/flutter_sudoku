@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 
-import 'about/about_item.dart';
 import 'cache/clear_cache_item.dart';
-import 'errorcount/error_count_item.dart';
 import 'dark/dark_item.dart';
+import 'errorcount/error_count_item.dart';
 import 'sound/play_sound_item.dart';
 import 'tipcount/tip_count_item.dart';
 import 'tiplevel/tip_level_item.dart';
@@ -34,8 +33,6 @@ class SudokuSettingScreen extends StatelessWidget {
             ErrorCountItem(),
             Divider(),
             TipCountItem(),
-            Divider(),
-            AboutItem(),
           ],
         ),
       ),
