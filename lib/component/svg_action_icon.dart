@@ -4,14 +4,14 @@ import 'svg_icon.dart';
 
 class SvgActionIcon extends StatelessWidget {
   final String name;
-  final GestureTapCallback onTap;
+  final VoidCallback onPressed;
 
-  const SvgActionIcon({super.key, required this.name, required this.onTap});
+  const SvgActionIcon({super.key, required this.name, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: onTap,
+      onPressed: onPressed,
       icon: SvgIcon(name: name, color: Colors.white),
     );
   }

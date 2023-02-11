@@ -30,7 +30,7 @@ class SudokuScreen extends HookConsumerWidget {
         leading: Builder(
           builder: (context) => SvgActionIcon(
             name: "drawer_menu",
-            onTap: () => Scaffold.of(context).openDrawer(),
+            onPressed: () => Scaffold.of(context).openDrawer(),
           ),
         ),
         title: InkWell(
@@ -45,11 +45,11 @@ class SudokuScreen extends HookConsumerWidget {
         actions: [
           SvgActionIcon(
             name: "sudoku_share",
-            onTap: () => context.share(title: sudokuModel.shareTitle, subject: "sudoku"),
+            onPressed: () => context.share(title: sudokuModel.shareTitle, subject: "sudoku"),
           ),
           SvgActionIcon(
             name: "sudoku_setting",
-            onTap: () => context.goto(const SudokuSettingScreen()),
+            onPressed: () => context.goto(const SudokuSettingScreen()),
           ),
         ],
       ),

@@ -49,7 +49,7 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
         actions: [
           SvgActionIcon(
             name: "delete",
-            onTap: () {
+            onPressed: () {
               context.showCommDialog(
                 callback: () async {
                   await GetIt.I<SudokuRecordApi>().deleteAll();
