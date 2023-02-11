@@ -18,6 +18,7 @@ class SudokuDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
+            decoration: BoxDecoration(color: Theme.of(context).appBarTheme.backgroundColor),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
