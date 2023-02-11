@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
@@ -24,9 +25,10 @@ class SudokuOperate extends StatelessWidget {
           ),
           OperateItem(
             icon: badges.Badge(
-              badgeStyle: badges.BadgeStyle(
-                padding: const EdgeInsets.all(3),
-                badgeColor: sudokuNotifier.enableNotes ? Colors.red : Colors.grey,
+              badgeAnimation: const BadgeAnimation.fade(),
+              badgeStyle: const badges.BadgeStyle(
+                padding: EdgeInsets.all(3),
+                badgeColor: Colors.red,
               ),
               badgeContent: sudokuNotifier.enableNotes
                   ? const Text("on", style: TextStyle(fontSize: 8))
@@ -38,6 +40,7 @@ class SudokuOperate extends StatelessWidget {
           ),
           OperateItem(
             icon: badges.Badge(
+              badgeAnimation: const BadgeAnimation.fade(),
               badgeStyle: badges.BadgeStyle(
                 padding: const EdgeInsets.all(3),
                 badgeColor: sudokuNotifier.canUseTip ? Colors.red : Colors.grey,

@@ -4,9 +4,9 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SudokuRecordApi {
-  final tableName = 'sudoku_record';
-  final dbName = 'sudoku_record.db';
-  final tableScript = '''
+  static const String tableName = 'sudoku_record';
+  static const String dbName = 'sudoku_record.db';
+  static const String tableScript = '''
     CREATE TABLE sudoku_record(
       id INTEGER PRIMARY KEY,
       year INTEGER NOT NULL,
