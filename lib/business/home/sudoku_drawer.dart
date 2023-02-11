@@ -5,9 +5,10 @@ import 'package:flutter_sudoku/business/setting/sudoku_about_screen.dart';
 import 'package:flutter_sudoku/business/setting/sudoku_setting_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
-import 'package:flutter_sudoku/util/comm_util.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'sudoku_statistics_screen.dart';
 
 class SudokuDrawer extends StatelessWidget {
   const SudokuDrawer({super.key});
@@ -40,8 +41,8 @@ class SudokuDrawer extends StatelessWidget {
             leading: const SvgIcon(name: "item_ analyze"),
             title: Text("统计", style: Theme.of(context).textTheme.bodyMedium),
             onTap: () {
-              CommUtil.toBeDev();
               context.pop();
+              context.goto(const SudokuStatisticsScreen());
             },
           ),
           ListTile(
