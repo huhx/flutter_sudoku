@@ -5,6 +5,7 @@ import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_deep_links/flutter_deep_links.dart';
 import 'package:flutter_sudoku/business/home/sudoku_screen.dart';
 import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
@@ -14,7 +15,6 @@ import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:uni_links/uni_links.dart';
 
 import 'api/sudoku_api.dart';
 import 'api/sudoku_record_api.dart';
@@ -78,6 +78,7 @@ class MainApp extends ConsumerStatefulWidget {
 class _MainAppState extends ConsumerState<MainApp> {
   Uri? _initialUri, _latestUri;
   StreamSubscription? _sub;
+  final FlutterDeepLinks flutterDeepLinks = FlutterDeepLinks();
 
   @override
   void initState() {
@@ -93,7 +94,7 @@ class _MainAppState extends ConsumerState<MainApp> {
   }
 
   void _handleIncomingLinks() {
-    _sub = uriLinkStream.listen((Uri? uri) {
+    _sub = flutterDeepLinks.uriLinkStream.listen((Uri? uri) {
       if (!mounted) return;
       logger.d('got uri: $uri');
       setState(() => _latestUri = uri);
@@ -108,7 +109,7 @@ class _MainAppState extends ConsumerState<MainApp> {
     if (!_initialUriIsHandled) {
       _initialUriIsHandled = true;
       try {
-        final uri = await getInitialUri();
+        final uri = await flutterDeepLinks.getInitialUri();
         if (uri == null) {
           logger.d('no initial uri');
         } else {
