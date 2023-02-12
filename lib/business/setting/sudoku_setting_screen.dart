@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
+import 'package:flutter_sudoku/model/sudoku_config.dart';
 
 import 'cache/clear_cache_item.dart';
 import 'dark/dark_item.dart';
@@ -28,17 +29,18 @@ class SudokuSettingScreen extends StatelessWidget {
               ClearCacheItem(),
               PlaySoundItem(),
               DarkItem(),
-              TipLevelItem(),
             ],
           ),
-          CupertinoListSection.insetGrouped(
-            additionalDividerMargin: 8,
-            margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
-            children: const [
-              ErrorCountItem(),
-              TipCountItem(),
-            ],
-          ),
+          if (sudokuConfig.isMemeber)
+            CupertinoListSection.insetGrouped(
+              additionalDividerMargin: 8,
+              margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
+              children: const [
+                TipLevelItem(),
+                ErrorCountItem(),
+                TipCountItem(),
+              ],
+            ),
         ],
       ),
     );

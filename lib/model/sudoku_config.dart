@@ -6,11 +6,13 @@ class SudokuConfig extends Equatable {
   final int retryCount;
   final int tipCount;
   final TipLevel tipLevel;
+  final bool isMemeber;
 
   const SudokuConfig({
     required this.retryCount,
     required this.tipCount,
     required this.tipLevel,
+    required this.isMemeber,
   });
 
   @override
@@ -19,6 +21,7 @@ class SudokuConfig extends Equatable {
 
 const SudokuConfig sudokuConfig = SudokuConfig(
   retryCount: 3,
-  tipCount: 10,
+  tipCount: 3,
   tipLevel: TipLevel.none,
+  isMemeber: false,
 );
