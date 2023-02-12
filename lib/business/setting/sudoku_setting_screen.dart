@@ -19,11 +19,11 @@ class SudokuSettingScreen extends StatelessWidget {
         leading: const AppbarBackButton(),
         title: const Text("设置"),
       ),
-      body: Column(
+      body: ListView(
         children: [
-          CupertinoListSection(
-            hasLeading: false,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+          CupertinoListSection.insetGrouped(
+            additionalDividerMargin: 8,
+            margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
             children: const [
               ClearCacheItem(),
               PlaySoundItem(),
@@ -31,10 +31,9 @@ class SudokuSettingScreen extends StatelessWidget {
               TipLevelItem(),
             ],
           ),
-          CupertinoListSection(
-            hasLeading: false,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            header: const Text("次数(0~9)"),
+          CupertinoListSection.insetGrouped(
+            additionalDividerMargin: 8,
+            margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
             children: const [
               ErrorCountItem(),
               TipCountItem(),

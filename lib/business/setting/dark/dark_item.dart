@@ -11,7 +11,7 @@ class DarkItem extends HookConsumerWidget {
     final themeMode = ref.watch(themeProvider);
 
     return CupertinoListTile(
-      title: const Text('夜间模式'),
+      title: Text('夜间模式', style: Theme.of(context).textTheme.bodyLarge),
       trailing: Switch(
         value: themeMode == ThemeMode.dark,
         onChanged: (isDark) => ref.read(themeProvider.notifier).setDark(isDark),

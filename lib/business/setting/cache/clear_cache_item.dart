@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/list_tile_trailing.dart';
@@ -10,7 +11,7 @@ class ClearCacheItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoListTile(
-      title: const Text('清除缓存'),
+      title: Text('清除缓存', style: Theme.of(context).textTheme.bodyLarge),
       trailing: const ListTileTrailing(),
       onTap: () => _showConfirmDialog(context),
     );

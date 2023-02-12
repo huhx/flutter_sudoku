@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/setting/tiplevel/tip_level_setting_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/model/sudoku_tip.dart';
@@ -13,7 +14,7 @@ class TipLevelItem extends HookConsumerWidget {
     final tipLevel = ref.watch(tipLevelProvider);
 
     return CupertinoListTile(
-      title: const Text('智能等级'),
+      title: Text('智能等级', style: Theme.of(context).textTheme.bodyLarge),
       trailing: Text(tipLevel.description),
       onTap: () async {
         final TipLevel? result = await context.goto(TipLevelSettingScreen(tipLevel: tipLevel));

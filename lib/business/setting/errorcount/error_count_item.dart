@@ -12,12 +12,13 @@ class ErrorCountItem extends HookConsumerWidget {
     final errorCount = ref.watch(errorCountProvider);
 
     return CupertinoListTile(
-      title: const Text('错误次数'),
+      title: Text('错误次数', style: Theme.of(context).textTheme.bodyLarge),
       trailing: Flexible(
         child: TextFormField(
           autofocus: false,
           initialValue: "$errorCount",
           keyboardType: TextInputType.number,
+          style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.end,
           decoration: const InputDecoration(border: InputBorder.none),
           inputFormatters: [LengthLimitingTextInputFormatter(1)],
