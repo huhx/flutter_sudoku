@@ -51,6 +51,9 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        // fix the issue that debug mode in xiaomi9 pro
+        multiDexEnabled true
     }
 
     signingConfigs {

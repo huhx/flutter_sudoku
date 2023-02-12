@@ -5,6 +5,7 @@ import 'package:flutter_sudoku/business/setting/sudoku_about_screen.dart';
 import 'package:flutter_sudoku/business/setting/sudoku_setting_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/svg_icon.dart';
+import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -40,14 +41,15 @@ class SudokuDrawer extends StatelessWidget {
                     context.goto(const OnboardScreen());
                   },
                 ),
-                ListTile(
-                  leading: const SvgIcon(name: "item_ analyze"),
-                  title: Text("统计", style: Theme.of(context).textTheme.bodyMedium),
-                  onTap: () {
-                    context.pop();
-                    context.goto(const SudokuStatisticsScreen());
-                  },
-                ),
+                if (sudokuConfig.isMemeber)
+                  ListTile(
+                    leading: const SvgIcon(name: "item_ analyze"),
+                    title: Text("统计", style: Theme.of(context).textTheme.bodyMedium),
+                    onTap: () {
+                      context.pop();
+                      context.goto(const SudokuStatisticsScreen());
+                    },
+                  ),
                 ListTile(
                   leading: const SvgIcon(name: "item_record"),
                   title: Text("记录", style: Theme.of(context).textTheme.bodyMedium),
@@ -56,14 +58,15 @@ class SudokuDrawer extends StatelessWidget {
                     context.goto(const SudokuRecordListScreen());
                   },
                 ),
-                ListTile(
-                  leading: const SvgIcon(name: "sudoku_share"),
-                  title: Text("分享", style: Theme.of(context).textTheme.bodyMedium),
-                  onTap: () {
-                    context.pop();
-                    context.share(title: '分享一款非常棒的数独游戏, 休闲益智.', subject: "sudoku");
-                  },
-                ),
+                if (sudokuConfig.isMemeber)
+                  ListTile(
+                    leading: const SvgIcon(name: "sudoku_share"),
+                    title: Text("分享", style: Theme.of(context).textTheme.bodyMedium),
+                    onTap: () {
+                      context.pop();
+                      context.share(title: '分享一款非常棒的数独游戏, 休闲益智.', subject: "sudoku");
+                    },
+                  ),
                 ListTile(
                   leading: const SvgIcon(name: "item_about"),
                   title: Text("关于", style: Theme.of(context).textTheme.bodyMedium),
