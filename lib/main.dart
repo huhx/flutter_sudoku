@@ -11,6 +11,7 @@ import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:uni_links/uni_links.dart';
@@ -34,6 +35,7 @@ void main() async {
   await PrefsUtil.init();
   await _initApplicationPath();
   _initServices();
+  await initPackageInfo();
 
   if (Platform.isAndroid) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -54,6 +56,16 @@ void _initServices() {
 Future<void> _initApplicationPath() async {
   final Directory directory = await getApplicationDocumentsDirectory();
   AppConfig.save("applicationPath", directory.path);
+}
+
+Future<void> initPackageInfo() async {
+  final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+  final String version = packageInfo.version;
+  final String buildNumber = packageInfo.buildNumber;
+
+  AppConfig.save("version", version);
+  AppConfig.save("buildNumber", buildNumber);
 }
 
 class MainApp extends ConsumerStatefulWidget {
