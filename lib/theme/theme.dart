@@ -56,6 +56,7 @@ final appThemeData = {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: themeColor,
     ),
+    listTileTheme: const ListTileThemeData(textColor: Colors.white),
     bottomSheetTheme: const BottomSheetThemeData(modalBackgroundColor: Colors.black),
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
