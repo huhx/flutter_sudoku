@@ -16,12 +16,12 @@ class SudokuConfig extends Equatable {
   });
 
   @override
-  List<Object?> get props => [retryCount, tipCount];
+  List<Object?> get props => [retryCount, tipCount, tipLevel, isMemeber];
 }
 
 const SudokuConfig sudokuConfig = SudokuConfig(
   retryCount: 3,
   tipCount: 3,
   tipLevel: TipLevel.none,
-  isMemeber: false,
+  isMemeber: true,
 );
