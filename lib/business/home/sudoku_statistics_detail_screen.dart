@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/api/sudoku_record_api.dart';
+import 'package:flutter_sudoku/business/statistics/sudoku_statistics.dart';
+import 'package:flutter_sudoku/component/center_progress_indicator.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
+import 'package:get_it/get_it.dart';
 
 class SudokuStatisticsDetailScreen extends StatelessWidget {
   final Difficulty difficulty;
@@ -8,30 +12,46 @@ class SudokuStatisticsDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 16),
-      children: const [
-        ListTile(
-          title: Text("已完成游戏"),
-          trailing: Text("12"),
-        ),
-        ListTile(
-          title: Text("最佳时间"),
-          trailing: Text("02:04"),
-        ),
-        ListTile(
-          title: Text("平均时间"),
-          trailing: Text("02:04"),
-        ),
-        ListTile(
-          title: Text("最长连赢"),
-          trailing: Text("12"),
-        ),
-        ListTile(
-          title: Text("最惨连败"),
-          trailing: Text("12"),
-        ),
-      ],
+    return FutureBuilder(
+      future: GetIt.I<SudokuRecordApi>().queryStatistics(difficulty),
+      builder: (context, snap) {
+        if (!snap.hasData) return const CenterProgressIndicator();
+        final SudokuStatistics statistics = snap.data as SudokuStatistics;
+
+        return ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+          children: [
+            ListTile(
+              title: const Text("总共局数"),
+              trailing: Text(statistics.totalCount.toString()),
+            ),
+            ListTile(
+              title: const Text("胜局次数"),
+              trailing: Text(statistics.successCount.toString()),
+            ),
+            ListTile(
+              title: const Text("败局次数"),
+              trailing: Text(statistics.faileCount.toString()),
+            ),
+            ListTile(
+              title: const Text("最佳时间"),
+              trailing: Text(statistics.bestTime.toString()),
+            ),
+            ListTile(
+              title: const Text("平均时间"),
+              trailing: Text(statistics.avgTime.toString()),
+            ),
+            ListTile(
+              title: const Text("最长连赢"),
+              trailing: Text(statistics.straightWins.toString()),
+            ),
+            ListTile(
+              title: const Text("最惨连败"),
+              trailing: Text(statistics.straightLose.toString()),
+            ),
+          ],
+        );
+      },
     );
   }
 }

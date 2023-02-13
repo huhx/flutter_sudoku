@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter_sudoku/business/statistics/sudoku_statistics.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:path/path.dart';
@@ -55,6 +58,18 @@ class SudokuRecordApi {
   Future<void> delete(int id) async {
     final Database db = await _getDB();
     await db.rawUpdate('UPDATE sudoku_record SET logStatus = ? where id = ?', [LogStatus.delete.name, id]);
+  }
+
+  Future<SudokuStatistics> queryStatistics(Difficulty difficulty) async {
+    final Database db = await _getDB();
+    final List<Map<String, dynamic>> maps = await db.query(
+      tableName,
+      where: 'difficulty = ?',
+      whereArgs: [difficulty.level],
+      orderBy: 'createTime desc',
+    );
+    final List<SudokuRecord> records = maps.map((json) => SudokuRecord.fromJson(json)).toList();
+    return SudokuStatistics.from(records);
   }
 
   Future<List<SudokuRecord>> querySudokuRecords(int pageNum) async {
