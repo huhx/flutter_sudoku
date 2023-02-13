@@ -100,7 +100,6 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
                       ),
                     ),
                     content: ListView.builder(
-                      padding: EdgeInsets.zero,
                       primary: false,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
