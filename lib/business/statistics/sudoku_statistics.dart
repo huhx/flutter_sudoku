@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
@@ -44,16 +46,36 @@ class SudokuStatistics extends Equatable {
       faileCount: failed.length,
       bestTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce((a, b) => a > b ? b : a),
       avgTime: success.isEmpty ? 0 : success.map((e) => e.duration).reduce((a, b) => a + b) ~/ success.length,
-      straightWins: getStraightWins(success),
-      straightLose: getStraightLose(failed),
+      straightWins: getStraightWins(records),
+      straightLose: getStraightLose(records),
     );
   }
 
-  static int getStraightWins(List<SudokuRecord> success) {
-    return 12;
+  static int getStraightWins(List<SudokuRecord> records) {
+    late int maximum = 0, current = 0;
+    final int length = records.length;
+    for (int i = 0; i < length; i++) {
+      if (records[i].gameStatus == GameStatus.success) {
+        current += 1;
+      } else {
+        maximum = max(maximum, current);
+        current = 0;
+      }
+    }
+    return max(maximum, current);
   }
 
-  static int getStraightLose(List<SudokuRecord> failed) {
-    return 4;
+  static int getStraightLose(List<SudokuRecord> records) {
+    late int maximum = 0, current = 0;
+    final int length = records.length;
+    for (int i = 0; i < length; i++) {
+      if (records[i].gameStatus == GameStatus.failed) {
+        current += 1;
+      } else {
+        maximum = max(maximum, current);
+        current = 0;
+      }
+    }
+    return max(maximum, current);
   }
 }
