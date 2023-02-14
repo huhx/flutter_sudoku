@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/api/sudoku_record_api.dart';
+import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/component/svg_action_icon.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
-import 'package:flutter_sudoku/util/comm_util.dart';
+import 'package:get_it/get_it.dart';
 
 import 'sudoku_statistics_detail_screen.dart';
 
@@ -19,8 +21,16 @@ class SudokuStatisticsScreen extends StatelessWidget {
           title: const Text("统计"),
           actions: [
             SvgActionIcon(
-              name: 'reset',
-              onPressed: () => CommUtil.toBeDev(),
+              name: 'delete',
+              onPressed: () {
+                context.showCommDialog(
+                  callback: () async {
+                    await GetIt.I<SudokuRecordApi>().deleteAll();
+                  },
+                  title: '清空记录',
+                  content: '你确定清空数独记录?',
+                );
+              },
             ),
           ],
           bottom: TabBar(
