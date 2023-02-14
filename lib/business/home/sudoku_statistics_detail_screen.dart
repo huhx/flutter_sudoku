@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/business/statistics/sudoku_statistics.dart';
+import 'package:flutter_sudoku/common/int_extension.dart';
 import 'package:flutter_sudoku/component/center_progress_indicator.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:get_it/get_it.dart';
@@ -35,11 +36,11 @@ class SudokuStatisticsDetailScreen extends StatelessWidget {
             ),
             ListTile(
               title: const Text("最佳时间"),
-              trailing: Text(statistics.bestTime.toString()),
+              trailing: Text(statistics.bestTime.timeString),
             ),
             ListTile(
               title: const Text("平均时间"),
-              trailing: Text(statistics.avgTime.toString()),
+              trailing: Text(statistics.avgTime.timeString),
             ),
             ListTile(
               title: const Text("最长连赢"),
