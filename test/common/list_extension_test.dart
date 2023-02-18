@@ -1,4 +1,4 @@
-import 'package:flutter_sudoku/common/list_extension.dart';
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

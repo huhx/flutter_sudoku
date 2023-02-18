@@ -1,6 +1,6 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
-import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/theme/shape.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 

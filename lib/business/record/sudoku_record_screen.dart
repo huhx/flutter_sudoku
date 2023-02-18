@@ -1,9 +1,7 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/component/appbar_back_button.dart';
-import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
-import 'package:flutter_sudoku/util/comm_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'data/sudoku_record_notifier.dart';

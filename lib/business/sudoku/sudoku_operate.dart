@@ -1,10 +1,9 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
-import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/theme/theme.dart';
-import 'package:flutter_sudoku/util/comm_util.dart';
-import 'package:badges/badges.dart' as badges;
 
 class SudokuOperate extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;

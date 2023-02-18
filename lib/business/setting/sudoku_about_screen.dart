@@ -1,6 +1,5 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/component/appbar_back_button.dart';
-import 'package:flutter_sudoku/util/app_config.dart';
 
 class SudokuAboutScreen extends StatelessWidget {
   const SudokuAboutScreen({super.key});

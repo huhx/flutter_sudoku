@@ -1,15 +1,9 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/business/home/sudoku_statistics_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
-import 'package:flutter_sudoku/common/list_extension.dart';
-import 'package:flutter_sudoku/common/stream_list.dart';
-import 'package:flutter_sudoku/component/appbar_back_button.dart';
-import 'package:flutter_sudoku/component/center_progress_indicator.dart';
-import 'package:flutter_sudoku/component/empty_widget.dart';
-import 'package:flutter_sudoku/component/svg_action_icon.dart';
-import 'package:flutter_sudoku/component/text_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/util/date_util.dart';
 import 'package:get_it/get_it.dart';
@@ -25,16 +19,10 @@ class SudokuRecordListScreen extends StatefulWidget {
   State<SudokuRecordListScreen> createState() => _SudokuRecordListScreenState();
 }
 
-class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
-  final StreamList<SudokuRecord> streamList = StreamList();
+class _SudokuRecordListScreenState extends StreamState<SudokuRecordListScreen, SudokuRecord> {
 
   @override
-  void initState() {
-    super.initState();
-    streamList.addRequestListener((pageKey) => _fetchPage(pageKey));
-  }
-
-  Future<void> _fetchPage(int pageKey) async {
+  Future<void> fetchPage(int pageKey) async {
     if (streamList.isOpen) {
       final List<SudokuRecord> sudokuRecords = await GetIt.I<SudokuRecordApi>().querySudokuRecords(pageKey);
       streamList.fetch(sudokuRecords, pageKey);
@@ -114,11 +102,5 @@ class _SudokuRecordListScreenState extends State<SudokuRecordListScreen> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    streamList.dispose();
-    super.dispose();
   }
 }

@@ -1,6 +1,6 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/component/appbar_back_button.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
 
 import 'cache/clear_cache_item.dart';

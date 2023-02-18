@@ -1,10 +1,10 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/profile/onboard_screen.dart';
 import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
 import 'package:flutter_sudoku/business/setting/sudoku_about_screen.dart';
 import 'package:flutter_sudoku/business/setting/sudoku_setting_screen.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
-import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_config.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';

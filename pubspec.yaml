@@ -62,6 +62,10 @@ dependencies:
   url_launcher: ^6.1.9
   package_info_plus: ^3.0.3
   flutter_deep_links: ^0.0.1
+  app_common_flutter:
+    git:
+      url: https://github.com/huhx/app_common_flutter
+      ref: main
 
 dependency_overrides:
   pull_to_refresh:

@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_deep_links/flutter_deep_links.dart';
 import 'package:flutter_sudoku/business/home/sudoku_screen.dart';
-import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -19,12 +19,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'api/sudoku_api.dart';
 import 'api/sudoku_record_api.dart';
 import 'provider/theme_provider.dart';
-import 'component/custom_load_footer.dart';
-import 'component/custom_water_drop_header.dart';
 import 'service/audio_service.dart';
 import 'theme/theme.dart';
-import 'util/app_config.dart';
-import 'util/comm_util.dart';
 import 'util/prefs_util.dart';
 
 bool _initialUriIsHandled = false;

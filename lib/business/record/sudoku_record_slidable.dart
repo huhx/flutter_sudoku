@@ -1,8 +1,7 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
-import 'package:flutter_sudoku/component/list_tile_trailing.dart';
-import 'package:flutter_sudoku/component/text_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

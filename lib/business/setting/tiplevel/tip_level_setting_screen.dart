@@ -1,8 +1,6 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_sudoku/component/appbar_back_button.dart';
-import 'package:flutter_sudoku/component/list_scroll_physics.dart';
-import 'package:flutter_sudoku/component/svg_icon.dart';
 import 'package:flutter_sudoku/model/sudoku_tip.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

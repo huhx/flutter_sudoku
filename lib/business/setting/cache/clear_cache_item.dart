@@ -1,8 +1,8 @@
+import 'package:app_common_flutter/app_common_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/common/context_extension.dart';
-import 'package:flutter_sudoku/component/list_tile_trailing.dart';
 import 'package:get_it/get_it.dart';
 
 class ClearCacheItem extends StatelessWidget {
