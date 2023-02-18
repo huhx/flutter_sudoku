@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:app_common_flutter/extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/common/date_extension.dart';
 import 'package:flutter_sudoku/common/int_extension.dart';
 
 import 'sudoku.dart';
@@ -65,7 +64,7 @@ class SudokuRecord extends Equatable {
   }
 
   String get dateString {
-    return DateTime(year, month, day).toDateString();
+    return DateTime(year, month, day).dateString;
   }
 
   String get createTimeString {
@@ -73,11 +72,11 @@ class SudokuRecord extends Equatable {
   }
 
   String get startString {
-    return DateTime.fromMillisecondsSinceEpoch(startTime).toDateTimeString;
+    return DateTime.fromMillisecondsSinceEpoch(startTime).dateTimeString;
   }
 
   String get endString {
-    return DateTime.fromMillisecondsSinceEpoch(endTime).toDateTimeString;
+    return DateTime.fromMillisecondsSinceEpoch(endTime).dateTimeString;
   }
 
   Color get color {

@@ -14,7 +14,7 @@ class SudokuCalendarScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const AppbarBackButton(),
-        title: Text(dateTime.toDateString()),
+        title: Text(dateTime.dateString),
       ),
       body: TableCalendar(
         focusedDay: dateTime,

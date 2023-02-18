@@ -185,7 +185,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
   }
 
   String get shareTitle {
-    return "huhx://sudoku?dateTime=${dateTime.toDateString()}&difficulty=${difficulty.level}";
+    return "huhx://sudoku?dateTime=${dateTime.dateString}&difficulty=${difficulty.level}";
   }
 
   String get retryString {
