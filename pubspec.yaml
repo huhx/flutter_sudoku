@@ -32,27 +32,20 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  dio: ^5.0.0
   hooks_riverpod: ^2.0.2
   flutter_hooks: ^0.18.5+1
-  flutter_svg: ^2.0.0
   google_fonts: ^4.0.1
-  fluttertoast: ^8.0.9
   double_back_to_close: ^2.0.0
   vibration: ^1.7.6
   shimmer: ^2.0.0
-  equatable: ^2.0.3
   shared_preferences: ^2.0.15
   path_provider: ^2.0.11
   modal_bottom_sheet: ^2.1.2
-  intl: ^0.18.0
   table_calendar: ^3.0.7
   introduction_screen: ^3.0.2
   sqflite: ^2.1.0+1
   path: ^1.8.2
-  pull_to_refresh: ^2.0.0
   just_audio: ^0.9.30
-  share_plus: ^6.1.0
   logger: ^1.1.0
   envied: ^0.3.0
   flutter_slidable: ^2.0.0
@@ -65,12 +58,6 @@ dependencies:
   app_common_flutter:
     git:
       url: https://github.com/huhx/app_common_flutter
-      ref: main
-
-dependency_overrides:
-  pull_to_refresh:
-    git:
-      url: https://github.com/huhx/flutter_pulltorefresh
       ref: main
 
 dev_dependencies:
