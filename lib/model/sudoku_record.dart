@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app_common_flutter/extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/common/date_extension.dart';

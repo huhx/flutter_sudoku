@@ -1,10 +1,10 @@
 import 'package:app_common_flutter/extension.dart';
+import 'package:app_common_flutter/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_api.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/business/sudoku/base_sudoku.dart';
 import 'package:flutter_sudoku/business/sudoku/counter_notifier.dart';
-import 'package:flutter_sudoku/common/result.dart';
 import 'package:flutter_sudoku/common/set_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_input.dart';
