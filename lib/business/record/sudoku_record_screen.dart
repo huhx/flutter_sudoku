@@ -1,4 +1,5 @@
-import 'package:app_common_flutter/app_common_flutter.dart';
+import 'package:app_common_flutter/util.dart';
+import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';

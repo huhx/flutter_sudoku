@@ -1,4 +1,5 @@
-import 'package:app_common_flutter/app_common_flutter.dart';
+import 'package:app_common_flutter/extension.dart';
+import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/home/sudoku_calendar_screen.dart';
 import 'package:flutter_sudoku/business/home/sudoku_drawer.dart';

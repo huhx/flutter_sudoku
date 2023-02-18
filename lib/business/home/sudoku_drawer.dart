@@ -1,4 +1,5 @@
-import 'package:app_common_flutter/app_common_flutter.dart';
+import 'package:app_common_flutter/extension.dart';
+import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/profile/onboard_screen.dart';
 import 'package:flutter_sudoku/business/record/sudoku_record_list_screen.dart';
