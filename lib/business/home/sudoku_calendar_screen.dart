@@ -18,7 +18,7 @@ class SudokuCalendarScreen extends StatelessWidget {
       ),
       body: TableCalendar(
         focusedDay: dateTime,
-        firstDay: DateTime.utc(2012, 6, 6),
+        firstDay: DateTime.utc(2020, 10, 4),
         lastDay: DateTime.now(),
         onDaySelected: (selectedDate, _) => context.pop(selectedDate),
       ),
