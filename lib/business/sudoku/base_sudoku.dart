@@ -1,5 +1,5 @@
+import 'package:app_common_flutter/extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/common/string_extension.dart';
 import 'package:flutter_sudoku/model/sudoku_point.dart';
 import 'package:flutter_sudoku/theme/color.dart';
 import 'package:flutter_sudoku/util/list_util.dart';
