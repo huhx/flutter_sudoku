@@ -1,8 +1,8 @@
+import 'package:app_common_flutter/extension.dart';
 import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/business/statistics/sudoku_statistics.dart';
-import 'package:flutter_sudoku/common/int_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:get_it/get_it.dart';
 

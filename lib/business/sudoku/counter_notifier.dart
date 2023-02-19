@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:app_common_flutter/extension.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_sudoku/common/int_extension.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CounterNotifier extends ChangeNotifier {

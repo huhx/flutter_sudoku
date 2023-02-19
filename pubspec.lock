@@ -22,7 +22,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: "204c17b4363119ed08442cc7388228bd4b30f1b6"
+      resolved-ref: dbf56726b2143e8b2e0e6cc22257a990167df8c0
       url: "https://github.com/huhx/app_common_flutter"
     source: git
     version: "0.0.1"

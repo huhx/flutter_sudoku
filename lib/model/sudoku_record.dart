@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:app_common_flutter/extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/common/int_extension.dart';
 
 import 'sudoku.dart';
 import 'sudoku_input_log.dart';
@@ -68,7 +67,7 @@ class SudokuRecord extends Equatable {
   }
 
   String get createTimeString {
-    return createTime.toDateString();
+    return createTime.dateString;
   }
 
   String get startString {
