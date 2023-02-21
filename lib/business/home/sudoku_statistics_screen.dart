@@ -1,3 +1,4 @@
+import 'package:app_common_flutter/constant.dart';
 import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
@@ -20,6 +21,7 @@ class SudokuStatisticsScreen extends StatelessWidget {
           title: const Text("统计"),
           actions: [
             SvgActionIcon(
+              package: Comm.package,
               name: 'delete',
               onPressed: () {
                 context.showCommDialog(
