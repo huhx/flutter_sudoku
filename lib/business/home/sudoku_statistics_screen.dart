@@ -8,9 +8,14 @@ import 'package:get_it/get_it.dart';
 
 import 'sudoku_statistics_detail_screen.dart';
 
-class SudokuStatisticsScreen extends StatelessWidget {
+class SudokuStatisticsScreen extends StatefulWidget {
   const SudokuStatisticsScreen({super.key});
 
+  @override
+  State<SudokuStatisticsScreen> createState() => _SudokuStatisticsScreenState();
+}
+
+class _SudokuStatisticsScreenState extends State<SudokuStatisticsScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -27,6 +32,7 @@ class SudokuStatisticsScreen extends StatelessWidget {
                 context.showCommDialog(
                   callback: () async {
                     await GetIt.I<SudokuRecordApi>().deleteAll();
+                    setState(() {});
                   },
                   title: '清空记录',
                   content: '你确定清空数独记录?',

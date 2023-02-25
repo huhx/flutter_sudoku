@@ -52,7 +52,7 @@ class SudokuStatistics extends Equatable {
   }
 
   static int getStraightWins(List<SudokuRecord> records) {
-    late int maximum = 0, current = 0;
+    int maximum = 0, current = 0;
     final int length = records.length;
     for (int i = 0; i < length; i++) {
       if (records[i].gameStatus == GameStatus.success) {
@@ -66,7 +66,7 @@ class SudokuStatistics extends Equatable {
   }
 
   static int getStraightLose(List<SudokuRecord> records) {
-    late int maximum = 0, current = 0;
+    int maximum = 0, current = 0;
     final int length = records.length;
     for (int i = 0; i < length; i++) {
       if (records[i].gameStatus == GameStatus.failed) {

@@ -64,8 +64,8 @@ class SudokuRecordApi {
     final Database db = await _getDB();
     final List<Map<String, dynamic>> maps = await db.query(
       tableName,
-      where: 'difficulty = ?',
-      whereArgs: [difficulty.level],
+      where: 'difficulty = ? and logStatus = ?',
+      whereArgs: [difficulty.level, LogStatus.normal.name],
       orderBy: 'createTime desc',
     );
     final List<SudokuRecord> records = maps.map((json) => SudokuRecord.fromJson(json)).toList();
