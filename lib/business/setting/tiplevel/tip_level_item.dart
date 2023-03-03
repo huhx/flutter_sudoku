@@ -14,6 +14,7 @@ class TipLevelItem extends HookConsumerWidget {
     final tipLevel = ref.watch(tipLevelProvider);
 
     return CupertinoListTile(
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Text('智能等级', style: Theme.of(context).textTheme.bodyLarge),
       trailing: Text(tipLevel.description),
       onTap: () async {

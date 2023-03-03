@@ -31,8 +31,8 @@ class SudokuOperate extends StatelessWidget {
                 badgeColor: Colors.red,
               ),
               badgeContent: sudokuNotifier.enableNotes
-                  ? const Text("on", style: TextStyle(fontSize: 8))
-                  : const Text("off", style: TextStyle(fontSize: 8)),
+                  ? const Text("Y", style: TextStyle(fontSize: 8))
+                  : const Text("N", style: TextStyle(fontSize: 8)),
               child: const SvgIcon(name: "operate_note", color: themeColor),
             ),
             label: "笔记",
@@ -42,7 +42,7 @@ class SudokuOperate extends StatelessWidget {
             icon: badges.Badge(
               badgeAnimation: const BadgeAnimation.fade(),
               badgeStyle: badges.BadgeStyle(
-                padding: const EdgeInsets.all(3),
+                padding: const EdgeInsets.all(4),
                 badgeColor: sudokuNotifier.canUseTip ? Colors.red : Colors.grey,
               ),
               badgeContent: Text("${sudokuNotifier.tipCount}", style: const TextStyle(fontSize: 8)),

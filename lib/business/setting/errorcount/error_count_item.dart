@@ -12,6 +12,7 @@ class ErrorCountItem extends HookConsumerWidget {
     final errorCount = ref.watch(errorCountProvider);
 
     return CupertinoListTile(
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Text('错误次数', style: Theme.of(context).textTheme.bodyLarge),
       trailing: Flexible(
         child: TextFormField(
@@ -20,7 +21,15 @@ class ErrorCountItem extends HookConsumerWidget {
           keyboardType: TextInputType.number,
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.end,
-          decoration: const InputDecoration(border: InputBorder.none),
+          decoration: const InputDecoration(
+            fillColor: Colors.transparent,
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            isCollapsed: true,
+          ),
           inputFormatters: [LengthLimitingTextInputFormatter(1)],
           onChanged: (String value) {
             if (value.isNotEmpty) {

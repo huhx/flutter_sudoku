@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sudoku/theme/shape.dart';
 
 class CancelConfirmDialog extends StatelessWidget {
   final String title;
@@ -17,7 +16,6 @@ class CancelConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      shape: dialogShape,
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

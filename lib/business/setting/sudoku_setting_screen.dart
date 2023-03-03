@@ -23,6 +23,7 @@ class SudokuSettingScreen extends StatelessWidget {
       body: ListView(
         children: [
           CupertinoListSection.insetGrouped(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             additionalDividerMargin: 8,
             margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
             children: const [
@@ -33,6 +34,7 @@ class SudokuSettingScreen extends StatelessWidget {
           ),
           if (sudokuConfig.isMemeber)
             CupertinoListSection.insetGrouped(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               additionalDividerMargin: 8,
               margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
               children: const [

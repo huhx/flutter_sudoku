@@ -59,6 +59,7 @@ dependencies:
     git:
       url: https://github.com/huhx/app_common_flutter
       ref: main
+  flex_color_scheme: ^6.1.2
 
 dev_dependencies:
   flutter_test:

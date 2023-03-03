@@ -12,15 +12,23 @@ class TipCountItem extends HookConsumerWidget {
     final tipCount = ref.watch(tipCountProvider);
 
     return CupertinoListTile(
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Text('提醒次数', style: Theme.of(context).textTheme.bodyLarge),
       trailing: Flexible(
         child: TextFormField(
           initialValue: "$tipCount",
           textAlign: TextAlign.end,
-          style: Theme.of(context).textTheme.bodyMedium,
           autofocus: false,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(border: InputBorder.none),
+          decoration: const InputDecoration(
+            fillColor: Colors.transparent,
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            isCollapsed: true,
+          ),
           inputFormatters: [LengthLimitingTextInputFormatter(1)],
           onChanged: (String value) {
             if (value.isNotEmpty) {

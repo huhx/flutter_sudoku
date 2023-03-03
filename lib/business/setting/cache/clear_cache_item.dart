@@ -11,6 +11,7 @@ class ClearCacheItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoListTile(
+      backgroundColor: Theme.of(context).colorScheme.background,
       title: Text('清除缓存', style: Theme.of(context).textTheme.bodyLarge),
       trailing: const ListTileTrailing(),
       onTap: () => _showConfirmDialog(context),
