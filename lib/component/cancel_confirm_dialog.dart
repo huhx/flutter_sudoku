@@ -26,11 +26,17 @@ class CancelConfirmDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              TextButton(
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                ),
                 child: const Text("取消", style: TextStyle(color: Colors.red)),
                 onPressed: () => Navigator.pop(context),
               ),
-              TextButton(
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                ),
                 child: const Text("确定", style: TextStyle(color: Colors.green)),
                 onPressed: () {
                   Navigator.pop(context);
