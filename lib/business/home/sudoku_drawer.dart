@@ -19,12 +19,11 @@ class SudokuDrawer extends StatelessWidget {
       child: Column(
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(color: Theme.of(context).appBarTheme.backgroundColor),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 "每日数独",
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 24, color: Colors.white),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 24),
               ),
             ),
           ),

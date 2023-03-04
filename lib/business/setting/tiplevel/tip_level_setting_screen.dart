@@ -18,7 +18,7 @@ class TipLevelSettingScreen extends HookConsumerWidget {
         leading: const AppbarBackButton(),
         title: const Text("智能等级设置"),
         actions: [
-          TextButton(
+          OutlinedButton(
             onPressed: () => Navigator.pop(context, tipLevelState.value),
             child: const Text("完成", style: TextStyle(color: Colors.white)),
           ),
