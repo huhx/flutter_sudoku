@@ -3,6 +3,7 @@ import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
+import 'package:flutter_sudoku/util/common_util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'data/sudoku_record_notifier.dart';
@@ -41,8 +42,10 @@ class SudokuRecordScreen extends HookConsumerWidget {
                 onPressed: () async {
                   final GameStatus gameStatus = await sudokuRecordModel.resetPlay();
                   if (gameStatus == GameStatus.success) {
+                    CommonUtil.vibrateWarn();
                     CommUtil.toast(message: "恭喜你成功过关");
                   } else if (gameStatus == GameStatus.failed) {
+                    CommonUtil.vibrateWarn();
                     CommUtil.toast(message: "已达到最大错误次数，游戏失败");
                   }
                 },
