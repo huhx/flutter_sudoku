@@ -31,12 +31,12 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = '11'
     }
 
     sourceSets {
@@ -53,7 +53,6 @@ android {
         versionName flutterVersionName
 
         // fix the issue that debug mode in xiaomi9 pro
-        multiDexEnabled true
     }
 
     signingConfigs {

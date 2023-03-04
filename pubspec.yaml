@@ -54,7 +54,7 @@ dependencies:
   get_it: ^7.2.0
   url_launcher: ^6.1.9
   package_info_plus: ^3.0.3
-  flutter_deep_links: ^0.0.1
+  flutter_deep_links: ^0.0.2
   app_common_flutter:
     git:
       url: https://github.com/huhx/app_common_flutter
