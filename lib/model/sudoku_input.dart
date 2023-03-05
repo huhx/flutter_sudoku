@@ -18,7 +18,7 @@ class SudokuInput extends Equatable {
     required this.noteValues,
   });
 
-  factory SudokuInput.inputClear(Point point) {
+  factory SudokuInput.clear(Point point) {
     return SudokuInput(
       point: point,
       value: 0,
@@ -28,7 +28,7 @@ class SudokuInput extends Equatable {
     );
   }
 
-  factory SudokuInput.inputNote(Point point, List<int> noteValue) {
+  factory SudokuInput.note(Point point, List<int> noteValue) {
     return SudokuInput(
       point: point,
       value: 0,
@@ -38,7 +38,7 @@ class SudokuInput extends Equatable {
     );
   }
 
-  factory SudokuInput.inputTip(Point point, int value) {
+  factory SudokuInput.tip(Point point, int value) {
     return SudokuInput(
       point: point,
       value: value,
@@ -48,7 +48,7 @@ class SudokuInput extends Equatable {
     );
   }
 
-  factory SudokuInput.inputValue(Point point, bool isCorrect, int value) {
+  factory SudokuInput.normal(Point point, bool isCorrect, int value) {
     return SudokuInput(
       point: point,
       value: value,

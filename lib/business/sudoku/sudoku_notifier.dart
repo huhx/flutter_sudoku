@@ -107,7 +107,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
         notesMap[selected] = list.addOrRemove(value);
       }
 
-      sudokuInputs.add(SudokuInput.inputNote(selected, [...?notesMap[selected]]));
+      sudokuInputs.add(SudokuInput.note(selected, [...?notesMap[selected]]));
       highlightPoints = [];
 
       notifyListeners();
@@ -118,7 +118,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
     content[selected.x][selected.y] = value;
     relatedPoints = related();
     highlightPoints = highlight();
-    sudokuInputs.add(SudokuInput.inputValue(selected, contentValue == answerValue, value));
+    sudokuInputs.add(SudokuInput.normal(selected, contentValue == answerValue, value));
 
     if (contentValue != answerValue) {
       textColorMap[selected] = errorColor;
@@ -156,7 +156,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       textColorMap[selected] = inputColor;
 
       tipCount = tipCount - 1;
-      sudokuInputs.add(SudokuInput.inputTip(selected, answerValue));
+      sudokuInputs.add(SudokuInput.tip(selected, answerValue));
 
       notifyListeners();
     }
@@ -171,7 +171,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
       highlightPoints = [];
 
       textColorMap[selected] = inputColor;
-      sudokuInputs.add(SudokuInput.inputClear(selected));
+      sudokuInputs.add(SudokuInput.clear(selected));
 
       notifyListeners();
     }
