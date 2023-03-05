@@ -12,3 +12,7 @@
 |-------------------------|-------------------------|-------------------------|
 | ![](images/image_4.png) | ![](images/image_5.png) | ![](images/image_6.png) |
 
+## Downlaod
+* Android:
+  * 蒲公英：https://www.pgyer.com/9qCn
+  * google play store: https://play.google.com/store/apps/details?id=com.huhx.sudoku
