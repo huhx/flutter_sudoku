@@ -44,7 +44,7 @@ class SudokuStatistics extends Equatable {
       totalCount: records.length,
       successCount: success.length,
       faileCount: failed.length,
-      bestTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce((a, b) => a > b ? b : a),
+      bestTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce(min),
       avgTime: success.isEmpty ? 0 : success.map((e) => e.duration).reduce((a, b) => a + b) ~/ success.length,
       straightWins: getStraightWins(records),
       straightLose: getStraightLose(records),
