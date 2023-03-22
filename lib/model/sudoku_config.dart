@@ -6,22 +6,22 @@ class SudokuConfig extends Equatable {
   final int retryCount;
   final int tipCount;
   final TipLevel tipLevel;
-  final bool isMemeber;
+  final bool isMember;
 
   const SudokuConfig({
     required this.retryCount,
     required this.tipCount,
     required this.tipLevel,
-    required this.isMemeber,
+    required this.isMember,
   });
 
   @override
-  List<Object?> get props => [retryCount, tipCount, tipLevel, isMemeber];
+  List<Object?> get props => [retryCount, tipCount, tipLevel, isMember];
 }
 
 const SudokuConfig sudokuConfig = SudokuConfig(
   retryCount: 3,
   tipCount: 3,
   tipLevel: TipLevel.none,
-  isMemeber: true,
+  isMember: true,
 );

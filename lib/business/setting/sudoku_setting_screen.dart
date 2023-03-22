@@ -32,7 +32,7 @@ class SudokuSettingScreen extends StatelessWidget {
               DarkItem(),
             ],
           ),
-          if (sudokuConfig.isMemeber)
+          if (sudokuConfig.isMember)
             CupertinoListSection.insetGrouped(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               additionalDividerMargin: 8,

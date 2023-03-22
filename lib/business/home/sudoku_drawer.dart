@@ -47,7 +47,7 @@ class SudokuDrawer extends StatelessWidget {
                     context.goto(const SudokuRecordListScreen());
                   },
                 ),
-                if (sudokuConfig.isMemeber)
+                if (sudokuConfig.isMember)
                   ListTile(
                     leading: const SvgIcon(name: "sudoku_share"),
                     title: Text("分享", style: Theme.of(context).textTheme.bodyMedium),
