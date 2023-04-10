@@ -48,7 +48,7 @@ dependencies:
   just_audio: ^0.9.30
   logger: ^1.1.0
   envied: ^0.3.0
-  flutter_slidable: ^2.0.0
+  flutter_slidable: ^3.0.0
   sticky_headers: ^0.3.0+2
   badges: ^3.0.2
   get_it: ^7.2.0
@@ -59,7 +59,7 @@ dependencies:
     git:
       url: https://github.com/huhx/app_common_flutter
       ref: main
-  flex_color_scheme: ^6.1.2
+  flex_color_scheme: ^7.0.0
 
 dev_dependencies:
   flutter_test:
@@ -73,7 +73,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   envied_generator: ^0.3.0
   build_runner: ^2.3.2
-  flutter_launcher_icons: ^0.12.0
+  flutter_launcher_icons: ^0.13.0
 
 flutter_icons:
   android: "launcher_icon"
