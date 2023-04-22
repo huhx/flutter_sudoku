@@ -32,7 +32,7 @@ class SudokuStatisticsDetailScreen extends StatelessWidget {
             ),
             ListTile(
               title: const Text("败局次数"),
-              trailing: Text(statistics.faileCount.toString()),
+              trailing: Text(statistics.failedCount.toString()),
             ),
             ListTile(
               title: const Text("最佳时间"),

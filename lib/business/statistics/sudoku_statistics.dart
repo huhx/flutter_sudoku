@@ -7,7 +7,7 @@ import 'package:flutter_sudoku/model/sudoku_record.dart';
 class SudokuStatistics extends Equatable {
   final int totalCount;
   final int successCount;
-  final int faileCount;
+  final int failedCount;
   final int bestTime;
   final int avgTime;
   final int straightWins;
@@ -16,7 +16,7 @@ class SudokuStatistics extends Equatable {
   const SudokuStatistics({
     required this.totalCount,
     required this.successCount,
-    required this.faileCount,
+    required this.failedCount,
     required this.bestTime,
     required this.avgTime,
     required this.straightWins,
@@ -28,7 +28,7 @@ class SudokuStatistics extends Equatable {
     return [
       totalCount,
       successCount,
-      faileCount,
+      failedCount,
       bestTime,
       avgTime,
       straightWins,
@@ -43,7 +43,7 @@ class SudokuStatistics extends Equatable {
     return SudokuStatistics(
       totalCount: records.length,
       successCount: success.length,
-      faileCount: failed.length,
+      failedCount: failed.length,
       bestTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce(min),
       avgTime: success.isEmpty ? 0 : success.map((e) => e.duration).reduce((a, b) => a + b) ~/ success.length,
       straightWins: getStraightWins(records),

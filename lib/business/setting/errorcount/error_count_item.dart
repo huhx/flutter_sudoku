@@ -22,7 +22,6 @@ class ErrorCountItem extends HookConsumerWidget {
         child: TextFormField(
           controller: userTextController,
           onTap: () => userTextController.selection = TextSelection.fromPosition(const TextPosition(offset: 1)),
-          autofocus: false,
           keyboardType: TextInputType.number,
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.end,

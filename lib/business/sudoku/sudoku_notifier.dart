@@ -136,7 +136,7 @@ class SudokuNotifier extends ChangeNotifier with BaseSudoku {
 
         ref.read(counterProvider).reset();
         _saveSudokuRecord();
-        audioService.playSucess();
+        audioService.playSuccess();
       }
     }
 

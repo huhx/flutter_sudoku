@@ -4,7 +4,7 @@ import 'package:just_audio/just_audio.dart';
 class AudioService {
   final AudioPlayer _player = AudioPlayer();
 
-  Future<void> playSucess() async {
+  Future<void> playSuccess() async {
     if (PrefsUtil.isPlaySound()) {
       await playSound('success.mp3');
     }
