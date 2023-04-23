@@ -37,39 +37,33 @@ class SudokuStatistics extends Equatable {
   }
 
   static SudokuStatistics from(List<SudokuRecord> records) {
-    final List<SudokuRecord> success = records.where((record) => record.gameStatus == GameStatus.success).toList();
-    final List<SudokuRecord> failed = records.where((record) => record.gameStatus == GameStatus.failed).toList();
+    final List<SudokuRecord> success = records.where((record) => record.isSuccess).toList();
+    final List<SudokuRecord> failed = records.where((record) => record.isFailed).toList();
 
     return SudokuStatistics(
       totalCount: records.length,
       successCount: success.length,
       failedCount: failed.length,
       bestTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce(min),
-      avgTime: success.isEmpty ? 0 : success.map((e) => e.duration).reduce((a, b) => a + b) ~/ success.length,
+      avgTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce((a, b) => a + b) ~/ success.length,
       straightWins: getStraightWins(records),
       straightLose: getStraightLose(records),
     );
   }
 
   static int getStraightWins(List<SudokuRecord> records) {
-    int maximum = 0, current = 0;
-    final int length = records.length;
-    for (int i = 0; i < length; i++) {
-      if (records[i].gameStatus == GameStatus.success) {
-        current += 1;
-      } else {
-        maximum = max(maximum, current);
-        current = 0;
-      }
-    }
-    return max(maximum, current);
+    return _getStraightValue(records, GameStatus.success);
   }
 
   static int getStraightLose(List<SudokuRecord> records) {
+    return _getStraightValue(records, GameStatus.failed);
+  }
+
+  static int _getStraightValue(List<SudokuRecord> records, GameStatus status) {
     int maximum = 0, current = 0;
     final int length = records.length;
     for (int i = 0; i < length; i++) {
-      if (records[i].gameStatus == GameStatus.failed) {
+      if (records[i].gameStatus == status) {
         current += 1;
       } else {
         maximum = max(maximum, current);

@@ -1,6 +1,7 @@
 import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/model/sudoku_tip.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -20,7 +21,7 @@ class TipLevelSettingScreen extends HookConsumerWidget {
         actions: [
           SvgActionIcon(
             name: "done",
-            onPressed: () => Navigator.pop(context, tipLevelState.value),
+            onPressed: () => context.pop(tipLevelState.value),
           )
         ],
       ),
@@ -57,7 +58,7 @@ class TipLevelItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => callback(),
+      onTap: callback,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Row(
