@@ -23,24 +23,6 @@ class SudokuRecord extends Equatable {
   final int endTime;
   final int createTime;
 
-  @override
-  List<Object?> get props => [
-        id,
-        year,
-        month,
-        day,
-        difficulty,
-        gameStatus,
-        logStatus,
-        sudokuInputLog,
-        duration,
-        errorCount,
-        tipCount,
-        startTime,
-        endTime,
-        createTime,
-      ];
-
   const SudokuRecord({
     this.id,
     required this.year,
@@ -127,6 +109,24 @@ class SudokuRecord extends Equatable {
       createTime: json['createTime'] as int,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        year,
+        month,
+        day,
+        difficulty,
+        gameStatus,
+        logStatus,
+        sudokuInputLog,
+        duration,
+        errorCount,
+        tipCount,
+        startTime,
+        endTime,
+        createTime,
+      ];
 }
 
 enum LogStatus { normal, delete }
