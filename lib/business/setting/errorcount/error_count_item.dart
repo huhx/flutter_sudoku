@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sudoku/provider/error_count_provider.dart';
+import 'package:flutter_sudoku/theme/shape.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ErrorCountItem extends HookConsumerWidget {
@@ -25,15 +26,7 @@ class ErrorCountItem extends HookConsumerWidget {
           keyboardType: TextInputType.number,
           style: Theme.of(context).textTheme.bodyMedium,
           textAlign: TextAlign.end,
-          decoration: const InputDecoration(
-            fillColor: Colors.transparent,
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            isCollapsed: true,
-          ),
+          decoration: inputDecoration,
           inputFormatters: [LengthLimitingTextInputFormatter(1)],
           onChanged: (String value) {
             if (value.isNotEmpty) {

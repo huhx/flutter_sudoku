@@ -79,6 +79,12 @@ final appThemeData = {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     // To use the playground font, add GoogleFonts package and uncomment
     fontFamily: GoogleFonts.lato().fontFamily,
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
   ).copyWith(
     appBarTheme: const AppBarTheme(centerTitle: true, titleTextStyle: TextStyle(fontSize: 17)),
   ),
@@ -92,6 +98,12 @@ final appThemeData = {
     visualDensity: FlexColorScheme.comfortablePlatformDensity,
     // To use the playground font, add GoogleFonts package and uncomment
     fontFamily: GoogleFonts.lato().fontFamily,
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+      },
+    ),
   ).copyWith(
     appBarTheme: const AppBarTheme(centerTitle: true, titleTextStyle: TextStyle(fontSize: 17)),
   ),

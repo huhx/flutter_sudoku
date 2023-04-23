@@ -17,10 +17,19 @@ const outlineInputBorder = OutlineInputBorder(
   borderSide: BorderSide.none,
 );
 
-
 final pageDecoration = const PageDecoration().copyWith(
   bodyFlex: 2,
   imageFlex: 4,
   bodyAlignment: Alignment.topCenter,
   imageAlignment: Alignment.bottomCenter,
+);
+
+const inputDecoration = InputDecoration(
+  fillColor: Colors.transparent,
+  border: InputBorder.none,
+  focusedBorder: InputBorder.none,
+  enabledBorder: InputBorder.none,
+  errorBorder: InputBorder.none,
+  disabledBorder: InputBorder.none,
+  isCollapsed: true,
 );

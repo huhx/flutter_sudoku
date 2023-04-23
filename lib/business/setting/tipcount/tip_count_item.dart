@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_sudoku/provider/tip_count_provider.dart';
+import 'package:flutter_sudoku/theme/shape.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TipCountItem extends HookConsumerWidget {
@@ -23,17 +24,8 @@ class TipCountItem extends HookConsumerWidget {
           controller: userTextController,
           onTap: () => userTextController.selection = TextSelection.fromPosition(const TextPosition(offset: 1)),
           textAlign: TextAlign.end,
-          autofocus: false,
           keyboardType: TextInputType.number,
-          decoration: const InputDecoration(
-            fillColor: Colors.transparent,
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
-            isCollapsed: true,
-          ),
+          decoration: inputDecoration,
           inputFormatters: [LengthLimitingTextInputFormatter(1)],
           onChanged: (String value) {
             if (value.isNotEmpty) {
