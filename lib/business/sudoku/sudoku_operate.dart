@@ -4,7 +4,6 @@ import 'package:badges/badges.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/business/sudoku/sudoku_notifier.dart';
-import 'package:flutter_sudoku/theme/theme.dart';
 
 class SudokuOperate extends StatelessWidget {
   final SudokuNotifier sudokuNotifier;
@@ -13,6 +12,8 @@ class SudokuOperate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color themeColor = Theme.of(context).colorScheme.primary;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Row(
@@ -33,7 +34,7 @@ class SudokuOperate extends StatelessWidget {
               badgeContent: sudokuNotifier.enableNotes
                   ? const Text("Y", style: TextStyle(fontSize: 8))
                   : const Text("N", style: TextStyle(fontSize: 8)),
-              child: const SvgIcon(name: "operate_note", color: themeColor),
+              child: SvgIcon(name: "operate_note", color: themeColor),
             ),
             label: "笔记",
             onPressed: () => sudokuNotifier.toggleNote(),
