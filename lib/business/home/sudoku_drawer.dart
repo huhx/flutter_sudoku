@@ -15,6 +15,8 @@ class SudokuDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle? textStyle = Theme.of(context).textTheme.bodyMedium;
+
     return Drawer(
       child: Column(
         children: [
@@ -23,7 +25,7 @@ class SudokuDrawer extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 "每日数独",
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 24),
+                style: textStyle?.copyWith(fontSize: 24),
               ),
             ),
           ),
@@ -33,7 +35,7 @@ class SudokuDrawer extends StatelessWidget {
               children: [
                 ListTile(
                   leading: const SvgIcon(name: "item_onboarding"),
-                  title: Text("玩法介绍", style: Theme.of(context).textTheme.bodyMedium),
+                  title: Text("玩法介绍", style: textStyle),
                   onTap: () {
                     context.pop();
                     context.goto(const OnboardScreen());
@@ -41,7 +43,7 @@ class SudokuDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const SvgIcon(name: "item_record"),
-                  title: Text("记录", style: Theme.of(context).textTheme.bodyMedium),
+                  title: Text("记录", style: textStyle),
                   onTap: () {
                     context.pop();
                     context.goto(const SudokuRecordListScreen());
@@ -49,7 +51,7 @@ class SudokuDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const SvgIcon(name: "sudoku_share"),
-                  title: Text("分享", style: Theme.of(context).textTheme.bodyMedium),
+                  title: Text("分享", style: textStyle),
                   onTap: () {
                     context.pop();
                     context.share(title: '分享一款非常棒的数独游戏, 休闲益智.', subject: "sudoku");
@@ -57,7 +59,7 @@ class SudokuDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const SvgIcon(name: "item_about"),
-                  title: Text("关于", style: Theme.of(context).textTheme.bodyMedium),
+                  title: Text("关于", style: textStyle),
                   onTap: () {
                     context.pop();
                     context.goto(const SudokuAboutScreen());
@@ -66,7 +68,7 @@ class SudokuDrawer extends StatelessWidget {
                 if (sudokuConfig.isMember)
                   ListTile(
                     leading: const SvgIcon(name: "item_feedback"),
-                    title: Text("意见反馈", style: Theme.of(context).textTheme.bodyMedium),
+                    title: Text("意见反馈", style: textStyle),
                     onTap: () async {
                       context.pop();
                       final Uri mail = Uri(
@@ -83,7 +85,7 @@ class SudokuDrawer extends StatelessWidget {
                   ),
                 ListTile(
                   leading: const SvgIcon(name: "sudoku_setting"),
-                  title: Text("设置", style: Theme.of(context).textTheme.bodyMedium),
+                  title: Text("设置", style: textStyle),
                   onTap: () {
                     context.pop();
                     context.goto(const SudokuSettingScreen());

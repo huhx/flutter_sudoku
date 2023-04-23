@@ -9,6 +9,7 @@ class SudokuStatistics extends Equatable {
   final int successCount;
   final int failedCount;
   final int bestTime;
+  final int worstTime;
   final int avgTime;
   final int straightWins;
   final int straightLose;
@@ -18,6 +19,7 @@ class SudokuStatistics extends Equatable {
     required this.successCount,
     required this.failedCount,
     required this.bestTime,
+    required this.worstTime,
     required this.avgTime,
     required this.straightWins,
     required this.straightLose,
@@ -30,6 +32,7 @@ class SudokuStatistics extends Equatable {
       successCount,
       failedCount,
       bestTime,
+      worstTime,
       avgTime,
       straightWins,
       straightLose,
@@ -45,6 +48,7 @@ class SudokuStatistics extends Equatable {
       successCount: success.length,
       failedCount: failed.length,
       bestTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce(min),
+      worstTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce(max),
       avgTime: success.isEmpty ? 0 : success.map((record) => record.duration).reduce((a, b) => a + b) ~/ success.length,
       straightWins: getStraightWins(records),
       straightLose: getStraightLose(records),

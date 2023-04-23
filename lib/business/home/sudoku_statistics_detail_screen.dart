@@ -39,6 +39,10 @@ class SudokuStatisticsDetailScreen extends StatelessWidget {
               trailing: Text(statistics.bestTime.timeString),
             ),
             ListTile(
+              title: const Text("最长时间"),
+              trailing: Text(statistics.worstTime.timeString),
+            ),
+            ListTile(
               title: const Text("平均时间"),
               trailing: Text(statistics.avgTime.timeString),
             ),
