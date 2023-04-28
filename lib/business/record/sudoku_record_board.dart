@@ -18,6 +18,7 @@ class SudokuRecordBoard extends HookConsumerWidget {
         (row) => TableRow(
           children: List.generate(9, (column) {
             final Point point = Point.from(row, column);
+            
             return TableCell(
               child: SudokuCell(
                 boxBorder: point.border,

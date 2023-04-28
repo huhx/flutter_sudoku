@@ -23,10 +23,7 @@ class SudokuDrawer extends StatelessWidget {
           DrawerHeader(
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                "每日数独",
-                style: textStyle?.copyWith(fontSize: 24),
-              ),
+              child: Text("每日数独", style: textStyle?.copyWith(fontSize: 24)),
             ),
           ),
           Expanded(

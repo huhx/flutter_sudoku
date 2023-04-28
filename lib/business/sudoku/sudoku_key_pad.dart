@@ -42,7 +42,7 @@ class NumberItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: isEnable ? () => onPressed(number) : null,
+      onTap: isEnable ? onPressed(number) : null,
       child: AspectRatio(
         aspectRatio: 1,
         child: Container(
