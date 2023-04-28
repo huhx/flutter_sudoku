@@ -13,7 +13,7 @@ class DarkItem extends HookConsumerWidget {
     return CupertinoListTile(
       backgroundColor: Theme.of(context).colorScheme.background,
       title: Text('夜间模式', style: Theme.of(context).textTheme.bodyLarge),
-      trailing: Switch(
+      trailing: Switch.adaptive(
         value: themeMode == ThemeMode.dark,
         onChanged: (isDark) => ref.read(themeProvider.notifier).setDark(isDark),
       ),
