@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
 import 'package:flutter_sudoku/business/home/sudoku_screen.dart';
 import 'package:flutter_sudoku/business/statistics/sudoku_statistics.dart';
+import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:get_it/get_it.dart';
 
@@ -60,12 +61,7 @@ class SudokuStatisticsDetailScreen extends StatelessWidget {
                 child: Center(
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 32)),
-                    onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (_) => SudokuScreen(DateTime.now(), difficulty)),
-                        (route) => false,
-                      );
-                    },
+                    onPressed: () => context.pushAndRemoveUntil(SudokuScreen(DateTime.now(), difficulty)),
                     child: const Text("开始一局"),
                   ),
                 ),

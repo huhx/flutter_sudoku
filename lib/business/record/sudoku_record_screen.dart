@@ -1,6 +1,8 @@
 import 'package:app_common_flutter/util.dart';
 import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sudoku/business/home/sudoku_screen.dart';
+import 'package:flutter_sudoku/common/context_extension.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:flutter_sudoku/model/sudoku_record.dart';
 import 'package:flutter_sudoku/util/common_util.dart';
@@ -22,6 +24,17 @@ class SudokuRecordScreen extends HookConsumerWidget {
       appBar: AppBar(
         leading: const AppbarBackButton(),
         title: const Text("数独记录详情"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: OutlinedButton(
+              onPressed: () {
+                context.pushAndRemoveUntil(SudokuScreen(sudokuRecordModel.dateTime, sudokuRecordModel.difficulty));
+              },
+              child: const Text("开始一局"),
+            ),
+          )
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
