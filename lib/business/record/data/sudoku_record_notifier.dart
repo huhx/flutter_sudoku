@@ -16,6 +16,7 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
 
   late int currentIndex;
   late bool _disposed;
+  late bool _showAnswer;
 
   SudokuRecordNotifier({required this.sudokuInputLog});
 
@@ -32,6 +33,7 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
     textColorMap = {for (final point in empty()) point: inputColor};
 
     _disposed = false;
+    _showAnswer = false;
     currentIndex = 0;
   }
 
@@ -52,15 +54,19 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
     return _disposed ? GameStatus.running : sudokuInputLog.gameStatus;
   }
 
-  void showAnswer() {
+  void toogleAnswer() {
     highlightPoints = [];
     relatedPoints = [];
 
     textColorMap = {for (final point in empty()) point: inputColor};
     notesMap.clear();
     selected = Point.from(-1, -1);
-
-    content = toArray(sudokuInputLog.answer);
+    if (_showAnswer) {
+      content = toArray(sudokuInputLog.question);
+    } else {
+      content = toArray(sudokuInputLog.answer);
+    }
+    _showAnswer = !_showAnswer;
 
     notifyListeners();
   }
