@@ -109,6 +109,7 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
   @override
   void dispose() {
     _disposed = true;
+    _showAnswer = false;
     super.dispose();
   }
 }
