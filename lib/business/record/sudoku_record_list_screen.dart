@@ -22,7 +22,6 @@ class SudokuRecordListScreen extends StatefulWidget {
 }
 
 class _SudokuRecordListScreenState extends StreamState<SudokuRecordListScreen, SudokuRecord> {
-
   @override
   Future<void> fetchPage(int pageKey) async {
     if (streamList.isOpen) {

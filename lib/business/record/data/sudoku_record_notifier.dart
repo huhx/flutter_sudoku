@@ -20,8 +20,8 @@ class SudokuRecordNotifier extends ChangeNotifier with BaseSudoku {
 
   SudokuRecordNotifier({required this.sudokuInputLog});
 
-   Difficulty get difficulty => sudokuInputLog.difficulty;
-   DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(sudokuInputLog.dateTime);
+  Difficulty get difficulty => sudokuInputLog.difficulty;
+  DateTime get dateTime => DateTime.fromMillisecondsSinceEpoch(sudokuInputLog.dateTime);
 
   void init() {
     question = toArray(sudokuInputLog.question);

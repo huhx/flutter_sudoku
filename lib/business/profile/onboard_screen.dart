@@ -12,7 +12,7 @@ class OnboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ThemeMode themeMode = ref.watch(themeProvider);
-    
+
     return Scaffold(
       appBar: AppBar(
         leading: const AppbarBackButton(),
@@ -31,7 +31,11 @@ class OnboardScreen extends ConsumerWidget {
             decoration: pageDecoration,
             title: "什么是数独",
             body: "数独是最受欢迎的益智游戏之一,它通过逻辑推理来完成。解题过程不需要计算或者特殊的数学技能，只需要开动你的大脑和集中注意力。每天玩一玩数独游戏，可以提高你的注意力和进一步开发你的大脑。",
-            image: Image.asset(getFilename(themeMode), alignment: Alignment.bottomCenter, fit: BoxFit.cover),
+            image: Image.asset(
+              getFilename(themeMode),
+              alignment: Alignment.bottomCenter,
+              fit: BoxFit.cover,
+            ),
           ),
           PageViewModel(
             decoration: pageDecoration,

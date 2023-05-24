@@ -73,6 +73,7 @@ class SudokuRecord extends Equatable {
   bool get isSuccess {
     return gameStatus == GameStatus.success;
   }
+
   bool get isFailed {
     return gameStatus == GameStatus.failed;
   }

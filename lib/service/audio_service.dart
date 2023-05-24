@@ -22,7 +22,7 @@ class AudioService {
     }
   }
 
-    Future<void> playOperation() async {
+  Future<void> playOperation() async {
     if (PrefsUtil.isPlaySound()) {
       await playSound('operate.mp3');
     }
