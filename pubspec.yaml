@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   hooks_riverpod: ^2.0.2
-  flutter_hooks: ^0.18.5+1
-  google_fonts: ^4.0.1
+  flutter_hooks: ^0.20.0
+  google_fonts: ^6.1.0
   double_back_to_close: ^2.0.0
   vibration: ^1.7.6
   shimmer: ^3.0.0
@@ -24,7 +24,7 @@ dependencies:
   sqflite: ^2.1.0+1
   path: ^1.8.2
   just_audio: ^0.9.30
-  logger: ^1.1.0
+  logger: ^2.0.2+1
   envied: ^0.3.0
   flutter_slidable: ^3.0.0
   sticky_headers: ^0.3.0+2
