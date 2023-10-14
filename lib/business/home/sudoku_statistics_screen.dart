@@ -1,8 +1,9 @@
 import 'package:app_common_flutter/constant.dart';
+import 'package:app_common_flutter/extension.dart';
 import 'package:app_common_flutter/views.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sudoku/api/sudoku_record_api.dart';
-import 'package:flutter_sudoku/common/context_extension.dart';
+import 'package:flutter_sudoku/common/constant.dart';
 import 'package:flutter_sudoku/model/sudoku.dart';
 import 'package:get_it/get_it.dart';
 
@@ -27,7 +28,7 @@ class _SudokuStatisticsScreenState extends State<SudokuStatisticsScreen> {
           actions: [
             SvgActionIcon(
               package: Comm.package,
-              name: 'delete',
+              name: IconName.delete,
               onPressed: () {
                 context.showCommDialog(
                   callback: () async {
