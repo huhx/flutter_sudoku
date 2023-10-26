@@ -25,7 +25,7 @@ dependencies:
   path: ^1.8.2
   just_audio: ^0.9.30
   logger: ^2.0.2+1
-  envied: ^0.3.0
+  envied: ^0.5.1
   flutter_slidable: ^3.0.0
   sticky_headers: ^0.3.0+2
   badges: ^3.0.2
@@ -42,8 +42,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
-  envied_generator: ^0.3.0
+  flutter_lints: ^3.0.0
+  envied_generator: ^0.5.1
   build_runner: ^2.3.2
   flutter_launcher_icons: ^0.13.0
 
