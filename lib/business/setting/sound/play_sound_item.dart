@@ -12,7 +12,7 @@ class PlaySoundItem extends HookConsumerWidget {
     final isPlaySound = useState(PrefsUtil.isPlaySound());
 
     return CupertinoListTile(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       title: Text('音效', style: Theme.of(context).textTheme.bodyLarge),
       trailing: Switch.adaptive(
         value: isPlaySound.value,

@@ -17,7 +17,7 @@ class ErrorCountItem extends HookConsumerWidget {
       ..selection = TextSelection.fromPosition(const TextPosition(offset: 1));
 
     return CupertinoListTile(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       title: Text('错误次数', style: Theme.of(context).textTheme.bodyLarge),
       trailing: Flexible(
         child: TextFormField(
